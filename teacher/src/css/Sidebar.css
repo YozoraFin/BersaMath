@@ -1,0 +1,22 @@
+.sidebar {
+    width: 0px;
+    position: fixed;
+    height: 100%;
+    z-index: 1;
+    background-color: #4A628A;
+    color: white;
+    transition: 0.5s;
+    overflow-x: hidden;
+    top: 0;
+    left: 0;
+    white-space: nowrap;
+}
+
+.sidebar-open {
+    display: block;
+    width: 250px;
+}
+
+.sidebar .header {
+    padding: 20px;
+}
