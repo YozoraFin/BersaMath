@@ -4,12 +4,14 @@ import Login from './pages/Login';
 import Layout from './components/Layout';
 import Dashboard from './pages/Dashboard';
 import Siteconfig from './pages/Siteconfig';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.min.js';
 
 function App() {
   return (
     <Routes>
-      <Route path='/' element={<Login/>}/>
-      <Route path='/admin' element={<Layout/>}>
+      <Route path='/aaa' element={<Login/>}/>
+      <Route path='/' element={<Layout/>}>
         <Route index element={<Dashboard/>} />
         <Route path='siteconfig' element={<Siteconfig/>} />
       </Route>

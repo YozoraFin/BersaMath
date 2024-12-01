@@ -1,0 +1,24 @@
+.sidebar {
+    padding: 20px 0;
+    width: 0px;
+    position: fixed;
+    height: 100%;
+    z-index: 1;
+    background-color: #4A628A;
+    color: white;
+    transition: 0.5s;
+    overflow-x: hidden;
+    top: 0;
+    left: 0;
+    
+}
+
+.sidebar-open {
+    padding: 20px;
+    display: block;
+    width: 250px;
+}
+
+.brand-name {
+    border-bottom: 1px solid;
+}
