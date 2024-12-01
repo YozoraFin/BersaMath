@@ -1,5 +1,4 @@
 .sidebar {
-    padding: 20px 0;
     width: 0px;
     position: fixed;
     height: 100%;
@@ -10,15 +9,14 @@
     overflow-x: hidden;
     top: 0;
     left: 0;
-    
+    white-space: nowrap;
 }
 
 .sidebar-open {
-    padding: 20px;
     display: block;
     width: 250px;
 }
 
-.brand-name {
-    border-bottom: 1px solid;
+.sidebar .header {
+    padding: 20px;
 }
