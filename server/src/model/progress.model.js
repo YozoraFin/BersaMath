@@ -1,7 +1,7 @@
 import db from "../config/db";
 import { DataTypes } from "sequelize";
 
-export const Progress = db.define(
+const Progress = db.define(
   "progress",
   {
     progress_id: {
@@ -58,3 +58,5 @@ Progress.associate = (models) => {
     foreignKey: "lesson_id",
   });
 };
+
+export {Progress}

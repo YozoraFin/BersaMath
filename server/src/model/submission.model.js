@@ -1,7 +1,7 @@
 import db from "../config/db";
 import { DataTypes } from "sequelize";
 
-export const Submission = db.define(
+const Submission = db.define(
   "submission",
   {
     submission_id: {
@@ -74,3 +74,5 @@ Submission.associate = (models) => {
     foreignKey: "student_id",
   });
 };
+
+export {Submission}

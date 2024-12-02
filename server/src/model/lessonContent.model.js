@@ -1,7 +1,7 @@
 import db from "../config/db";
 import { DataTypes } from "sequelize";
 
-export const LessonContent = db.define(
+const LessonContent = db.define(
   "lesson_content",
   {
     content_id: {
@@ -57,3 +57,5 @@ LessonContent.associate = (models) => {
     foreignKey: "lesson_id",
   });
 };
+
+export {LessonContent}

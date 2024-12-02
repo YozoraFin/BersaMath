@@ -1,7 +1,7 @@
 import db from "../config/db";
 import { DataTypes } from "sequelize";
 
-export const Reply = db.define(
+const DiscussionReply = db.define(
   "discussion_reply",
   {
     reply_id: {
@@ -51,3 +51,5 @@ Reply.associate = (models) => {
     foreignKey: "student_id",
   });
 };
+
+export {DiscussionReply}

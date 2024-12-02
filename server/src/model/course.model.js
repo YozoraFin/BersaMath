@@ -1,4 +1,4 @@
-import db from "../config/db";
+import db from "../config/db.js";
 import { DataTypes } from "sequelize";
 
 export const Course = db.define(

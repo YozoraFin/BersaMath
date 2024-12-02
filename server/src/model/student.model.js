@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
-import db from "../config/db";
+import db from "../config/db.js";
 
-export const Student = db.define(
+const Student = db.define(
   "student",
   {
     student_id: {
@@ -54,15 +54,20 @@ export const Student = db.define(
         isIn: [["Pria", "Wanita"]],
       },
     },
-    grade_level: {
-        type: DataTypes.STRING(20),
+    is_verified: {
+        type: DataTypes.BOOLEAN,
         allowNull: false,
-        validate: {
-            isIn: [["7", "8", "9", "10", "11", "12"]],
-        }
+        defaultValue: false,
+    },
+    grade_level: {
+      type: DataTypes.STRING(20),
+      allowNull: false,
+      validate: {
+        isIn: [["7", "8", "9", "10", "11", "12"]],
+      },
     },
     profile_pict: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.JSON,
       allowNull: true,
     },
     refresh_token: {
@@ -76,9 +81,19 @@ export const Student = db.define(
   }
 );
 
-Teacher.associate = (models) => {
-  Teacher.hasMany(models.Course, {
-    foreignKey: "teacher_id",
+Student.associate = (models) => {
+  Student.hasMany(models.Enrollment, {
+    foreignKey: "student_id",
+    onDelete: "CASCADE",
+  });
+  Student.hasMany(models.Submission, {
+    foreignKey: "student_id",
+    onDelete: "CASCADE",
+  });
+  Student.hasMany(models.Discussion, {
+    foreignKey: "student_id",
     onDelete: "CASCADE",
   });
 };
+
+export { Student };

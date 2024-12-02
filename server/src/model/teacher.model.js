@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
-import db from "../config/db";
+import db from "../config/db.js";
 
-export const Teacher = db.define(
+const Teacher = db.define(
   "teacher",
   {
     teacher_id: {
@@ -54,8 +54,13 @@ export const Teacher = db.define(
         isIn: [["Pria", "Wanita"]],
       },
     },
+    is_verified: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
     profile_pict: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.JSON,
       allowNull: true,
     },
     refresh_token: {
@@ -75,3 +80,5 @@ Teacher.associate = (models) => {
     onDelete: "CASCADE",
   });
 };
+
+export {Teacher};

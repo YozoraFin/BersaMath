@@ -1,7 +1,7 @@
 import db from "../config/db";
 import { DataTypes } from "sequelize";
 
-export const Lesson = db.define(
+const Lesson = db.define(
   "lesson",
   {
     lesson_id: {
@@ -54,3 +54,5 @@ Lesson.associate = (models) => {
     onDelete: "CASCADE",
   });
 };
+
+export {Lesson}
