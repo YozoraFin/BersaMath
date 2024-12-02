@@ -7,6 +7,7 @@ import cors from "cors";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import slowDown from "express-slow-down";
+import teacherRoutes from "./routes/teacher.routes.js"
 
 const app = express();
 const port = process.env.PORT;
@@ -47,6 +48,8 @@ app.use(
 // if (process.env.NODE_ENV === 'production') {
 //   app.set('trust proxy', 1);
 // }
+
+app.use('/api/v1/teacher', teacherRoutes)
 
 app.listen(port, async () => {
   try {
