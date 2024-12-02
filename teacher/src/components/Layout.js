@@ -11,11 +11,11 @@ export default function Layout() {
   }
 
   return (
-    <div>
+    <div className='body'>
         <Sidebar sidebar={sidebar}/>
         <div className={sidebar ? 'main main-sidebar' : 'main'}>
           <Navbar sidebarClick={sidebarClick}/>
-          <div className="container-fluid content">
+          <div className="container-fluid outlet">
             <Outlet/>
           </div>
         </div>

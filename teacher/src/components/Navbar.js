@@ -12,7 +12,7 @@ export default function Navbar({ sidebarClick }) {
           <Link to={'/admin'} className='nav-link mx-3 text-secondary'>Home</Link>
         </div>
         <div className="col-6 text-end">
-          <FontAwesomeIcon className='text-secondary' type='button' icon={faPowerOff} />
+          <FontAwesomeIcon className='text-secondary logout-button' type='button' icon={faPowerOff} />
         </div>
       </div>
     </nav>

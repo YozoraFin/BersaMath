@@ -1,10 +1,24 @@
 .navbar {
-    box-shadow: 0px 1px 5px -1px rgba(165,165,165,0.93);
-    -webkit-box-shadow: 0px 1px 5px -1px rgba(165,165,165,0.93);
-    -moz-box-shadow: 0px 1px 5px -1px rgba(165,165,165,0.93);
     height: 50px;
+}
+
+.navbar .navbar-toggler-icon {
+    transition: 0.3s;
+    border-radius: 5px;
+    border: white solid 2px;
 }
 
 .navbar .navbar-toggler-icon:hover {
     cursor: pointer;
+    border: #4A628A solid 2px;
+}
+
+.navbar .logout-button:hover {
+    color: #4A628A !important;
+    transform: scale(1.1);
+    transition: 0.3s;
+}
+
+.navbar .logout-button:active {
+    transform: scale(0.9);
 }

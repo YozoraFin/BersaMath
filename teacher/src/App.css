@@ -3,3 +3,6 @@
 @import 'css/Navbar.css';
 @import 'css/Content.css';
 
+.body {
+    min-height: 100vh;
+}
