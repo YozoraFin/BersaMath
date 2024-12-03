@@ -8,6 +8,7 @@ import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import slowDown from "express-slow-down";
 import teacherRoutes from "./routes/teacher.routes.js"
+import studentRoutes from "./routes/student.routes.js"
 
 const app = express();
 const port = process.env.PORT;
@@ -50,6 +51,7 @@ app.use(
 // }
 
 app.use('/api/v1/teacher', teacherRoutes)
+app.use('/api/v1/student', studentRoutes)
 
 app.listen(port, async () => {
   try {
