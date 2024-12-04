@@ -1,0 +1,81 @@
+.login {
+    height: 100vh;
+}
+
+.login .login-card {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    width: 350px;
+    height: 400px;
+    box-shadow: 1px 5px 13px 0px rgba(185,185,185,0.75);
+    -webkit-box-shadow: 1px 5px 13px 0px rgba(185,185,185,0.75);
+    -moz-box-shadow: 1px 5px 13px 0px rgba(185,185,185,0.75);
+}
+
+.login .login-card .card-header {
+    background-color: #4A628A;
+    color: white;
+}
+
+.login .form-box {
+    position: relative;
+    width: 300px;
+}
+
+.login .checkbox {
+    width: 300px;
+}
+
+.login .form-box label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 16px;
+    color: #4a618ab2;
+    transition: 0.5s;
+    pointer-events: none;
+}
+
+.login .login-form {
+    width: 100%;
+    padding-bottom: 2px;
+    border: none;
+    border-bottom: 1px solid #4A628A;
+}
+
+.login .login-form:focus {
+    outline: none;
+}
+
+.login .form-box .login-form:focus ~ label,
+.login .form-box .filled {
+    top: -20px;
+    left: 0;
+    color: #4A628A;
+    font-size: 14px;
+}
+
+.login .password-toggle {
+    position: absolute;
+    right: 0;
+}
+
+.login .card-footer {
+    width: 300px;
+}
+
+.login .btn {
+    border: 1px solid #4A628A;
+    color: #4A628A;
+    border-radius: 0;
+}
+
+.login .btn:hover {
+    border: 1px solid #4A628A;
+    color: white;
+    background-color: #4A628A;
+    border-radius: 0;
+}
