@@ -36,10 +36,18 @@ const DiscussionReply = db.define(
       type: DataTypes.JSON,
       allowNull: true,
     },
+    created_at: {
+      type: DataTypes.DATE,
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+    },
   },
   {
     freezeTableName: true,
-    timestamps: false,
+    timestamps: true,
+    createdAt: "created_at",
+    updatedAt: "updated_at",
   }
 );
 
@@ -52,4 +60,4 @@ Reply.associate = (models) => {
   });
 };
 
-export {DiscussionReply}
+export { DiscussionReply };

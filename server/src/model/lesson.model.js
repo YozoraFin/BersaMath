@@ -38,10 +38,18 @@ const Lesson = db.define(
         isIn: [["teori", "kuis"]],
       },
     },
+    created_at: {
+      type: DataTypes.DATE,
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+    },
   },
   {
     freezeTableName: true,
-    timestamps: false,
+    timestamps: true,
+    createdAt: "created_at",
+    updatedAt: "updated_at",
   }
 );
 
@@ -55,4 +63,4 @@ Lesson.associate = (models) => {
   });
 };
 
-export {Lesson}
+export { Lesson };

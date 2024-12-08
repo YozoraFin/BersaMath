@@ -59,10 +59,18 @@ const Submission = db.define(
         isIn: [["diajukan", "dinilai"]],
       },
     },
+    created_at: {
+      type: DataTypes.DATE,
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+    },
   },
   {
     freezeTableName: true,
-    timestamps: false,
+    timestamps: true,
+    createdAt: "created_at",
+    updatedAt: "updated_at",
   }
 );
 
@@ -75,4 +83,4 @@ Submission.associate = (models) => {
   });
 };
 
-export {Submission}
+export { Submission };

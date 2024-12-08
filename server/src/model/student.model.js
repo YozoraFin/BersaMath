@@ -55,9 +55,9 @@ const Student = db.define(
       },
     },
     is_verified: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-        defaultValue: false,
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
     },
     grade_level: {
       type: DataTypes.STRING(20),
@@ -74,10 +74,18 @@ const Student = db.define(
       type: DataTypes.TEXT,
       allowNull: true,
     },
+    created_at: {
+      type: DataTypes.DATE,
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+    },
   },
   {
     freezeTableName: true,
-    timestamps: false,
+    timestamps: true,
+    createdAt: "created_at",
+    updatedAt: "updated_at",
   }
 );
 

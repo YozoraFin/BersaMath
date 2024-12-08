@@ -51,10 +51,18 @@ const Practice = db.define(
       type: DataTypes.DATE,
       allowNull: false,
     },
+    created_at: {
+      type: DataTypes.DATE,
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+    },
   },
   {
     freezeTableName: true,
-    timestamps: false,
+    timestamps: true,
+    createdAt: "created_at",
+    updatedAt: "updated_at",
   }
 );
 
@@ -68,4 +76,4 @@ Practice.associate = (models) => {
   });
 };
 
-export {Practice}
+export { Practice };

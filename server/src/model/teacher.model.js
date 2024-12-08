@@ -59,6 +59,11 @@ const Teacher = db.define(
       allowNull: false,
       defaultValue: false,
     },
+    role: {
+      type: DataTypes.ENUM("teacher", "super_teacher"),
+      allowNull: false,
+      defaultValue: "teacher",
+    },
     profile_pict: {
       type: DataTypes.JSON,
       allowNull: true,
@@ -67,10 +72,18 @@ const Teacher = db.define(
       type: DataTypes.TEXT,
       allowNull: true,
     },
+    created_at: {
+      type: DataTypes.DATE,
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+    },
   },
   {
     freezeTableName: true,
-    timestamps: false,
+    timestamps: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
   }
 );
 
