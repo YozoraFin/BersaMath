@@ -3,7 +3,7 @@
     position: fixed;
     height: 100%;
     z-index: 1;
-    background-color: #4A628A;
+    background-color: #4A628A !important;
     color: white;
     transition: 0.5s;
     overflow-x: hidden;

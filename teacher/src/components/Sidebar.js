@@ -1,19 +1,33 @@
-import React, { useState } from 'react'
+import React, { useLayoutEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faInfinity, faUser, faSchool, faTable, faTasks, faTachometerAlt } from '@fortawesome/fontawesome-free-solid'
 import { Link, useLocation } from 'react-router-dom'
 
 export default function Sidebar({ sidebar }) {
+  const [width, setWidth] = useState(0)
   const location = useLocation()
 
+  useLayoutEffect(() => {
+    const updateSize = () => {
+      setWidth(window.innerWidth)
+    }
+    window.addEventListener('resize', updateSize)
+    updateSize()
+    return () => window.removeEventListener('resize', updateSize)
+  }, [])
+
   return (
-    <div className={sidebar ? 'sidebar sidebar-open' : 'sidebar'}>
+    <div className={width < 450 ? 'sidebar offcanvas offcanvas-start' : sidebar ? "sidebar sidebar-open" : "sidebar"}  tabindex="-1" id="sidebaroffcanvas">
       <div className="sidebar-profile">
-        <div className="header">
-          <h4 className='brand-name m-0'>
+        <div className="header row">
+          <h4 className='brand-name m-0 col-9 text-light'>
             <FontAwesomeIcon size='sm' icon={faInfinity} /> 
             <span className='ms-2'>BersaMath</span>
           </h4>
+          {width < 450
+            ? <button type="button" class="btn-close btn-close-white text-reset ms-auto text-light" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            : ""
+          }
         </div>
         <div className="border-top"></div>
         <div className="profile">
