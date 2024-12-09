@@ -4,3 +4,53 @@
     -moz-box-shadow: 2px 2px 6px -1px rgba(0,0,0,0.37) inset;
     min-height: calc(100vh - 50px);
 }
+
+.main {
+    margin-left: 0px;
+    transition: 0.5s;
+    min-height: 100vh;
+}
+
+.main-sidebar {
+    margin-left: 250px;
+}
+
+.breadcrumb-item {
+    background-color: rgb(245, 245, 245);
+}
+
+.dashboard .card {
+    border-radius: 0px !important;
+    text-decoration: none;
+    transition: 0.3s;
+    box-shadow: 0px 3px 3px -1px rgba(142,142,142,0.75);
+    -webkit-box-shadow: 0px 3px 3px -1px rgba(142,142,142,0.75);
+    -moz-box-shadow: 0px 3px 3px -1px rgba(142,142,142,0.75);
+}
+
+@media screen and (max-width: 784px) {
+    .dashboard .card {
+        width: 40vh;
+    }
+}
+
+.card-main {
+    font-size: 35px;
+    font-weight: 500;
+}
+
+.card-nav {
+    transition: 0.3s;
+}
+
+.card:hover .card-nav {
+    transform: translate(0, -3px) ;
+}
+
+.row-danger td {
+    color: red !important;
+}
+
+.row-success td {
+    color: #5cb85c !important;
+}

@@ -1,5 +1,6 @@
 .navbar {
     height: 50px;
+    background-color: white;
 }
 
 .navbar .navbar-toggler-icon {
@@ -11,6 +12,25 @@
 .navbar .navbar-toggler-icon:hover {
     cursor: pointer;
     border: #4A628A solid 2px;
+    transform: translate(0, -2px);
+}
+
+.navbar .navbar-toggler-icon:active {
+    transform: translate(0, 2px);
+}
+
+.navbar .nav-link {
+    color: #4A628A;
+    transition: 0.3s;
+}
+
+.navbar .nav-link:hover {
+    color: #37496a !important;
+    transform: translate(0, -2px);
+}
+
+.navbar .nav-link:active {
+    transform: translate(0, 2px);
 }
 
 .navbar .logout-button:hover {

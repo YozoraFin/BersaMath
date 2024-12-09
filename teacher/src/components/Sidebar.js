@@ -31,7 +31,7 @@ export default function Sidebar({ sidebar }) {
           <FontAwesomeIcon size='sm' icon={faTachometerAlt} /> 
           <span className='ms-2'>Dasbor</span>
         </Link>
-        <Link className={location.pathname.indexOf('kelas') > -1 ? 'link active' : 'link'} to={'/bersamath/kelas'}>
+        <Link className={location.pathname.indexOf('kelas') > -1 || location.pathname.indexOf('xplorer') > -1 ? 'link active' : 'link'} to={'/bersamath/kelas'}>
           <FontAwesomeIcon size='sm' icon={faSchool} /> 
           <span className='ms-2'>Kelas</span>
         </Link>

@@ -1,5 +1,4 @@
 @import 'css/Sidebar.css';
-@import 'css/Main.css';
 @import 'css/Navbar.css';
 @import 'css/Content.css';
 @import 'css/Login.css';
@@ -7,4 +6,20 @@
 body {
     min-height: 100vh;
     background-color: rgb(245, 245, 245) !important;
+}
+
+.text-main {
+    color: #4A628A !important;
+}
+
+.text-second {
+    color: #364764 !important;
+}
+
+.bg-main {
+    background-color: #4A628A !important;
+}
+
+.bg-second {
+    background-color: #364764 !important;
 }

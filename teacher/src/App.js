@@ -1,14 +1,15 @@
-import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import Login from './pages/Login';
 import Layout from './components/Layout';
 import Dashboard from './pages/Dashboard';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.min.js';
 import Class from './pages/Class';
 import Course from './pages/Course';
 import Assignment from './pages/Assignment';
 import Profile from './pages/Profile';
+import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.min.js';
+import Student from './pages/Student';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path='materi' element={<Course/>} />
         <Route path='tugas' element={<Assignment/>} />
         <Route path='profil' element={<Profile/>} />
+        <Route path='xplorer/:id' element={<Student/>} />
       </Route>
     </Routes>
   );
