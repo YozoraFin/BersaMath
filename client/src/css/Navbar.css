@@ -6,11 +6,11 @@
     color : white !important;
 }
 
-.btn {
+.btn-nav {
     color : rgb(240, 240, 240) !important;
     border: none;
 }
 
-.btn:focus, .btn:hover, .btn:active {
+.btn-nav:focus, .btn-nav:hover, .btn-nav:active {
     color : white !important;
 }

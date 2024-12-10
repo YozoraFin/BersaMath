@@ -34,3 +34,8 @@
 .btn-close {
     padding: 0.5rem;
 }
+
+.btn-register {
+    text-decoration: none;
+    padding: 0;
+}
