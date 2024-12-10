@@ -39,7 +39,7 @@ export default function Navbar() {
                                 </li>
                             </ul>
                             <div className="justify-content-center d-flex pe-3">
-                                <button className="btn" onClick={handleLoginClick}>Masuk</button>
+                                <button className="btn btn-nav" onClick={handleLoginClick}>Login</button>
                             </div>
                         </div>
                     </div>
