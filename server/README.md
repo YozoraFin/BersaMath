@@ -42,7 +42,7 @@ cp .env.example .env
 
 `ALLOWED_ORIGINS=http://localhost:3000,https://yourdomain.com`
 
-# Database
+#Database
 `DB=bersamath`
 
 `DB_USERNAME=your_username`
@@ -53,7 +53,7 @@ cp .env.example .env
 
 `DB_PORT=3306`
 
-# JWT
+#JWT
 `JWT_SECRET_KEY=your_jwt_secret`
 
 `JWT_REFRESH_SECRET_KEY=your_refresh_secret`
@@ -62,7 +62,7 @@ cp .env.example .env
 
 `RESET_SECRET_KEY=your_reset_secret`
 
-# Email
+#Email
 `EMAIL_USER=your_email@gmail.com`
 
 `EMAIL_APP_PASSWORD=your_app_password`
