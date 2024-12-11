@@ -1,5 +1,9 @@
 import { DataTypes } from "sequelize";
 import db from "../config/db.js";
+import { Enrollment } from "./enrollment.model.js";
+import { Submission } from "./submission.model.js";
+import { Discussion } from "./discussion.model.js";
+import { Course } from "./course.model.js";
 
 const Student = db.define(
   "student",
@@ -89,19 +93,32 @@ const Student = db.define(
   }
 );
 
-Student.associate = (models) => {
-  Student.hasMany(models.Enrollment, {
-    foreignKey: "student_id",
-    onDelete: "CASCADE",
-  });
-  Student.hasMany(models.Submission, {
-    foreignKey: "student_id",
-    onDelete: "CASCADE",
-  });
-  Student.hasMany(models.Discussion, {
-    foreignKey: "student_id",
-    onDelete: "CASCADE",
-  });
-};
+// relation here
+Student.hasMany(Enrollment, {
+  foreignKey: "student_id",
+  onDelete: "CASCADE",
+});
+Enrollment.belongsTo(Student, {
+  foreignKey: "student_id",
+})
+Student.belongsToMany(Course, {
+  through: Enrollment,
+  foreignKey: "student_id",
+  otherKey: "course_id"
+});
+Submission.belongsTo(Student, {
+  foreignKey: "student_id"
+})
+Student.hasMany(Submission, {
+  foreignKey: "student_id",
+  onDelete: "CASCADE",
+});
+Discussion.belongsTo(Student, {
+  foreignKey: "student_id"
+})
+Student.hasMany(Discussion, {
+  foreignKey: "student_id",
+  onDelete: "CASCADE",
+});
 
 export { Student };

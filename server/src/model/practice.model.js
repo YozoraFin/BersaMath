@@ -1,5 +1,6 @@
-import db from "../config/db";
+import db from "../config/db.js";
 import { DataTypes } from "sequelize";
+import { Submission } from "./submission.model.js";
 
 const Practice = db.define(
   "practice",
@@ -35,7 +36,7 @@ const Practice = db.define(
       type: DataTypes.STRING(20),
       allowNull: false,
       validate: {
-        isIn: [["mudah", "menengah", "sulit"]],
+        isIn: [["basic", "intermediate", "advanced"]],
       },
     },
     max_score: {
@@ -66,14 +67,12 @@ const Practice = db.define(
   }
 );
 
-Practice.associate = (models) => {
-  Practice.belongsTo(models.Lesson, {
-    foreignKey: "lesson_id",
-  });
-  Practice.hasMany(models.Submission, {
-    foreignKey: "practice_id",
-    onDelete: "CASCADE",
-  });
-};
+Submission.belongsTo(Practice, {
+  foreignKey: "practice_id"
+})
+Practice.hasMany(Submission, {
+  foreignKey: "practice_id",
+  onDelete: "CASCADE"
+})
 
 export { Practice };

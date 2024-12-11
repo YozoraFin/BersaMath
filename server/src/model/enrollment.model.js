@@ -1,5 +1,6 @@
-import db from "../config/db";
+import db from "../config/db.js";
 import { DataTypes } from "sequelize";
+import { Course } from "./course.model.js";
 
 const Enrollment = db.define(
   "enrollment",
@@ -47,18 +48,5 @@ const Enrollment = db.define(
     updatedAt: "updated_at",
   }
 );
-
-Enrollment.associate = (models) => {
-  Enrollment.belongsTo(models.Student, {
-    foreignKey: "student_id",
-  });
-  Enrollment.belongsTo(models.Course, {
-    foreignKey: "course_id",
-  });
-  Enrollment.hasMany(models.Progress, {
-    foreignKey: "enrollment_id",
-    onDelete: "CASCADE",
-  });
-};
 
 export { Enrollment };

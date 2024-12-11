@@ -1,4 +1,4 @@
-import db from "../config/db";
+import db from "../config/db.js";
 import { DataTypes } from "sequelize";
 
 const DiscussionReply = db.define(
@@ -50,14 +50,5 @@ const DiscussionReply = db.define(
     updatedAt: "updated_at",
   }
 );
-
-Reply.associate = (models) => {
-  Reply.belongsTo(models.Discussion, {
-    foreignKey: "discussion_id",
-  });
-  Reply.belongsTo(models.Student, {
-    foreignKey: "student_id",
-  });
-};
 
 export { DiscussionReply };

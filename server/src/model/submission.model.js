@@ -1,5 +1,6 @@
-import db from "../config/db";
+import db from "../config/db.js";
 import { DataTypes } from "sequelize";
+import { Practice } from "./practice.model.js";
 
 const Submission = db.define(
   "submission",
@@ -56,7 +57,7 @@ const Submission = db.define(
       allowNull: false,
       defaultValue: "diajukan",
       validate: {
-        isIn: [["diajukan", "dinilai"]],
+        isIn: [["submitted", "graded"]],
       },
     },
     created_at: {
@@ -73,14 +74,5 @@ const Submission = db.define(
     updatedAt: "updated_at",
   }
 );
-
-Submission.associate = (models) => {
-  Submission.belongsTo(models.Practice, {
-    foreignKey: "practice_id",
-  });
-  Submission.belongsTo(models.Student, {
-    foreignKey: "student_id",
-  });
-};
 
 export { Submission };

@@ -1,7 +1,8 @@
-import db from "../config/db";
+import db from "../config/db.js";
 import { DataTypes } from "sequelize";
+import { DiscussionReply } from "./discussionReply.model.js";
 
-export const Discussion = db.define(
+const Discussion = db.define(
   "discussion",
   {
     discussion_id: {
@@ -62,15 +63,12 @@ export const Discussion = db.define(
   }
 );
 
-Discussion.associate = (models) => {
-  Discussion.belongsTo(models.Course, {
-    foreignKey: "course_id",
-  });
-  Discussion.belongsTo(models.Student, {
-    foreignKey: "student_id",
-  });
-  Discussion.hasMany(models.Reply, {
-    foreignKey: "discussion_id",
-    onDelete: "CASCADE",
-  });
-};
+DiscussionReply.belongsTo(Discussion, {
+  foreignKey: "discussion_id"
+})
+Discussion.hasMany(DiscussionReply, {
+  foreignKey: "discussion_id",
+  onDelete: "CASCADE"
+})
+
+export { Discussion };

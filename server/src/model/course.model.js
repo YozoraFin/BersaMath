@@ -1,5 +1,10 @@
 import db from "../config/db.js";
 import { DataTypes } from "sequelize";
+import { Teacher } from "./teacher.model.js";
+import { Topic } from "./topic.model.js";
+import { Lesson } from "./lesson.model.js";
+import { Enrollment } from "./enrollment.model.js";
+import { Discussion } from "./discussion.model.js";
 
 export const Course = db.define(
   "course",
@@ -65,23 +70,32 @@ export const Course = db.define(
   }
 );
 
-Course.associate = (models) => {
-  Course.belongsTo(models.Teacher, {
-    foreignKey: "teacher_id",
-  });
-  Course.belongsTo(models.Topic, {
-    foreignKey: "topic_id",
-  });
-  Course.hasMany(models.Lesson, {
-    foreignKey: "course_id",
-    onDelete: "CASCADE",
-  });
-  Course.hasMany(models.Enrollment, {
-    foreignKey: "course_id",
-    onDelete: "CASCADE",
-  });
-  Course.hasMany(models.Discussion, {
-    foreignKey: "course_id",
-    onDelete: "CASCADE",
-  });
-};
+// relastionh here
+Course.belongsTo(Topic, {
+  foreignKey: "topic_id",
+});
+Topic.hasMany(Course, {
+  foreignKey: "topic_id",
+  onDelete: "CASCADE",
+});
+Enrollment.belongsTo(Course, {
+  foreignKey: "course_id",
+});
+Course.hasMany(Enrollment, {
+  foreignKey: "course_id",
+  onDelete: "CASCADE",
+});
+Lesson.belongsTo(Course, {
+  foreignKey: "course_id",
+});
+Course.hasMany(Lesson, {
+  foreignKey: "course_id",
+  onDelete: "CASCADE",
+});
+Discussion.belongsTo(Course, {
+  foreignKey: "course_id"
+})
+Course.hasMany(Discussion, {
+  foreignKey: "course_id",
+  onDelete: "CASCADE",
+});

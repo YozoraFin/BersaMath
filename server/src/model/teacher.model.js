@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import db from "../config/db.js";
+import { Course } from "./course.model.js";
 
 const Teacher = db.define(
   "teacher",
@@ -87,11 +88,13 @@ const Teacher = db.define(
   }
 );
 
-Teacher.associate = (models) => {
-  Teacher.hasMany(models.Course, {
-    foreignKey: "teacher_id",
-    onDelete: "CASCADE",
-  });
-};
+// relation here
+Teacher.hasMany(Course, {
+  foreignKey: "teacher_id",
+  onDelete: "CASCADE",
+});
+Course.belongsTo(Teacher, {
+  foreignKey: "teacher_id",
+});
 
 export {Teacher};

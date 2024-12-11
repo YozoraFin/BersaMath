@@ -1,5 +1,6 @@
-import db from "../config/db";
+import db from "../config/db.js";
 import { DataTypes } from "sequelize";
+import { Course } from "./course.model.js";
 
 const Topic = db.define(
   "topic",
@@ -9,7 +10,7 @@ const Topic = db.define(
       type: DataTypes.INTEGER,
       primaryKey: true,
     },
-    name: {
+    title: {
       type: DataTypes.STRING(100),
       allowNull: false,
       validate: {
@@ -38,11 +39,12 @@ const Topic = db.define(
   }
 );
 
-Topic.associate = (models) => {
-  Topic.hasMany(models.Course, {
-    foreignKey: "topic_id",
-    onDelete: "CASCADE",
-  });
-};
+// Course.belongsTo(Topic, {
+//   foreignKey: "topic_id",
+// });
+// Topic.hasMany(Course, {
+//   foreignKey: "topic_id",
+//   onDelete: "CASCADE",
+// });
 
 export { Topic };

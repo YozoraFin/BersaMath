@@ -1,5 +1,6 @@
-import db from "../config/db";
+import db from "../config/db.js";
 import { DataTypes } from "sequelize";
+import { Practice } from "./practice.model.js";
 
 const Lesson = db.define(
   "lesson",
@@ -38,6 +39,11 @@ const Lesson = db.define(
         isIn: [["teori", "kuis"]],
       },
     },
+    sequence: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0,
+    },
     created_at: {
       type: DataTypes.DATE,
     },
@@ -53,14 +59,12 @@ const Lesson = db.define(
   }
 );
 
-Lesson.associate = (models) => {
-  Lesson.belongsTo(models.Course, {
-    foreignKey: "course_id",
-  });
-  Lesson.hasMany(models.Practice, {
-    foreignKey: "lesson_id",
-    onDelete: "CASCADE",
-  });
-};
+Practice.belongsTo(Lesson, {
+  foreignKey: "lesson_id"
+})
+Lesson.hasMany(Practice, {
+  foreignKey: "lesson_id",
+  onDelete: "CASCADE"
+})
 
 export { Lesson };

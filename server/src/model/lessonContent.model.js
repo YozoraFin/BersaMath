@@ -1,4 +1,4 @@
-import db from "../config/db";
+import db from "../config/db.js";
 import { DataTypes } from "sequelize";
 
 const LessonContent = db.define(
@@ -24,13 +24,6 @@ const LessonContent = db.define(
         len: [3, 200],
       },
     },
-    content: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-      validate: {
-        len: [1, 5000],
-      },
-    },
     math_formula: {
       type: DataTypes.TEXT,
       allowNull: true,
@@ -38,12 +31,21 @@ const LessonContent = db.define(
         len: [0, 1000],
       },
     },
+    content_type: {
+      type: DataTypes.STRING(20),
+      allowNull: false,
+      validate: {
+        isIn: [["text", "video", "file"]],
+      },
+    },
     content_url: {
       type: DataTypes.STRING(255),
       allowNull: true,
-      validate: {
-        isUrl: true,
-      },
+    },
+    sequence: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0,
     },
     created_at: {
       type: DataTypes.DATE,
