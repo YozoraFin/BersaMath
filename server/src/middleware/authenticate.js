@@ -2,6 +2,8 @@
 import jwt from "jsonwebtoken";
 import { Teacher } from "../model/teacher.model.js";
 import { Student } from "../model/student.model.js";
+import { Course } from "../model/course.model.js";
+import { Enrollment } from "../model/enrollment.model.js";
 
 // Verify JWT token
 export const verifyToken = async (req, res, next) => {
@@ -39,18 +41,6 @@ export const generateTokens = (userId, role) => {
   return { accessToken, refreshToken };
 };
 
-// Verify user role
-export const verifyRole = (roles) => {
-  return (req, res, next) => {
-    if (!roles.includes(req.role)) {
-      return res.status(403).json({
-        message: "You do not have permission to access this resource",
-      });
-    }
-    next();
-  };
-};
-
 // Handle refresh token
 export const handleRefreshToken = async (req, res) => {
   try {
@@ -82,5 +72,114 @@ export const handleRefreshToken = async (req, res) => {
     res.json(tokens);
   } catch (error) {
     res.status(403).json({ message: "Invalid refresh token" });
+  }
+};
+
+export const isSuperTeacher = async (req, res, next) => {
+  try {
+    const teacher = await Teacher.findByPk(req.userId);
+
+    if (!teacher || teacher.role !== "super_teacher") {
+      return res.status(403).json({
+        success: false,
+        message: "Requires super teacher privileges",
+      });
+    }
+    next();
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const verifyTeacher = async (req, res, next) => {
+  try {
+    const teacher = await Teacher.findByPk(req.userId);
+
+    if (!teacher) {
+      return res.status(403).json({
+        success: false,
+        message: "Teacher access required",
+      });
+    }
+
+    next();
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to verify teacher",
+      error: error.message,
+    });
+  }
+};
+
+export const verifyCourseOwner = async (req, res, next) => {
+  try {
+    const { course_id } = req.params;
+    const teacher_id = req.userId;
+
+    const course = await Course.findOne({
+      where: { course_id, teacher_id },
+    });
+
+    if (!course) {
+      return res.status(403).json({
+        success: false,
+        message: "Unauthorized to access course",
+      });
+    }
+
+    next();
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to verify course ownership",
+      error: error.message,
+    });
+  }
+};
+
+export const verifyCourseAccess = async (req, res, next) => {
+  try {
+    const { course_id } = req.params;
+    const userId = req.userId;
+    const userRole = req.role;
+
+    // If user is a teacher, allow access
+    if (userRole === "teacher") {
+      const course = await Course.findOne({
+        where: {
+          course_id,
+          teacher_id: userId,
+        },
+      });
+
+      if (course) {
+        return next();
+      }
+    }
+
+    // Check student enrollment
+    const enrollment = await Enrollment.findOne({
+      where: {
+        student_id: userId,
+        course_id,
+        status: "aktif",
+      },
+    });
+
+    if (!enrollment) {
+      return res.status(403).json({
+        success: false,
+        message: "Unauthorized to access course - Please enroll first",
+      });
+    }
+
+    next();
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to verify course access",
+      error: error.message,
+    });
   }
 };
