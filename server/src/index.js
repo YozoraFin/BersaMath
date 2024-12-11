@@ -9,6 +9,13 @@ import rateLimit from "express-rate-limit";
 import slowDown from "express-slow-down";
 import teacherRoutes from "./routes/teacher.routes.js"
 import studentRoutes from "./routes/student.routes.js"
+import topicRoutes from "./routes/topic.routes.js"
+import courseRoutes from "./routes/course.routes.js"
+import enrollmentRoutes from "./routes/enrollment.routes.js"
+import lessonRoutes from "./routes/lesson.routes.js"
+import practiceRoutes from "./routes/practice.routes.js"
+import submissionRoutes from "./routes/submission.routes.js"
+import authRoutes from "./routes/auth.routes.js"
 
 const app = express();
 const port = process.env.PORT;
@@ -50,8 +57,11 @@ app.use(
 //   app.set('trust proxy', 1);
 // }
 
+app.use('/api/v1/auth', authRoutes)
 app.use('/api/v1/teacher', teacherRoutes)
 app.use('/api/v1/student', studentRoutes)
+app.use('/api/v1/topic', topicRoutes)
+app.use('/api/v1/course', courseRoutes, enrollmentRoutes, lessonRoutes, practiceRoutes, submissionRoutes)
 
 app.listen(port, async () => {
   try {
