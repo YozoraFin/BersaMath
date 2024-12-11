@@ -14,10 +14,10 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export const register = async (req, res) => {
+export const studentRegister = async (req, res) => {
   try {
     const { name, email, password, phone, bio, gender, grade_level } = req.body;
-    const hashPassword = passwordUtils.hashPassword(password)
+    const hashPassword = passwordUtils.hashPassword(password);
     const emailExists = await Student.findOne({
       where: { email: email.toLowerCase() },
     });
@@ -90,7 +90,7 @@ export const register = async (req, res) => {
   }
 };
 
-export const verifyEmail = async (req, res) => {
+export const studentVerifyEmail = async (req, res) => {
   try {
     const { token } = req.params;
 
@@ -126,7 +126,7 @@ export const verifyEmail = async (req, res) => {
   }
 };
 
-export const login = async (req, res) => {
+export const studentLogin = async (req, res) => {
   try {
     const { identifier, password } = req.body;
     const student = await Student.findOne({
@@ -134,7 +134,10 @@ export const login = async (req, res) => {
         [Op.or]: [{ email: identifier }, { phone: identifier }],
       },
     });
-    const isValidPassword = passwordUtils.comparePassword(password, student.password);
+    const isValidPassword = passwordUtils.comparePassword(
+      password,
+      student.password
+    );
     if (!isValidPassword) {
       return res.status(401).json({
         success: false,
@@ -181,93 +184,228 @@ export const login = async (req, res) => {
   }
 };
 
-export const requestResetPassword = async (req, res) => {
-    try {
-      const { email } = req.body;
-      const student = await Student.findOne({
-        where: { email: email.toLowerCase() },
+export const studentRequestResetPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const student = await Student.findOne({
+      where: { email: email.toLowerCase() },
+    });
+
+    if (!student) {
+      return res.status(404).json({
+        success: false,
+        message: "Account not found",
       });
-  
-      if (!student) {
-        return res.status(404).json({
-          success: false,
-          message: "Account not found",
-        });
-      }
-  
-      const token = jwt.sign(
-        { id: student.student_id },
-        process.env.RESET_SECRET_KEY,
-        { expiresIn: "30m" }
-      );
-      const resetLink = `${process.env.CLIENT_URL}/reset-password/${token}`;
-  
-      await transporter.sendMail({
-        from: process.env.EMAIL_USER,
-        to: student.email,
-        subject: "Reset Password",
-        html: `
+    }
+
+    const token = jwt.sign(
+      { id: student.student_id },
+      process.env.RESET_SECRET_KEY,
+      { expiresIn: "30m" }
+    );
+    const resetLink = `${process.env.CLIENT_URL}/reset-password/${token}`;
+
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: student.email,
+      subject: "Reset Password",
+      html: `
                 <h2>Reset Password</h2>
                 <p>Klik link berikut untuk mereset password Anda:</p>
                 <a href="${resetLink}">${resetLink}</a>
                 <p>Link ini akan kadaluarsa dalam 30 menit.</p>
               `,
-      });
-  
-      res.status(200).json({
-        success: true,
-        message: "Reset password link has been sent to your email",
-      });
-    } catch (error) {
-      return res.status(500).json({
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Reset password link has been sent to your email",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Reset password failed",
+      error: error.message,
+    });
+  }
+};
+
+export const studentResetPassword = async (req, res) => {
+  try {
+    const { token, newPassword } = req.body;
+    const hashPassword = passwordUtils.hashPassword(newPassword);
+
+    // Validate password format
+    if (!newPassword || newPassword.length < 8) {
+      return res.status(400).json({
         success: false,
-        message: "Reset password failed",
-        error: error.message,
+        message: "Password must be at least 8 characters",
       });
     }
-  };
-  
-  export const resetPassword = async (req, res) => {
-    try {
-      const { token, newPassword } = req.body;
-      const hashPassword = passwordUtils.hashPassword(newPassword)
-  
-      // Validate password format
-      if (!newPassword || newPassword.length < 8) {
-        return res.status(400).json({
-          success: false,
-          message: "Password must be at least 8 characters",
-        });
-      }
-  
-      const decoded = jwt.verify(token, process.env.RESET_SECRET_KEY);
-  
-      const student = await Student.findByPk(decoded.id);
-      if (!student) {
-        return res.status(404).json({
-          success: false,
-          message: "Account not found",
-        });
-      }
-  
-      // Password will be hashed by middleware
-      await student.update({ password: hashPassword });
-  
-      res.status(200).json({
-        success: true,
-        message: "Password reset successful",
-      });
-    } catch (error) {
-      if (error.name === "TokenExpiredError") {
-        return res.status(401).json({
-          success: false,
-          message: "Reset password link has expired",
-        });
-      }
-      res.status(500).json({
+
+    const decoded = jwt.verify(token, process.env.RESET_SECRET_KEY);
+
+    const student = await Student.findByPk(decoded.id);
+    if (!student) {
+      return res.status(404).json({
         success: false,
-        message: "Failed to reset password",
-        error: error.message,
+        message: "Account not found",
       });
     }
-  };
+
+    // Password will be hashed by middleware
+    await student.update({ password: hashPassword });
+
+    res.status(200).json({
+      success: true,
+      message: "Password reset successful",
+    });
+  } catch (error) {
+    if (error.name === "TokenExpiredError") {
+      return res.status(401).json({
+        success: false,
+        message: "Reset password link has expired",
+      });
+    }
+    res.status(500).json({
+      success: false,
+      message: "Failed to reset password",
+      error: error.message,
+    });
+  }
+};
+
+export const logout = async (req, res) => {
+  try {
+    const student = await Student.findByPk(req.userId);
+    if (!student) {
+      return res.status(404).json({
+        success: false,
+        message: "Student not found",
+      });
+    }
+
+    await student.update({ refresh_token: null });
+
+    res.status(200).json({
+      success: true,
+      message: "Logged out successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to logout",
+      error: error.message,
+    });
+  }
+};
+
+export const getAllStudents = async (req, res) => {
+  try {
+    const students = await Student.findAll({
+      attributes: {
+        exclude: ["password", "refresh_token"],
+      },
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Students fetched successfully",
+      data: students,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch students",
+      error: error.message,
+    });
+  }
+};
+
+export const getStudentById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const student = await Student.findByPk(id, {
+      attributes: {
+        exclude: ["password", "refresh_token"],
+      },
+      // include: [{
+      //   model: Enrollment,
+      //   include: [{
+      //     model: Course,
+      //     attributes: ['title', 'difficulty'],
+      //     include: [{
+      //       model: Teacher,
+      //       attributes: ['name']
+      //     }]
+      //   }]
+      // }],
+      // raw: true,
+      // nest: true,
+    });
+
+    if (!student) {
+      return res.status(404).json({
+        success: false,
+        message: "Student not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Student fetched successfully",
+      data:student
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch student",
+      error: error.message,
+    });
+  }
+};
+
+export const updateStudentProfile = async (req, res) => {
+  try {
+    const { name, bio, grade_level } = req.body;
+    const student = await Student.findByPk(req.userId);
+
+    if (!student) {
+      return res.status(404).json({
+        success: false,
+        message: "Student not found",
+      });
+    }
+
+    const profile_pict = req.file ? req.file.path : student.profile_pict;
+
+    await student.update({
+      name,
+      bio,
+      grade_level,
+      profile_pict,
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Profile updated successfully",
+      data: {
+        id: student.student_id,
+        name: student.name,
+        email: student.email,
+        phone: student.phone,
+        bio: student.bio,
+        gender: student.gender,
+        grade_level: student.grade_level,
+        profile_pict: student.profile_pict,
+        updated_at: student.updated_at,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to update profile",
+      error: error.message,
+    });
+  }
+};

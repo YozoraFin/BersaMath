@@ -5,6 +5,7 @@ import nodemailer from "nodemailer";
 import jwt from "jsonwebtoken";
 import passwordUtils from "../middleware/password.js";
 
+// nodemailer init
 const transporter = nodemailer.createTransport({
   host: "smtp.ethereal.email",
   port: 587,
@@ -14,10 +15,10 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export const register = async (req, res) => {
+export const teacherRegister = async (req, res) => {
   try {
     const { name, email, password, phone, bio, gender } = req.body;
-    const hashPassword = passwordUtils.hashPassword(password)
+    const hashPassword = passwordUtils.hashPassword(password);
     const emailExists = await Teacher.findOne({
       where: { email: email.toLowerCase() },
     });
@@ -89,7 +90,7 @@ export const register = async (req, res) => {
   }
 };
 
-export const verifyEmail = async (req, res) => {
+export const teacherVerifyEmail = async (req, res) => {
   try {
     const { token } = req.params;
 
@@ -126,7 +127,7 @@ export const verifyEmail = async (req, res) => {
   }
 };
 
-export const login = async (req, res) => {
+export const teacherLogin = async (req, res) => {
   try {
     const { identifier, password } = req.body;
     const teacher = await Teacher.findOne({
@@ -134,7 +135,10 @@ export const login = async (req, res) => {
         [Op.or]: [{ email: identifier }, { phone: identifier }],
       },
     });
-    const isValidPassword = await passwordUtils.comparePassword(password, teacher.password);
+    const isValidPassword = passwordUtils.comparePassword(
+      password,
+      teacher.password
+    );
     if (!isValidPassword) {
       return res.status(401).json({
         success: false,
@@ -181,7 +185,7 @@ export const login = async (req, res) => {
   }
 };
 
-export const requestResetPassword = async (req, res) => {
+export const teacherRequestResetPassword = async (req, res) => {
   try {
     const { email } = req.body;
     const teacher = await Teacher.findOne({
@@ -227,10 +231,10 @@ export const requestResetPassword = async (req, res) => {
   }
 };
 
-export const resetPassword = async (req, res) => {
+export const teacherResetPassword = async (req, res) => {
   try {
     const { token, newPassword } = req.body;
-    const hashPassword = await passwordUtils.hashPassword(newPassword)
+    const hashPassword = await passwordUtils.hashPassword(newPassword);
 
     // Validate password format
     if (!newPassword || newPassword.length < 8) {
@@ -267,6 +271,193 @@ export const resetPassword = async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Failed to reset password",
+      error: error.message,
+    });
+  }
+};
+
+export const logout = async (req, res) => {
+  try {
+    const teacher = await Teacher.findByPk(req.userId);
+    if (!teacher) {
+      return res.status(404).json({
+        success: false,
+        message: "Teacher not found",
+      });
+    }
+
+    await teacher.update({ refresh_token: null });
+
+    res.status(200).json({
+      success: true,
+      message: "Logged out successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to logout",
+      error: error.message,
+    });
+  }
+};
+
+export const getAllTeachers = async (req, res) => {
+  try {
+    const teachers = await Teacher.findAll({
+      attributes: {
+        exclude: ["password", "refresh_token"],
+      },
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Teachers fetched successfully",
+      data: teachers,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch teachers",
+      error: error.message,
+    });
+  }
+};
+
+export const getTeacherById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const teacher = await Teacher.findByPk(id, {
+      attributes: {
+        exclude: ["password", "refresh_token"],
+      },
+    });
+
+    if (!teacher) {
+      return res.status(404).json({
+        success: false,
+        message: "Teacher not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Teacher fetched successfully",
+      data: teacher,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch teacher",
+      error: error.message,
+    });
+  }
+};
+
+export const updateTeacherProfile = async (req, res) => {
+  try {
+    const { name, bio } = req.body;
+    const teacher = await Teacher.findByPk(req.userId);
+
+    if (!teacher) {
+      return res.status(404).json({
+        success: false,
+        message: "Teacher not found",
+      });
+    }
+
+    const profile_pict = req.file ? req.file.path : teacher.profile_pict;
+
+    await teacher.update({
+      name,
+      bio,
+      profile_pict,
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Profile updated successfully",
+      data: {
+        id: teacher.teacher_id,
+        name: teacher.name,
+        email: teacher.email,
+        phone: teacher.phone,
+        bio: teacher.bio,
+        gender: teacher.gender,
+        profile_pict: teacher.profile_pict,
+        updated_at: teacher.updated_at,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to update profile",
+      error: error.message,
+    });
+  }
+};
+
+export const registerSuperTeacher = async (req, res) => {
+  try {
+    const { name, email, password, phone, bio, gender, registrationCode } =
+      req.body;
+
+    // Verify registration code
+    if (registrationCode !== process.env.SUPER_TEACHER_SECURE_CODE) {
+      return res.status(403).json({
+        success: false,
+        message: "Invalid registration code",
+      });
+    }
+
+    const hashPassword = passwordUtils.hashPassword(password);
+
+    // Check existing email/phone
+    const emailExists = await Teacher.findOne({
+      where: { email: email.toLowerCase() },
+    });
+
+    const phoneExists = await Teacher.findOne({
+      where: { phone },
+    });
+
+    if (emailExists || phoneExists) {
+      return res.status(400).json({
+        success: false,
+        message: "Email/Phone already registered",
+      });
+    }
+
+    // Create super teacher with role
+    const teacher = await Teacher.create({
+      name,
+      email: email.toLowerCase(),
+      password: hashPassword,
+      phone,
+      bio,
+      gender,
+      role: "super_teacher",
+      is_verified: true, // Auto verify super teachers
+    });
+
+    const tokens = generateTokens(teacher.teacher_id, "super_teacher");
+
+    return res.status(201).json({
+      success: true,
+      message: "Super teacher registration successful",
+      data: {
+        teacher: {
+          id: teacher.teacher_id,
+          name: teacher.name,
+          email: teacher.email,
+          role: teacher.role,
+        },
+        tokens,
+      },
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Registration failed",
       error: error.message,
     });
   }
