@@ -31,7 +31,7 @@ export default function Sidebar({ sidebar }) {
         </div>
         <div className="border-top"></div>
         <div className="profile">
-          <Link className='mentor-name'>
+          <Link to={'/bersamath/profil'} className='mentor-name'>
             <h5 className='m-0'>
               <FontAwesomeIcon size='sm' icon={faUser} /> 
               <span className='ms-2'>Pak Ageng</span>

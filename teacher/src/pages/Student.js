@@ -96,31 +96,31 @@ export default function Student() {
               </tr>
             </thead>
             <tbody>
-              <tr role='button' onClick={() => navigate('/bersamath/xplorer/1')}>
+              <tr role='button' onClick={() => navigate('/bersamath/xplorer/1/1')}>
                 <td>1</td>
                 <td>Dasar-dasar matriks</td>
                 <td>Matriks</td>
                 <td>90%</td>
               </tr>
-              <tr role='button' className='row-danger'  onClick={() => navigate('/bersamath/xplorer/1')}>
+              <tr role='button' className='row-danger'  onClick={() => navigate('/bersamath/xplorer/1/1')}>
                 <td>2</td>
                 <td>Bukan Dasar-dasar matriks</td>
                 <td>Matriks</td>
                 <td>60%</td>
               </tr>
-              <tr role='button' onClick={() => navigate('/bersamath/xplorer/1')}>
+              <tr role='button' onClick={() => navigate('/bersamath/xplorer/1/1')}>
                 <td>3</td>
                 <td>Korelasi antara Matriks dan Pancasila</td>
                 <td>Matriks</td>
                 <td>100%</td>
               </tr>
-              <tr role='button' className='row-success'  onClick={() => navigate('/bersamath/xplorer/1')}>
+              <tr role='button' className='row-success'  onClick={() => navigate('/bersamath/xplorer/1/1')}>
                 <td>4</td>
                 <td>Matriks dalam perkembangan teknologi di zaman perang dunia ke-2</td>
                 <td>Matriks</td>
                 <td>80%</td>
               </tr>
-              <tr className='table-danger' role='button' onClick={() => navigate('/bersamath/xplorer/1')}>
+              <tr className='table-danger' role='button' onClick={() => navigate('/bersamath/xplorer/1/1')}>
                 <td>5</td>
                 <td>Perkembangan Matriks dengan teknologi AI</td>
                 <td>Matriks</td>

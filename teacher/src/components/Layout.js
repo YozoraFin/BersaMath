@@ -23,7 +23,7 @@ export default function Layout() {
   return (
     <div className='body'>
         <Sidebar sidebar={sidebar}/>
-        <div className={sidebar && width > 1080 ? 'main main-sidebar' : 'main'}>
+        <div className={sidebar && width > 1000 ? 'main main-sidebar' : 'main'}>
           <Navbar sidebarClick={sidebarClick} sidebar={sidebar}/>
           <div className="container-fluid outlet">
             <Outlet/>
