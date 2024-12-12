@@ -83,8 +83,8 @@ export default function LessonDetail() {
 				</div>
 				<div className="card-footer row">
 					<div className="col-12 text-end">
-						<button className="btn btn-outline-success">
-							Unggah
+						<button className="btn btn-outline-primary">
+							Perbarui
 						</button>
 					</div>
 				</div>
