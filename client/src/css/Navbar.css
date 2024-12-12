@@ -1,0 +1,16 @@
+.nav-link {
+    color : rgb(240, 240, 240) !important;
+}
+
+.nav_link:focus, .nav-link:hover, .nav-link:active {
+    color : white !important;
+}
+
+.btn-nav {
+    color : rgb(240, 240, 240) !important;
+    border: none;
+}
+
+.btn-nav:focus, .btn-nav:hover, .btn-nav:active {
+    color : white !important;
+}

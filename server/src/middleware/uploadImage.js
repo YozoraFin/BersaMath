@@ -1,91 +1,56 @@
-import path from "path";
 import multer from "multer";
-import { fileURLToPath } from 'url';
+import path from "path";
+import fs from "fs";
 
-// create directory
-// const storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, path.join(__dirname, "../uploads"));
-//   },
-//   filename: function (req, file, cb) {
-//     // unique string sequence to save file in uploads dir
-//     const uniquePrefix = Date.now() + Math.random().toString();
-//     cb(null, uniquePrefix + file.originalname);
-//   },
-// });
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, "../uploads"));
-  },
-  filename: function (req, file, cb) {
-    // unique string sequence to save file in uploads dir
-    const uniquePrefix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, uniquePrefix + '-' + file.originalname);
+// Create upload directories if they don't exist
+const dirs = ["./public/uploads/profile", "./public/uploads/thumbnail"];
+dirs.forEach((dir) => {
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
+  }
+});
+
+// Profile image storage
+const profileStorage = multer.diskStorage({
+  destination: "./public/uploads/profile",
+  filename: (req, file, cb) => {
+    const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
+    cb(null, `profile-${uniqueSuffix}${path.extname(file.originalname)}`);
   },
 });
 
-// filter tipe file
-const fileFilter = function (req, file, cb) {
-  if (
-    file.mimetype === "image/jpeg" ||
-    file.mimetype === "image/png" ||
-    file.mimetype === "image/jpg"
-  ) {
+// Thumbnail storage
+const thumbnailStorage = multer.diskStorage({
+  destination: "./public/uploads/thumbnail",
+  filename: (req, file, cb) => {
+    const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
+    cb(null, `thumbnail-${uniqueSuffix}${path.extname(file.originalname)}`);
+  },
+});
+
+const imageFilter = (req, file, cb) => {
+  const allowedTypes = /jpeg|jpg|png|gif/;
+  const extname = allowedTypes.test(
+    path.extname(file.originalname).toLowerCase()
+  );
+  const mimetype = allowedTypes.test(file.mimetype);
+
+  if (extname && mimetype) {
     cb(null, true);
   } else {
-    cb(null, false);
+    cb(new Error("Only image files are allowed!"), false);
   }
 };
 
-// multer init
-const upload = multer({
-  storage,
-  limits: 1024 * 1024 * 20, // 20mb limit size
-  fileFilter,
-});
+// Separate middleware for each type
+export const uploadProfileImage = multer({
+  storage: profileStorage,
+  limits: { fileSize: 2 * 1024 * 1024 }, // 2MB
+  fileFilter: imageFilter,
+}).single("profile_pict");
 
-// single upload
-const uploadSingle = function (fileKey) {
-  // return a middleware function
-  return function (req, res, next) {
-    const uploadItem = upload.single(fileKey);
-    uploadItem(req, res, function (err) {
-      if (err instanceof multer.MulterError) {
-        // multer error ketika upload
-        return res.status(500).json({ message: err.message });
-      } else if (err) {
-        // error tidak diketahui
-        return res.status(500).json({ message: err.message });
-      } else {
-        // lanjut tidak ada kendala
-        return next();
-      }
-    });
-  };
-};
-
-// multiple upload
-const uploadMultiple = function (fileKey) {
-  return function (req, res, next) {
-    const uploadItem = upload.array(fileKey, 10);
-    uploadItem(req, res, function (err) {
-      if (err instanceof multer.MulterError) {
-        // multer error ketika upload
-        return res.status(500).json({ message: err.message });
-      } else if (err) {
-        // error tidak diketahui
-        return res.status(500).json({ message: err.message });
-      } else {
-        // lanjut tidak ada kendala
-        return next();
-      }
-    });
-  };
-};
-
-export default {
-  uploadSingle,
-  uploadMultiple,
-};
+export const uploadThumbnail = multer({
+  storage: thumbnailStorage,
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
+  fileFilter: imageFilter,
+}).single("thumbnail");

@@ -1,0 +1,45 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+#root {
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+}
+
+.margin {
+    margin : 6rem;
+}
+
+.wrapper_task {
+    max-width : 1000px;
+    overflow-x : auto;
+    overflow-y : hidden;
+}
+
+.wrapper_sbj {
+    max-width : 1500px;
+    overflow-x : auto;
+    overflow-y : hidden;
+}
+
+.ongoing {
+    min-width : 200px !important;
+}
+
+.card-link {
+    text-decoration: none;
+}
+
+.card {
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
