@@ -1,4 +1,3 @@
-import '../css/Login.css';
 import { useState } from 'react';
 
 export default function LoginPopup({ show, onClose }) {
