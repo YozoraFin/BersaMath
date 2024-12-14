@@ -32,14 +32,14 @@ export default function App() {
 
   return (
     <div id='root'>
-      <Navbar onLoginClick={handleShowLoginPopup} onLogin={handleLogin} />
+      <Navbar onLoginClick={handleShowLoginPopup} onLogin={handleLogin} isLoggedIn={isLoggedIn} />
       <main>
         <Routes>
           <Route path='/' element={isLoggedIn ? <Navigate to="/beranda" /> : <BerandaGuest onShowLoginPopup={handleShowLoginPopup} />} />
           <Route path="/beranda" element={isLoggedIn ? <Beranda /> : <Navigate to="/" />} />
-          <Route path="/materi" element={<Materi />} />
-          <Route path="/materi/:id" element={<Subjek />} />
-          <Route path="/tugas" element={<Tugas />} />
+          <Route path="/materi" element={isLoggedIn ? <Materi /> : <Navigate to="/" />} />
+          <Route path="/materi/:id" element={isLoggedIn ? <Subjek /> : <Navigate to="/" />} />
+          <Route path="/tugas" element={isLoggedIn ? <Tugas /> : <Navigate to="/" />} />
         </Routes>
       </main>
       <Footer />
@@ -47,7 +47,7 @@ export default function App() {
         <LoginPopup 
           show={showLoginPopup} 
           onClose={handleCloseLoginPopup} 
-          onLogin={handleLogin} // Passing handleLogin
+          onLogin={handleLogin}
         />
       )}
     </div>

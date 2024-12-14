@@ -1,12 +1,18 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Login from './LoginPopup.jsx';
 
-export default function Navbar({ onLogin }) {
+export default function Navbar({ onLogin, isLoggedIn }) {
     const [showLogin, setShowLogin] = useState(false);
     const [activeMenu, setActiveMenu] = useState('/');
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (isLoggedIn && activeMenu !== '/') {
+            console.log(`Navigating to ${activeMenu}`); // Debug log
+            navigate(activeMenu);
+        }
+    }, [isLoggedIn, activeMenu, navigate]);
 
     const handleLoginClick = () => {
         setShowLogin(true);
@@ -18,25 +24,9 @@ export default function Navbar({ onLogin }) {
 
     const handleMenuClick = (menu) => {
         setActiveMenu(menu);
-    };
-
-    const handleTitleClick = () => {
-        setActiveMenu('/');
-    };
-
-    const handleMateriClick = () => {
-        if (!isLoggedIn) {
-            setShowLogin(true);
-        } else {
-            navigate('/materi');
-        }
-    };
-
-    const handleTugasClick = () => {
-        if (!isLoggedIn) {
-            setShowLogin(true);
-        } else {
-            navigate('/tugas');
+        if (isLoggedIn) {
+            console.log(`Navigating to ${menu}`); // Debug log
+            navigate(menu);
         }
     };
 
@@ -44,7 +34,7 @@ export default function Navbar({ onLogin }) {
         <div>
             <nav className="navbar navbar-expand-lg bg fixed-top py-3">
                 <div className="container-fluid">
-                    <Link to="/" className="navbar-brand ps-3 text-white" onClick={handleTitleClick}>
+                    <Link to="/" className="navbar-brand ps-3 text-white" onClick={() => handleMenuClick('/')}>
                         Bersa<strong>Math</strong>
                     </Link>
                     <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
@@ -69,24 +59,18 @@ export default function Navbar({ onLogin }) {
                                 </li>
                                 <li className="nav-item">
                                     <Link 
-                                        to="#"
+                                        to="#" 
                                         className={`nav-link ${activeMenu === '/materi' ? 'active' : ''} px-3`} 
-                                        onClick={() => {
-                                            handleMenuClick('/materi');
-                                            handleMateriClick();
-                                        }}
+                                        onClick={() => handleMenuClick('/materi')}
                                     >
                                         Materi
                                     </Link>
                                 </li>
                                 <li className="nav-item">
                                     <Link 
-                                        to="#"
+                                        to="#" 
                                         className={`nav-link ${activeMenu === '/tugas' ? 'active' : ''} px-3`} 
-                                        onClick={() => {
-                                            handleMenuClick('/tugas');
-                                            handleTugasClick();
-                                        }}
+                                        onClick={() => handleMenuClick('/tugas')}
                                     >
                                         Tugas
                                     </Link>

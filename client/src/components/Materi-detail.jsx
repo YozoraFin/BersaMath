@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import materi from '../assets/json/materi.json';
 
-export default function Subject() {
+export default function Subjek() {
     const { id } = useParams();
     const navigate = useNavigate();
     const subject = materi.find((subject) => subject.title.toLowerCase() === id);
@@ -10,11 +10,11 @@ export default function Subject() {
         return <div>Materi tidak ditemukan</div>;
     }
 
-    const nextSubject = materi.find((subjek, index) => subjek.title.toLowerCase() === id && index < materi.length - 1);
-    const nextSubjectId = nextSubject ? materi[materi.indexOf(nextSubject) + 1].title.toLowerCase() : null;
+    const nextSubjectIndex = materi.findIndex((subjek) => subjek.title.toLowerCase() === id) + 1;
+    const nextSubjectId = nextSubjectIndex < materi.length ? materi[nextSubjectIndex].title.toLowerCase() : null;
 
     return (
-        <div className='margin d-flex flex-column min_height'>
+        <div className='d-flex flex-column min-height p-5'>
             <h1 className='mb-4'>{subject.title}</h1>
             <div className='d-flex justify-content-center gap-5'>
                 <iframe
