@@ -55,7 +55,7 @@ export default function Beranda() {
                                             <p><small className="text-muted">{subjek.time}</small></p>
                                         </div>
                                     </Link>
-                                    </div>
+                                </div>
                             ))}
                     </div>
                 </div>
