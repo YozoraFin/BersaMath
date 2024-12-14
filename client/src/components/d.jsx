@@ -1,27 +1,9 @@
-import { useState} from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Login from './LoginPopup.jsx';
 
 export default function Navbar({ onLogin, isLoggedIn }) {
-    const [showLogin, setShowLogin] = useState(false);
-    const [activeMenu, setActiveMenu] = useState('/');
-    const navigate = useNavigate();
 
-    const handleLoginClick = () => {
-        setShowLogin(true);
-    };
-
-    const handleCloseLogin = () => {
-        setShowLogin(false);
-    };
-
-    const handleMenuClick = (menu) => {
-        setActiveMenu(menu);
-        if (isLoggedIn) {
-            console.log(`Navigating to ${menu}`); // Debug log
-            navigate(menu);
-        }
-    };
 
     return (
         <div>
@@ -42,32 +24,36 @@ export default function Navbar({ onLogin, isLoggedIn }) {
                             <ul className="navbar-nav align-items-center flex-grow-1 pe-3 justify-content-center gap-3">
                                 <li className="nav-item">
                                     <Link 
-                                        to='#'
-                                        className={`nav-link ${activeMenu === '/' ? 'active' : ''} px-3`} 
+                                        to="/" 
+                                        className={`nav-link px-3`} 
                                         aria-current="page" 
-                                        onClick={() => handleMenuClick('/beranda')}
+                                        onClick={() => handleMenuClick('/')}
                                     >
                                         Beranda
                                     </Link>
                                 </li>
-                                <li className="nav-item">
-                                    <Link
-                                        to='#'
-                                        className={`nav-link ${activeMenu === '/materi' ? 'active' : ''} px-3`} 
-                                        onClick={() => handleMenuClick('/materi')}
-                                    >
-                                        Materi
-                                    </Link>
-                                </li>
-                                <li className="nav-item">
-                                    <Link
-                                        to='#'
-                                        className={`nav-link ${activeMenu === '/tugas' ? 'active' : ''} px-3`} 
-                                        onClick={() => handleMenuClick('/tugas')}
-                                    >
-                                        Tugas
-                                    </Link>
-                                </li>
+                                {isLoggedIn && (
+                                    <>
+                                        <li className="nav-item">
+                                            <Link 
+                                                to="/materi" 
+                                                className={`nav-link px-3`} 
+                                                onClick={() => handleMenuClick('/materi')}
+                                            >
+                                                Materi
+                                            </Link>
+                                        </li>
+                                        <li className="nav-item">
+                                            <Link 
+                                                to="/tugas" 
+                                                className={`nav-link px-3`} 
+                                                onClick={() => handleMenuClick('/tugas')}
+                                            >
+                                                Tugas
+                                            </Link>
+                                        </li>
+                                    </>
+                                )}
                             </ul>
                             <div className="justify-content-center d-flex pe-3">
                                 <button className="btn btn-nav" onClick={handleLoginClick}>Login</button>

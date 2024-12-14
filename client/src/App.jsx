@@ -17,7 +17,7 @@ export default function App() {
   const [showLoginPopup, setShowLoginPopup] = useState(false);
 
   const handleLogin = () => {
-    console.log("handleLogin called"); // Debug log
+    console.log("handleLogin called");
     setIsLoggedIn(true);
     setShowLoginPopup(false);
   };
