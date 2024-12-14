@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Login from './Login';
+import Login from './LoginPopup.jsx';
 
-export default function Navbar() {
+export default function Navbar({ onLogin }) {
     const [showLogin, setShowLogin] = useState(false);
     const [activeMenu, setActiveMenu] = useState('/');
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -99,7 +99,7 @@ export default function Navbar() {
                     </div>
                 </div>
             </nav>
-            <Login show={showLogin} onClose={handleCloseLogin} />
+            <Login show={showLogin} onClose={handleCloseLogin} onLogin={onLogin} />
         </div>
     );
 }
