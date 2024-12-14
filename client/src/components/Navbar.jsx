@@ -1,4 +1,4 @@
-import { useState} from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Login from './LoginPopup.jsx';
 
@@ -41,32 +41,29 @@ export default function Navbar({ onLogin, isLoggedIn }) {
                         <div className="offcanvas-body bg">
                             <ul className="navbar-nav align-items-center flex-grow-1 pe-3 justify-content-center gap-3">
                                 <li className="nav-item">
-                                    <Link 
-                                        to='#'
-                                        className={`nav-link ${activeMenu === '/' ? 'active' : ''} px-3`} 
+                                    <div
+                                        className={`nav-link ${activeMenu === '/beranda' ? 'active' : ''} px-3`} 
                                         aria-current="page" 
                                         onClick={() => handleMenuClick('/beranda')}
                                     >
                                         Beranda
-                                    </Link>
+                                    </div>
                                 </li>
                                 <li className="nav-item">
-                                    <Link
-                                        to='#'
+                                    <div
                                         className={`nav-link ${activeMenu === '/materi' ? 'active' : ''} px-3`} 
                                         onClick={() => handleMenuClick('/materi')}
                                     >
                                         Materi
-                                    </Link>
+                                    </div>
                                 </li>
                                 <li className="nav-item">
-                                    <Link
-                                        to='#'
+                                    <div
                                         className={`nav-link ${activeMenu === '/tugas' ? 'active' : ''} px-3`} 
                                         onClick={() => handleMenuClick('/tugas')}
                                     >
                                         Tugas
-                                    </Link>
+                                    </div>
                                 </li>
                             </ul>
                             <div className="justify-content-center d-flex pe-3">
