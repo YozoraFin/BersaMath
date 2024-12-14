@@ -10,30 +10,46 @@ import Materi from './components/Materi.jsx';
 import Tugas from './components/Tugas.jsx';
 import Footer from './components/Footer.jsx';
 import Subjek from './components/Materi-detail.jsx';
+import LoginPopup from './components/LoginPopup.jsx';
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showLoginPopup, setShowLoginPopup] = useState(false);
 
   const handleLogin = () => {
-    console.log("handleLogin called");
+    console.log("handleLogin called"); // Debug log
     setIsLoggedIn(true);
+    setShowLoginPopup(false);
+  };
+
+  const handleShowLoginPopup = () => {
+    setShowLoginPopup(true);
+  };
+
+  const handleCloseLoginPopup = () => {
     setShowLoginPopup(false);
   };
 
   return (
     <div id='root'>
-      <Navbar onLoginClick={() => setShowLoginPopup(true)} onLogin={handleLogin} />
+      <Navbar onLoginClick={handleShowLoginPopup} onLogin={handleLogin} isLoggedIn={isLoggedIn} />
       <main>
         <Routes>
-          <Route path='/' element={isLoggedIn ? <Navigate to="/beranda" /> : <BerandaGuest />} />
+          <Route path='/' element={isLoggedIn ? <Navigate to="/beranda" /> : <BerandaGuest onShowLoginPopup={handleShowLoginPopup} />} />
           <Route path="/beranda" element={isLoggedIn ? <Beranda /> : <Navigate to="/" />} />
-          <Route path="/materi" element={<Materi />} />
-          <Route path="/materi/:id" element={<Subjek />} />
-          <Route path="/tugas" element={<Tugas />} />
+          <Route path="/materi" element={isLoggedIn ? <Materi /> : <Navigate to="/" />} />
+          <Route path="/materi/:id" element={isLoggedIn ? <Subjek /> : <Navigate to="/" />} />
+          <Route path="/tugas" element={isLoggedIn ? <Tugas /> : <Navigate to="/" />} />
         </Routes>
       </main>
       <Footer />
+      {showLoginPopup && (
+        <LoginPopup 
+          show={showLoginPopup} 
+          onClose={handleCloseLoginPopup} 
+          onLogin={handleLogin}
+        />
+      )}
     </div>
   );
 }
