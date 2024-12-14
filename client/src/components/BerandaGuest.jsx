@@ -7,7 +7,7 @@ export default function BerandaGuest({ onShowLoginPopup }) {
                 <div className='header-content'>
                     <div className='content'>
                         <h1 className="mb-4 fw-bold header-title pt-5 pb-3">BersaMath</h1>
-                        <p className="mb-4 header-subtitle pb-3">Platform belajar online seputar Matematika gratis untuk seluruh pengguna di Indonesia.</p>
+                        <p className="mb-4 header-subtitle pb-3">Platform belajar online seputar Matematika gratis untuk seluruh pengguna di Indonesia</p>
                         <button className="btn btn-register shadow-lg" onClick={onShowLoginPopup}>Daftar Sekarang</button>
                     </div>
                 </div>
