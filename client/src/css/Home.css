@@ -1,35 +1,34 @@
+#root {
+    min-height: 100vh;
+}
+
 html, body {
     height: 100%;
     margin: 0;
-}
-
-#root {
-    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
 }
 
 main {
     flex: 1;
 }
 
-.margin {
-    margin : 6rem;
-}
-
 .bg {
     background-color :  #4A628A;
 }
 
-.min_height {
-    min-height : calc(100vh - 15vh);
+.min-height {
+    min-height : 100vh;
+    margin-top : 63px;
 }
 
-.wrapper_task {
+.wrapper-task {
     max-width : 1000px;
     overflow-x : auto;
     overflow-y : hidden;
 }
 
-.wrapper_sbj {
+.wrapper-sbj {
     max-width : 1500px;
     overflow-x : auto;
     overflow-y : hidden;
@@ -88,4 +87,54 @@ main {
 
 .grid-item .card-body {
     flex-grow: 1;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  display: none;
+}
+
+.container-header {
+    background: url('https://www.quipper.com/id/school/assets/images/background/student/student_header_pc.png');
+    background-repeat: no-repeat;
+    background-position: top right;
+    background-size: contain;
+    height: 500px;
+    position: relative;
+    margin-top: 4rem;
+}
+
+.header-content {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.content {
+    position: absolute;
+    padding: 0;
+    margin-top: 48px;
+    margin-bottom: 32px;
+}
+
+.header-title {
+    width: 400px;
+    font-size: 3rem;
+}
+
+.header-subtitle {
+    width: 500px;
+    font-size: 1.05rem;
+}
+
+.btn-register {
+    padding: 20px 0px;
+    width: 200px;
+    font-size: 1.25rem;
+    font-weight: 600;
+    border-radius: 50px;
+    background-color: #4A628A;
+    color: white;
 }

@@ -8,8 +8,8 @@ export default function Tugas() {
     ];
 
     return (
-        <div className="margin min_height">
-            <div className="container mt-5">
+        <div className="min-height p-5">
+            <div className="container">
                 <h1 className="mb-4">Tugas Matematika</h1>
                 <div className="row">
                     {tugas.map((task, index) => (

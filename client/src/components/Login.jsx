@@ -33,7 +33,7 @@ export default function LoginPopup({ show, onClose }) {
                             </div>
                             <button type="submit" className="btn btn-primary">Daftar</button>
                             <div className="my-3">
-                                <button className="btn btn-register btn-link" onClick={toggleForm}>Belum punya akun?</button>                                
+                                <button className="btn btn-link" onClick={toggleForm}>Belum punya akun?</button>                                
                             </div>
                         </form>
                     ) : (
@@ -48,7 +48,7 @@ export default function LoginPopup({ show, onClose }) {
                             </div>
                             <button type="submit" className="btn btn-primary">Masuk</button>
                             <div className="my-3">
-                                <button className="btn btn-register btn-link" onClick={toggleForm}>Belum punya akun?</button>                                
+                                <button className="btn btn-link" onClick={toggleForm}>Belum punya akun?</button>                                
                             </div>
                         </form>
                     )}

@@ -1,16 +1,20 @@
 .nav-link {
-    color : rgb(240, 240, 240) !important;
+    color: white !important;
+    padding: 0.5rem;
+    border-radius: 5rem;
+    transition: background-color 0.3s;
 }
 
-.nav_link:focus, .nav-link:hover, .nav-link:active {
-    color : white !important;
+.nav-link.active, .nav-link:focus, .nav-link:active {
+    color: #4A628A !important;
+    background-color: white;
 }
 
 .btn-nav {
-    color : rgb(240, 240, 240) !important;
+    color: rgb(240, 240, 240) !important;
     border: none;
 }
 
 .btn-nav:focus, .btn-nav:hover, .btn-nav:active {
-    color : white !important;
+    color: white !important;
 }

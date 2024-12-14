@@ -4,8 +4,8 @@ import materi from '../assets/json/materi.json';
 export default function Materi() {
 
     return (
-        <div className="margin min_height">
-            <div className="container mt-5">
+        <div className="min-height p-5">
+            <div className="container">
                 <h1 className="mb-4">Materi Matematika</h1>
                 <div className="row grid-container">
                     {materi.map((subject, index) => (

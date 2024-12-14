@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import materi from '../assets/json/materi.json';
+import Swiper from './Swiper.jsx';
 
 export default function Beranda() {
     const tugas = [
@@ -19,20 +20,21 @@ export default function Beranda() {
     ];
 
     return (
-        <div className="margin min_height">
-            <div className="container border rounded-3 mb-5">
+        <div className="min-height">
+            <Swiper />
+            <div className="container border border-white shadow-lg rounded-3 my-5">
                 <div className="d-flex m-5">
                     <div className="me-3">
                         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBdTFjHTSEiiT-C59g1Q6VZyxukFwcy-NRrA&s" className="rounded-3" alt="" />     
                     </div>
                     <div>
                         <h1 className="mb-5">Selamat datang, Kopling!</h1>
-                        <div className="d-flex wrapper_task">
+                        <div className="d-flex wrapper-task">
                             {tugas.map((task, index) => (
                                 <div className="card mx-2 ongoing border rounded-3" key={index}>
                                     <div className="card-body">
                                         <h5>{task.title}</h5>
-                                        <p>Deadline: {task.deadline}</p>
+                                            <p>Deadline: {task.deadline}</p>
                                     </div>    
                                 </div>
                             ))}
@@ -40,37 +42,21 @@ export default function Beranda() {
                     </div>
                 </div>
             </div>
-            <div className="container border rounded-3 mb-5">
+            <div className="container border border-white shadow-lg rounded-3 my-5">
                 <div className="m-5">
                     <h1 className="mb-4">Materi</h1>
-                    <div className="d-flex wrapper_sbj">
+                        <div className="d-flex wrapper-sbj">
                             {materi.map((subjek, index) => (
                                 <div className="card mx-2 ongoing border rounded-3" key={index}>
                                     <Link to={`/materi/${subjek.title.toLowerCase()}`} className="card-link">
                                         <div className="card-body">
                                             <h5>{subjek.title}</h5>
-                                            <p className='text-truncate'>{subjek.description}</p>
+                                                <p className='text-truncate'>{subjek.short_description}</p>
                                             <p><small className="text-muted">{subjek.time}</small></p>
                                         </div>
                                     </Link>
-                                </div>
+                                    </div>
                             ))}
-                    </div>
-                </div>
-            </div>
-            <div className="container border rounded-3 mb-5">
-                <div className="m-5">
-                    <h1 className="mb-4">Guru Pengampu</h1>
-                    <div className="d-flex wrapper_sbj">
-                        {guru.map((dosen, index) => (
-                            <div className="card mx-2 ongoing border rounded-3" key={index}>
-                                <div className="card-body">
-                                    <h5>{dosen.name}</h5>
-                                    <p>{dosen .subject}</p>
-                                    <p><small className="text-muted">Kelas : {dosen.class}</small></p>
-                                </div>    
-                            </div>
-                        ))}
                     </div>
                 </div>
             </div>
