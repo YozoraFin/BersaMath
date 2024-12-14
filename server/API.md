@@ -19,10 +19,12 @@ Content-Type: application/json
 | `gender` | `string` | **Required**. Your gender value |
 | `registrationCode` | `string` | **Required**. Your registrationCode value |
 
-```json
+```headers
 Response (201):
+```
+```json
 {
-  "success": true,
+  "success": true,  
   "message": "Super teacher registration successful",
   "data": {
     "teacher": {
