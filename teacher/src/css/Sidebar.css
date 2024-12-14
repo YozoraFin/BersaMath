@@ -1,0 +1,61 @@
+.sidebar {
+    width: 0;
+    position: fixed;
+    height: 100%;
+    z-index: 1;
+    background-color: #4A628A !important;
+    color: white;
+    transition: 0.5s;
+    overflow-x: hidden;
+    top: 0;
+    left: 0;
+    white-space: nowrap;
+}
+
+.sidebar-open {
+    display: block;
+    width: 250px;
+}
+
+.sidebar .header {
+    padding: 20px;
+}
+
+.sidebar .profile {
+    padding: 15px 20px;
+}
+
+.sidebar .mentor-name {
+    text-decoration: none;
+    color: white;
+}
+
+.sidebar .content {
+    background-color: #4A628A;
+    margin: 0;
+}
+
+.sidebar .link {
+    padding: 12px 20px;
+    text-decoration: none;
+    color: white;
+    width: 100%;
+    transition: 0.3s;
+    font-size: 18px;
+}
+
+.sidebar .link:hover {
+    box-shadow: 0px 1px 5px -1px rgba(165,165,165,0.93);
+    -webkit-box-shadow: 0px 1px 5px -1px rgba(165,165,165,0.93);
+    -moz-box-shadow: 0px 1px 5px -1px rgba(165,165,165,0.93);
+    transform: scale(1.05);
+}
+
+.sidebar .link:active {
+    transform: scale(0.95);
+}
+
+.sidebar .link:hover, .active {
+    color: #4A628A !important;
+    background-color: white;
+}
