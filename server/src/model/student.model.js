@@ -4,6 +4,7 @@ import { Enrollment } from "./enrollment.model.js";
 import { Submission } from "./submission.model.js";
 import { Discussion } from "./discussion.model.js";
 import { Course } from "./course.model.js";
+import { DiscussionReply } from "./discussionReply.model.js";
 
 const Student = db.define(
   "student",
@@ -117,6 +118,13 @@ Discussion.belongsTo(Student, {
   foreignKey: "student_id"
 })
 Student.hasMany(Discussion, {
+  foreignKey: "student_id",
+  onDelete: "CASCADE",
+});
+DiscussionReply.belongsTo(Student, {
+  foreignKey: "student_id"
+})
+Student.hasMany(DiscussionReply, {
   foreignKey: "student_id",
   onDelete: "CASCADE",
 });

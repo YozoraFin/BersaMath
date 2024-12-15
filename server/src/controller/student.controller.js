@@ -302,16 +302,64 @@ export const logout = async (req, res) => {
 
 export const getAllStudents = async (req, res) => {
   try {
+    const {
+      page = 1,
+      limit = 10,
+      search = '',
+      grade_level,
+      gender,
+      sort = 'created_at',
+      order = 'DESC'
+    } = req.query;
+
+    const whereClause = {
+      [Op.and]: [
+        search ? {
+          [Op.or]: [
+            { name: { [Op.like]: `%${search}%` } },
+            { email: { [Op.like]: `%${search}%` } }
+          ]
+        } : {},
+        grade_level ? { grade_level } : {},
+        gender ? { gender } : {}
+      ]
+    };
+
+    const offset = (page - 1) * limit;
+    const totalStudents = await Student.count({ where: whereClause });
+
+    if (totalStudents === 0) {
+      return res.status(200).json({
+        success: true,
+        message: "No students found with given criteria",
+        data: [],
+        metadata: {
+          total: 0,
+          page: parseInt(page),
+          limit: parseInt(limit),
+          pages: 0
+        }
+      });
+    }
+
     const students = await Student.findAll({
-      attributes: {
-        exclude: ["password", "refresh_token"],
-      },
+      where: whereClause,
+      attributes: { exclude: ['password', 'refresh_token'] },
+      order: [[sort, order]],
+      limit: parseInt(limit),
+      offset: parseInt(offset)
     });
 
     res.status(200).json({
       success: true,
       message: "Students fetched successfully",
       data: students,
+      metadata: {
+        total: totalStudents,
+        page: parseInt(page),
+      limit: parseInt(limit),
+        pages: Math.ceil(totalStudents / limit)
+      }
     });
   } catch (error) {
     res.status(500).json({

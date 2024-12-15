@@ -16,6 +16,12 @@ import lessonRoutes from "./routes/lesson.routes.js"
 import practiceRoutes from "./routes/practice.routes.js"
 import submissionRoutes from "./routes/submission.routes.js"
 import authRoutes from "./routes/auth.routes.js"
+import path from 'path';
+import { fileURLToPath } from 'url';
+import discussionRoutes from "./routes/discussion.routes.js";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const port = process.env.PORT;
@@ -52,6 +58,11 @@ app.use(
     maxAge: 3600,
   })
 );
+app.use(express.json());
+
+// static files
+app.use('/public', express.static(path.join(__dirname, '../public')));
+// Access files via: http://localhost:5000/public/uploads/profile/image.jpg
 
 // if (process.env.NODE_ENV === 'production') {
 //   app.set('trust proxy', 1);
@@ -61,7 +72,7 @@ app.use('/api/v1/auth', authRoutes)
 app.use('/api/v1/teacher', teacherRoutes)
 app.use('/api/v1/student', studentRoutes)
 app.use('/api/v1/topic', topicRoutes)
-app.use('/api/v1/course', courseRoutes, enrollmentRoutes, lessonRoutes, practiceRoutes, submissionRoutes)
+app.use('/api/v1/course', courseRoutes, enrollmentRoutes, lessonRoutes, practiceRoutes, submissionRoutes, discussionRoutes)
 
 app.listen(port, async () => {
   try {

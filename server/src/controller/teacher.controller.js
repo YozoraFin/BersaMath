@@ -4,6 +4,8 @@ import { Op } from "sequelize";
 import nodemailer from "nodemailer";
 import jwt from "jsonwebtoken";
 import passwordUtils from "../middleware/password.js";
+import { Course } from "../model/course.model.js";
+import sequelize from "sequelize";
 
 // nodemailer init
 const transporter = nodemailer.createTransport({
@@ -303,16 +305,64 @@ export const logout = async (req, res) => {
 
 export const getAllTeachers = async (req, res) => {
   try {
+    const {
+      page = 1,
+      limit = 10,
+      search = '',
+      role,
+      gender,
+      sort = 'created_at',
+      order = 'DESC'
+    } = req.query;
+
+    const whereClause = {
+      [Op.and]: [
+        search ? {
+          [Op.or]: [
+            { name: { [Op.like]: `%${search}%` } },
+            { email: { [Op.like]: `%${search}%` } }
+          ]
+        } : {},
+        role ? { role } : {},
+        gender ? { gender } : {}
+      ]
+    };
+
+    const offset = (page - 1) * limit;
+    const totalTeachers = await Teacher.count({ where: whereClause });
+
+    if (totalTeachers === 0) {
+      return res.status(200).json({
+        success: true,
+        message: "No teachers found with given criteria",
+        data: [],
+        metadata: {
+          total: 0,
+          page: parseInt(page),
+          limit: parseInt(limit),
+          pages: 0
+        }
+      });
+    }
+
     const teachers = await Teacher.findAll({
-      attributes: {
-        exclude: ["password", "refresh_token"],
-      },
+      where: whereClause,
+      attributes: { exclude: ['password', 'refresh_token'] },
+      order: [[sort, order]],
+      limit: parseInt(limit),
+      offset: parseInt(offset)
     });
 
     res.status(200).json({
       success: true,
       message: "Teachers fetched successfully",
       data: teachers,
+      metadata: {
+        total: totalTeachers,
+        page: parseInt(page),
+        limit: parseInt(limit),
+        pages: Math.ceil(totalTeachers / limit)
+      }
     });
   } catch (error) {
     res.status(500).json({
@@ -330,6 +380,10 @@ export const getTeacherById = async (req, res) => {
       attributes: {
         exclude: ["password", "refresh_token"],
       },
+      include: [{
+        model: Course,
+        attributes: ["course_id", "title"],
+      }]
     });
 
     if (!teacher) {

@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import { Practice } from "../model/practice.model.js";
 import { Student } from "../model/student.model.js";
 import { Submission } from "../model/submission.model.js";
@@ -116,21 +117,75 @@ export const gradeSubmission = async (req, res) => {
 export const getSubmissionsByPractice = async (req, res) => {
   try {
     const { practice_id } = req.params;
+    const {
+      page = 1,
+      limit = 10,
+      search = '',
+      status,
+      score_min,
+      score_max,
+      sort = 'created_at',
+      order = 'DESC'
+    } = req.query;
+
+    const whereClause = {
+      practice_id,
+      [Op.and]: [
+        status ? { status } : {},
+        score_min ? { score: { [Op.gte]: score_min } } : {},
+        score_max ? { score: { [Op.lte]: score_max } } : {},
+        search ? {
+          '$student.name$': {
+            [Op.like]: `%${search}%`
+          }
+        } : {}
+      ]
+    };
+
+    const offset = (page - 1) * limit;
+    const totalSubmissions = await Submission.count({
+      where: whereClause,
+      include: [{
+        model: Student,
+        attributes: []
+      }]
+    });
+
+    if (totalSubmissions === 0) {
+      return res.status(200).json({
+        success: true,
+        message: "No submissions found with given criterials",
+        data: [],
+        metadata: {
+          total: 0,
+          page: parseInt(page),
+          limit: parseInt(limit),
+          pages: 0
+        }
+      });
+    }
 
     const submission = await Submission.findAll({
-      where: { practice_id },
-      include: [
-        {
-          model: Student,
-          attributes: ["name"],
-        },
-      ],
+      where: whereClause,
+      include: [{
+        model: Student,
+        attributes: ['name', 'email']
+      }],
+      order: [[sort, order]],
+      limit: parseInt(limit),
+      offset: parseInt(offset)
     });
 
     res.status(200).json({
       success: true,
       message: "Submissions fetched successfully",
       data: submission,
+      metadata: {
+        total: totalSubmissions,
+        page: parseInt(page),
+        limit: parseInt(limit),
+        pages: Math.ceil(totalSubmissions / limit)
+      }
     });
   } catch (error) {
     res.status(500).json({
