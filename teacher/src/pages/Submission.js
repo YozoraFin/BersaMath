@@ -1,9 +1,25 @@
+import { faFilePdf, faStickyNote } from '@fortawesome/fontawesome-free-solid'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 export default function Submission() {
   const param = useParams()
   const navigate = useNavigate()
+  const swal = withReactContent(Swal)
+
+  const handleGrading = () => {
+    swal.fire({
+      title: 'Masukan nilai!',
+      input: 'number',
+      icon: 'question',
+      customClass: {
+        input: 'text-end',
+      }
+    })
+  }
 
   return (
     <div className="p-3">
@@ -28,9 +44,13 @@ export default function Submission() {
             <td><h6>: Dasar-Dasar Matriks</h6></td>
           </tr>
         </table>
+        <div>
+          <FontAwesomeIcon icon={faFilePdf} className='me-2 text-main'/>
+          <a className='text-main' href="http://localhost:5000/public/uploads/content/dafpus.pdf" target='_blank'>Daftar Pustaka</a>
+        </div>
         <div className="row">
           <div className="col-12 text-end">
-          <button className="btn btn-outline-success">Nilai</button>
+            <button onClick={handleGrading} className="btn btn-outline-success">Nilai</button>
           </div>
         </div>
       </div>

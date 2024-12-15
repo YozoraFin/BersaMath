@@ -161,7 +161,7 @@ export const teacherLogin = async (req, res) => {
       });
     }
 
-    const tokens = generateTokens(teacher.teacher_id, teacher.role, teacher.course_id);
+    const tokens = await generateTokens(teacher.teacher_id, teacher.role, teacher.course_id);
     console.log('Login response tokens:', tokens); // Debug log
 
     await teacher.update({ refresh_token: tokens.refreshToken });
