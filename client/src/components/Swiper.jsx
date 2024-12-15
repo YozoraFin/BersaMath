@@ -1,27 +1,45 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 import '../css/Home.css';
-import { Navigation, Autoplay } from 'swiper/modules';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 
 export default function SwipperBanner() {
     const slides = [
         {
         id: 1,
-        image: '/assets/img/banner-1.png',
+        image: 'https://via.placeholder.com/800x400?text=Welcome+to+Quipper+School',
+        title: 'Welcome to Quipper School',
+        description: 'Your journey to knowledge starts here.',
         },
         {
         id: 2,
-        image: '/assets/img/banner-2.png',
-        }
+        image: 'https://via.placeholder.com/800x400?text=Explore+Our+Courses',
+        title: 'Explore Our Courses',
+        description: 'Find the right course for you.',
+        },
+        {
+        id: 3,
+        image: 'https://via.placeholder.com/800x400?text=Join+Our+Community',
+        title: 'Join Our Community',
+        description: 'Connect with learners and educators.',
+        },
+        {
+        id: 4,
+        image: 'https://via.placeholder.com/800x400?text=Achieve+Your+Goals',
+        title: 'Achieve Your Goals',
+        description: 'Unlock your potential with us.',
+        },
     ];
 
     return (
         <Swiper
-        modules={[Navigation, Autoplay]}
+        modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={0}
         slidesPerView={1}
         navigation
+        pagination={{ clickable: true }}
         loop={true}
         autoplay={{
             delay: 10000,

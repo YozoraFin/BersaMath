@@ -59,13 +59,13 @@ export default function LoginPopup({ show, onClose, onLogin }) {
             
             if (savedUserInfo && savedUserInfo.username === username && savedUserInfo.password === password) {
                 console.log("Calling onLogin function");
-                onLogin(savedUserInfo.username); // Pass the username to the onLogin function
+                onLogin();
                 onClose();
             } else {
                 setErrorMessage('Nama pengguna atau kata sandi tidak valid!');
             }
         }
-    };
+    };    
 
     return (
         <div className="modal-overlay" onClick={onClose}>
