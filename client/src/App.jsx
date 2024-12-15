@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js';
@@ -28,9 +28,23 @@ export default function App() {
         profilePicture: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBdTFjHTSEiiT-C59g1Q6VZyxukFwcy-NRrA&s'
     });
 
+    useEffect(() => {
+        const storedUser = JSON.parse(localStorage.getItem('user'));
+        const storedSelectedSubject = JSON.parse(localStorage.getItem('selectedSubject'));
+        if (storedUser) {
+            setIsLoggedIn(true);
+            setUser(storedUser);
+        }
+        if (storedSelectedSubject) {
+            setSelectedSubject(storedSelectedSubject);
+        }
+    }, []);
+
     const handleLogin = (username) => {
-        setIsLoggedIn(true);
-        setUser(prevUser => ({ ...prevUser, username }));
+        setIsLoggedIn(!!username);
+        const updatedUser = { ...user, username };
+        setUser(updatedUser);
+        localStorage.setItem('user', JSON.stringify(updatedUser));
         setShowLoginPopup(false);
     };
 
@@ -44,16 +58,17 @@ export default function App() {
 
     const handleSelectSubject = (subject) => {
         setSelectedSubject(subject);
+        localStorage.setItem('selectedSubject', JSON.stringify(subject));
     };
 
     const handleUpdateProfile = (updatedUser) => {
         setUser(prevUser => ({ ...prevUser, ...updatedUser }));
+        localStorage.setItem('user', JSON.stringify(updatedUser));
     };
 
     return (
         <div id='root'>
             <Navbar 
-                onLoginClick={handleShowLoginPopup}
                 onLogin={handleLogin}
                 isLoggedIn={isLoggedIn}
                 selectedSubject={selectedSubject}
@@ -66,7 +81,7 @@ export default function App() {
                     <Route path="/beranda/:subject" element={isLoggedIn ? <Beranda user={user} /> : <Navigate to="/" />} />
                     <Route path="/materi/:subject" element={isLoggedIn ? <Materi /> : <Navigate to="/" />} />
                     <Route path="/materi/:subject/:id" element={isLoggedIn ? <Subjek /> : <Navigate to="/" />} />
-                    <Route path="/materi/:subject/:id/discussion/:discussionId" element={isLoggedIn ? <DiskusiDetail /> : <Navigate to="/" />} />
+                    <Route path="/materi/:subject/:id/discussion/:discussionId" element={isLoggedIn ? <DiskusiDetail user={user} /> : <Navigate to="/" />} />
                     <Route path="/materi/:subject/:id/discussion-add" element={isLoggedIn ? <DiskusiAdd user={user} /> : <Navigate to="/" />} />
                     <Route path="/tugas" element={<PrivateRoute isLoggedIn={isLoggedIn && selectedSubject} element={<Tugas selectedSubject={selectedSubject ? selectedSubject.title : ''} />} />} />
                     <Route path="/tugas/:id" element={<PrivateRoute isLoggedIn={isLoggedIn && selectedSubject} element={<TugasDetail selectedSubject={selectedSubject ? selectedSubject.title : ''} />} />} />

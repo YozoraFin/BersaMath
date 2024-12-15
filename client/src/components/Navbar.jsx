@@ -30,6 +30,8 @@ export default function Navbar({ onLogin, isLoggedIn, selectedSubject, user }) {
         } else if (isLoggedIn && !selectedSubject) {
             console.log("Redirecting to select subject");
             navigate("/select-subject");
+        } else {
+            navigate(menu);
         }
     };
 
@@ -38,14 +40,8 @@ export default function Navbar({ onLogin, isLoggedIn, selectedSubject, user }) {
     };
 
     const handleLogout = () => {
-        setIsLoggedIn(false);
-        setSelectedSubject(null);
-        setUser({
-            username: '',
-            bio: '',
-            profilePicture: ''
-        });
-        console.log("Logged out");
+        onLogin('');
+        navigate('/');
     };
 
     return (

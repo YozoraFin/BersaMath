@@ -1,6 +1,10 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import tugas from '../assets/json/tugas-aljabar.json';
 import { useState } from 'react';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+const MySwal = withReactContent(Swal);
 
 export default function TugasDetail({ selectedSubject }) {
     const { id } = useParams();
@@ -22,7 +26,22 @@ export default function TugasDetail({ selectedSubject }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (!submittedFile) {
+            MySwal.fire({
+                title: 'Gagal!',
+                text: 'Tidak ada file yang dipilih.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+            return;
+        }
         console.log(submittedFile);
+        MySwal.fire({
+            title: 'Berhasil!',
+            text: 'Jawaban berhasil dikumpulkan.',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
     };
 
     return (
