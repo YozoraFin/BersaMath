@@ -83,7 +83,7 @@ export const handleContent = (req, res, next) => {
       });
     }
 
-    const { content_type, content_url } = req.body;
+    const { content_type, content_url, content } = req.body;
 
     // Validate content type
     const validTypes = ["text", "video", "file"];
@@ -115,10 +115,10 @@ export const handleContent = (req, res, next) => {
         break;
 
       case "text":
-        if (!req.file) {
+        if (!content) {
           return res.status(400).json({
             success: false,
-            message: "Content URL / File is required",
+            message: "Field 'content' is required",
           });
         }
         break;

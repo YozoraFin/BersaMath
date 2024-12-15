@@ -24,6 +24,13 @@ const LessonContent = db.define(
         len: [3, 200],
       },
     },
+    content: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+      validate: {
+        len: [0, 2000],
+      },
+    },
     math_formula: {
       type: DataTypes.TEXT,
       allowNull: true,

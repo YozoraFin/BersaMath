@@ -3,7 +3,7 @@ import path from "path";
 import fs from "fs";
 
 // Create upload directories if they don't exist
-const dirs = ["./public/uploads/profile", "./public/uploads/thumbnail"];
+const dirs = ["./public/uploads/profile", "./public/uploads/thumbnail", "./public/uploads/discussion"];
 dirs.forEach((dir) => {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
@@ -25,6 +25,15 @@ const thumbnailStorage = multer.diskStorage({
   filename: (req, file, cb) => {
     const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
     cb(null, `thumbnail-${uniqueSuffix}${path.extname(file.originalname)}`);
+  },
+});
+
+// Discussion images storage
+const discussionStorage = multer.diskStorage({
+  destination: "./public/uploads/discussion",
+  filename: (req, file, cb) => {
+    const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
+    cb(null, `discussion-${uniqueSuffix}${path.extname(file.originalname)}`);
   },
 });
 
@@ -54,3 +63,10 @@ export const uploadThumbnail = multer({
   limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
   fileFilter: imageFilter,
 }).single("thumbnail");
+export const uploadDiscussionImages = multer({
+  storage: discussionStorage,
+  limits: { 
+    fileSize: 5 * 1024 * 1024, // 5MB per file
+  },
+  fileFilter: imageFilter,
+}).single("iamges");

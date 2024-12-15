@@ -10,6 +10,14 @@ const Teacher = db.define(
       primaryKey: true,
       autoIncrement: true,
     },
+    course_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: "course",
+        key: "course_id",
+      },
+    },
     name: {
       type: DataTypes.STRING(100),
       allowNull: false,
@@ -89,12 +97,19 @@ const Teacher = db.define(
 );
 
 // relation here
-Teacher.hasMany(Course, {
-  foreignKey: "teacher_id",
+// Teacher.hasMany(Course, {
+//   foreignKey: "course_id",
+//   onDelete: "CASCADE",
+// });
+// Course.belongsTo(Teacher, {
+//   foreignKey: "course_id",
+// });
+Teacher.belongsTo(Course, {
+  foreignKey: "course_id",
   onDelete: "CASCADE",
 });
-Course.belongsTo(Teacher, {
-  foreignKey: "teacher_id",
+Course.hasMany(Teacher, {
+  foreignKey: "course_id",
 });
 
 export {Teacher};

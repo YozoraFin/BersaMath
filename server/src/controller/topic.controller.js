@@ -2,12 +2,56 @@ import { Topic } from "../model/topic.model.js";
 
 export const getAllTopics = async (req, res) => {
   try {
-    const topics = await Topic.findAll();
+    const {
+      page = 1,
+      limit = 10,
+      search = '',
+      sort = 'created_at',
+      order = 'DESC'
+    } = req.query;
+
+    const whereClause = {
+      ...(search && {
+        title: {
+          [Op.like]: `%${search}%`
+        }
+      })
+    };
+
+    const offset = (page - 1) * limit;
+    const totalTopics = await Topic.count({ where: whereClause });
+
+    if (totalTopics === 0) {
+      return res.status(200).json({
+        success: true,
+        message: "No topics found with given criteria",
+        data: [],
+        metadata: {
+          total: 0,
+          page: parseInt(page),
+          limit: parseInt(limit),
+          pages: 0
+        }
+      });
+    }
+
+    const topics = await Topic.findAll({
+      where: whereClause,
+      order: [[sort, order]],
+      limit: parseInt(limit),
+      offset: parseInt(offset)
+    });
 
     res.status(200).json({
       success: true,
       message: "Topics fetched successfully",
       data: topics,
+      metadata: {
+        total: totalTopics,
+        page: parseInt(page),
+        limit: parseInt(limit),
+        pages: Math.ceil(totalTopics / limit)
+      }
     });
   } catch (error) {
     res.status(500).json({

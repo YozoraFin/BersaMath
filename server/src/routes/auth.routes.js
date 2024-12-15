@@ -18,10 +18,10 @@ router.post('/teacher/request-password-reset', teacherRequestResetPassword),
 router.post('/teacher/reset-password', teacherResetPassword)
 
 // student routes
-router.post('/register', validateRegister, studentRegister)
-router.get('/verify/:token', studentVerifyEmail)
-router.post('/login', validateLogin, studentLogin)
-router.post('/request-password-reset', studentRequestResetPassword),
-router.post('/reset-password', studentResetPassword)
+router.post('/student/register', validateRegister, studentRegister)
+router.get('/student/verify/:token', studentVerifyEmail)
+router.post('/student/login', validateLogin, studentLogin)
+router.post('/student/request-password-reset', studentRequestResetPassword),
+router.post('/student/reset-password', studentResetPassword)
 
 export default router;

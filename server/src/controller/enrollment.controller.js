@@ -1,5 +1,7 @@
+import { Op } from "sequelize";
 import { Course } from "../model/course.model.js";
 import { Enrollment } from "../model/enrollment.model.js";
+import { Student } from "../model/student.model.js";
 import { Teacher } from "../model/teacher.model.js";
 
 export const createEnrollment = async (req, res) => {
@@ -176,6 +178,77 @@ export const getEnrollmentById = async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Failed to get enrollment",
+      error: error.message,
+    });
+  }
+};
+
+export const getAllEnrollments = async (req, res) => {
+  try {
+    const { course_id } = req.params;
+    const {
+      page = 1,
+      limit = 10,
+      search = "",
+      status,
+      sort = "created_at",
+      order = "DESC",
+    } = req.query;
+
+    const whereClause = {
+      course_id,
+      [Op.and]: [
+        status ? { status } : {},
+        search
+          ? {
+              "$student.name$": {
+                [Op.like]: `%${search}%`,
+              },
+            }
+          : {},
+      ],
+    };
+
+    const offset = (page - 1) * limit;
+
+    const totalEnrollments = await Enrollment.count({
+      where: whereClause,
+      include: [
+        {
+          model: Student,
+          attributes: [],
+        },
+      ],
+    });
+
+    const enrollments = await Enrollment.findAll({
+      where: whereClause,
+      include: [
+        {
+          model: Student,
+          attributes: ["name", "email", "phone"],
+        },
+      ],
+      order: [[sort, order]],
+      limit: parseInt(limit),
+      offset: parseInt(offset),
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Enrollments fetched successfully",
+      data: enrollments,
+      metadata: {
+        total: totalEnrollments,
+        page: parseInt(page),
+        limit: parseInt(limit),
+        pages: Math.ceil(totalEnrollments / limit),
+      },
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch enrollments",
       error: error.message,
     });
   }
