@@ -1,0 +1,47 @@
+[
+    {
+        "title": "Aljabar",
+        "difficulty": "Mudah",
+        "img": "/assets/img/aljabar.png"
+    },
+    {
+        "title": "Aritmetika",
+        "difficulty": "Mudah",
+        "img": "/assets/img/aljabar.png"
+    },
+    {
+        "title": "Peluang",
+        "difficulty": "Mudah",
+        "img": "/assets/img/aljabar.png"
+    },
+    {
+        "title": "Geometri",
+        "difficulty": "Sedang",
+        "img": "/assets/img/aljabar.png"
+    },
+    {
+        "title": "Statistika",
+        "difficulty": "Sedang",
+        "img": "/assets/img/aljabar.png"
+    },
+    {
+        "title": "Vektor",
+        "difficulty": "Sedang",
+        "img": "/assets/img/aljabar.png"
+    },
+    {
+        "title": "Kalkulus",
+        "difficulty": "Susah",
+        "img": "/assets/img/aljabar.png"
+    },
+    {
+        "title": "Trigonometri",
+        "difficulty": "Susah",
+        "img": "/assets/img/aljabar.png"
+    },
+    {
+        "title": "Bilangan Kompleks",
+        "difficulty": "Susah",
+        "img": "/assets/img/aljabar.png"
+    }
+]

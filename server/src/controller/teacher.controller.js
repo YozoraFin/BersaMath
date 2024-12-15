@@ -5,7 +5,6 @@ import nodemailer from "nodemailer";
 import jwt from "jsonwebtoken";
 import passwordUtils from "../middleware/password.js";
 import { Course } from "../model/course.model.js";
-import sequelize from "sequelize";
 
 // nodemailer init
 const transporter = nodemailer.createTransport({
@@ -174,6 +173,7 @@ export const teacherLogin = async (req, res) => {
           id: teacher.teacher_id,
           name: teacher.name,
           email: teacher.email,
+          role: teacher.role,
         },
         tokens,
       },

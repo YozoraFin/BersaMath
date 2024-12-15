@@ -1,8 +1,16 @@
+<<<<<<< HEAD
 import { useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Login from './LoginPopup.jsx';
 
 export default function Navbar({ onLogin, isLoggedIn }) {
+=======
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Login from './LoginPopup.jsx';
+
+export default function Navbar({ onLogin, isLoggedIn, selectedSubject, user }) {
+>>>>>>> a3e01d6433c45766c52edc7386fdc360ef108362
     const [showLogin, setShowLogin] = useState(false);
     const [activeMenu, setActiveMenu] = useState('/');
     const navigate = useNavigate();
@@ -17,10 +25,41 @@ export default function Navbar({ onLogin, isLoggedIn }) {
 
     const handleMenuClick = (menu) => {
         setActiveMenu(menu);
+<<<<<<< HEAD
         if (isLoggedIn) {
             console.log(`Navigating to ${menu}`); // Debug log
             navigate(menu);
+=======
+        if (isLoggedIn && selectedSubject) {
+            const subjectPath = `${selectedSubject.title.toLowerCase()}`;
+            console.log(`Navigating to ${menu}`);
+            if (menu === '/beranda') {
+                navigate(`/beranda/${subjectPath}`);
+            } else if (menu === '/materi') {
+                navigate(`/materi/${subjectPath}`);
+            } else {
+                navigate(menu);
+            }
+        } else if (isLoggedIn && !selectedSubject) {
+            console.log("Redirecting to select subject");
+            navigate("/select-subject");
+>>>>>>> a3e01d6433c45766c52edc7386fdc360ef108362
         }
+    };
+
+    const handleProfileClick = () => {
+        navigate('/profile');
+    };
+
+    const handleLogout = () => {
+        setIsLoggedIn(false);
+        setSelectedSubject(null);
+        setUser({
+            username: '',
+            bio: '',
+            profilePicture: ''
+        });
+        console.log("Logged out");
     };
 
     return (
@@ -41,28 +80,44 @@ export default function Navbar({ onLogin, isLoggedIn }) {
                         <div className="offcanvas-body bg">
                             <ul className="navbar-nav align-items-center flex-grow-1 pe-3 justify-content-center gap-3">
                                 <li className="nav-item">
+<<<<<<< HEAD
                                     <Link 
                                         to='#'
                                         className={`nav-link ${activeMenu === '/' ? 'active' : ''} px-3`} 
                                         aria-current="page" 
+=======
+                                    <div
+                                        className={`nav-link ${activeMenu === '/beranda' ? 'active-menu' : ''} px-3`}
+                                        aria-current="page"
+>>>>>>> a3e01d6433c45766c52edc7386fdc360ef108362
                                         onClick={() => handleMenuClick('/beranda')}
                                     >
                                         Beranda
                                     </Link>
                                 </li>
                                 <li className="nav-item">
+<<<<<<< HEAD
                                     <Link
                                         to='#'
                                         className={`nav-link ${activeMenu === '/materi' ? 'active' : ''} px-3`} 
+=======
+                                    <div
+                                        className={`nav-link ${activeMenu === '/materi' ? 'active-menu' : ''} ${(!isLoggedIn || !selectedSubject) ? 'disabled' : ''} px-3`}
+>>>>>>> a3e01d6433c45766c52edc7386fdc360ef108362
                                         onClick={() => handleMenuClick('/materi')}
                                     >
                                         Materi
                                     </Link>
                                 </li>
                                 <li className="nav-item">
+<<<<<<< HEAD
                                     <Link
                                         to='#'
                                         className={`nav-link ${activeMenu === '/tugas' ? 'active' : ''} px-3`} 
+=======
+                                    <div
+                                        className={`nav-link ${activeMenu === '/tugas' ? 'active-menu' : ''} ${(!isLoggedIn || !selectedSubject) ? 'disabled' : ''} px-3`}
+>>>>>>> a3e01d6433c45766c52edc7386fdc360ef108362
                                         onClick={() => handleMenuClick('/tugas')}
                                     >
                                         Tugas
@@ -70,7 +125,17 @@ export default function Navbar({ onLogin, isLoggedIn }) {
                                 </li>
                             </ul>
                             <div className="justify-content-center d-flex pe-3">
-                                <button className="btn btn-nav" onClick={handleLoginClick}>Login</button>
+                                {isLoggedIn ? (
+                                    <div className="dropdown">
+                                        <img src={user.profilePicture} alt="Profile" className="rounded-circle dropdown-toggle" width="40" height="40" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false" />
+                                        <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                                            <li><a className="dropdown-item" onClick={handleProfileClick}>Profile</a></li>
+                                            <li><a className="dropdown-item text-danger" onClick={handleLogout}>Log Out</a></li>
+                                        </ul>
+                                    </div>
+                                ) : (
+                                    <button className="btn btn-nav" onClick={handleLoginClick}>Login</button>
+                                )}
                             </div>
                         </div>
                     </div>
