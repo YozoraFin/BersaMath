@@ -1,6 +1,6 @@
 import { faBook, faExclamation, faLocationArrow, faSearch, faTasks, faXRay } from '@fortawesome/fontawesome-free-solid'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import api from '../api/Api'
 
@@ -11,9 +11,19 @@ export default function Dashboard() {
 
   const getData = () => {
     api.get('api/v1/course/'+localStorage.getItem('course')+'/lesson/3/practice/1/submission').then((res) => {
-      
+      setGrading(res.data?.metadata.total)
+    })
+    api.get('api/v1/student/').then((res) => {
+      setStudent(res.data?.metadata.total)
+    })
+    api.get('api/v1/course/' + localStorage.getItem('course') + '/lesson?lesson_type=teori').then((res) => {
+      setLesson(res.data?.metadata.total)
     })
   }
+
+  useEffect(() => {
+    getData()
+  }, [])
 
   return (
     <div className="p-3">
