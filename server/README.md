@@ -72,6 +72,20 @@ cp .env.example .env
 
 `CLIENT_URL=http://localhost:3000`
 
+### Testing Email
+- All emails will be captured by Ethereal
+- View them at https://ethereal.email/messages
+- Login using your Ethereal credentials
+### Troubleshooting
+- Make sure SMTP credentials are correct
+- Check spam folder for verification emails
+- Enable "Less secure app access" if using Gmail
+
+```bash
+# Generate secret keys (in terminal)
+node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
+```
+
 ## Development
 ```bash
 # Run development server
