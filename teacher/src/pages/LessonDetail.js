@@ -21,10 +21,18 @@ export default function LessonDetail() {
 	const navigate = useNavigate()
 	const param = useParams()
 
-	const getDetail = () => {
+	const getDetail = () => { 
 		api.get('api/v1/course/'+localStorage.getItem('course')+'/lesson/'+param.id+'/content?content_id='+param.id).then((res) => {
 			const data = res.data?.data[0]
-			console.log(data)
+			setTitle(data?.lesson.title)
+			setType(data?.content_type)
+			if(data?.content_type === 'text') {
+				setText(data?.content)
+			} else if(data?.content_type === 'video') {
+				setLink(data?.content_url)
+			} else {
+
+			}
 		})
 	}
 

@@ -21,7 +21,7 @@ export default function Sidebar({ sidebar }) {
       <div className="sidebar-profile">
         <div className="header row">
           <h4 className='brand-name m-0 col-9 text-light'>
-            <img src='assets/img/LogoMarcel.png' width={35}/>
+            <img src={process.env.REACT_APP_BASE_URL+ '/assets/img/LogoMarcel.png'} width={35}/>
             <span className='ms-2'>BersaMath</span>
           </h4>
           {width < 450

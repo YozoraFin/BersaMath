@@ -89,15 +89,15 @@ export default function Login() {
               </label>
               <FontAwesomeIcon onClick={() => sethidePassword(!hidePassword)} type='button' color='#4A628A' className='password-toggle' icon={hidePassword ? faEye : faEyeSlash} />
             </div>
-            <div className="border-bottom"></div>
+            <div className="border-bottom mb-2 pt-3"></div>
             <div className="card-footer d-flex flex-fill justify-content-end align-items-center align-self-center">
-            <button 
-              type="submit" 
-              className="btn"
-              disabled={loading}
-            >
-              {loading ? 'Loading...' : 'Masuk'}
-            </button>
+              <button   
+                type="submit" 
+                className="btn"
+                disabled={loading}
+              >
+                {loading ? 'Loading...' : 'Masuk'}
+              </button>
             </div>
           </form>
         </div>

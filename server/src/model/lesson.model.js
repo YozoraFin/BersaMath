@@ -74,5 +74,8 @@ Lesson.hasMany(Practice, {
 Lesson.hasOne(LessonContent, {
   foreignKey: 'lesson_id'
 })
+LessonContent.belongsTo(Lesson, {
+  foreignKey: 'lesson_id'
+})
 
 export { Lesson };
