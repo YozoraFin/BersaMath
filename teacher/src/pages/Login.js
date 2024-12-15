@@ -3,30 +3,50 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from '@fortawesome/fontawesome-free-solid'
 import { Link, useNavigate } from 'react-router-dom'
 import api from '../api/Api'
+import { authService } from '../api/auth'
 
 export default function Login() {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const [formData, setFormData] = useState({
+    identifier: '',
+    password: ''
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const [hidePassword, sethidePassword] = useState(true)
   const navigate = useNavigate()
 
-  const login = (e) => {
-    e.preventDefault()
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
 
-    const data = {
-      identifier: username,
-      password: password
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+
+    try {
+      const response = await authService.login(
+        formData.identifier, 
+        formData.password
+      );
+
+      const { tokens, teacher } = response.data;
+
+      localStorage.setItem('Token', tokens.accessToken);
+      localStorage.setItem('RefreshToken', tokens.refreshToken);
+      localStorage.setItem('name', teacher.name);
+      localStorage.setItem('role', teacher.role);
+
+      navigate('/bersamath');
+    } catch (error) {
+      setError(error.message || 'Login Gagal');
+    } finally {
+      setLoading(false);
     }
-
-    api.post(process.env.REACT_APP_BASEURL + 'api/v1/auth/teacher/login', data).then((res) => {
-      if(res.status === 200) {
-        localStorage.setItem('Token', res.data?.data.tokens.accessToken)
-        localStorage.setItem('RefreshToken', res.data?.data.tokens.refreshToken)
-        localStorage.setItem('name', res.data?.data.teacher.name)
-        navigate('/bersamath')
-      }
-    })
-  }
+  };
 
   return (
     <div className='login'>
@@ -36,21 +56,50 @@ export default function Login() {
         </div>
         <div className="card-body w-100 text-center">
           <h4 className='my-3'>Masuk</h4>
-          <div className="form-box email mx-auto mt-4 py-2"> 
-            <input value={username} onChange={e => setUsername(e.target.value)} name='email' type="text" className="login-form" />
-            <label className={username === '' ? '' : 'filled'} htmlFor="email">Email/No. Telp</label>
-          </div>
-          <div className="form-box password mx-auto mt-4 py-2"> 
-            <input value={password} onChange={e => setPassword(e.target.value)} name='password' type={hidePassword ? 'password' : 'text'} className="login-form" />
-            <label className={password === '' ? '' : 'filled'} htmlFor="password">Password</label>
-            <FontAwesomeIcon onClick={() => sethidePassword(!hidePassword)} type='button' color='#4A628A' className='password-toggle' icon={hidePassword ? faEye : faEyeSlash} />
-          </div>
-        </div>
-        <div className="border-bottom"></div>
-        <div className="card-footer d-flex flex-fill justify-content-end align-items-center align-self-center">
-          <button onClick={login} className='btn'>
-            Masuk
-          </button>
+          {error && (
+            <div className="alert alert-danger" role="alert">
+              {error}
+            </div>
+          )}
+          <form onSubmit={handleSubmit}>
+            <div className="form-box email mx-auto mt-4 py-2">
+              <input
+                type="text"
+                name="identifier"
+                value={formData.identifier}
+                onChange={handleChange}
+                className="login-form"
+                required
+              />
+              <label className={formData.identifier ? 'filled' : ''}>
+                Email/No. Telp
+              </label>
+            </div>
+            <div className="form-box password mx-auto mt-4 py-2">
+              <input
+                type={hidePassword ? "password" : "text"}
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                className="login-form"
+                required
+              />
+              <label className={formData.password ? 'filled' : ''}>
+                Password
+              </label>
+              <FontAwesomeIcon onClick={() => sethidePassword(!hidePassword)} type='button' color='#4A628A' className='password-toggle' icon={hidePassword ? faEye : faEyeSlash} />
+            </div>
+            <div className="border-bottom"></div>
+            <div className="card-footer d-flex flex-fill justify-content-end align-items-center align-self-center">
+            <button 
+              type="submit" 
+              className="btn"
+              disabled={loading}
+            >
+              {loading ? 'Loading...' : 'Masuk'}
+            </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>

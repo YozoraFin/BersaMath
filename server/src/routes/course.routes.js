@@ -1,6 +1,6 @@
 import express from "express";
 import { addTeachersToCourse, createCourse, deleteCourse, getAllCourses, getCourseById, updateCourse } from "../controller/course.controller.js";
-import { isSuperTeacher, verifyCourseOwner, verifyTeacher, verifyToken } from "../middleware/authenticate.js";
+import { isSuperTeacher, verifyTeacher, verifyToken } from "../middleware/authenticate.js";
 import { uploadThumbnail } from "../middleware/uploadImage.js";
 
 const router = express.Router();

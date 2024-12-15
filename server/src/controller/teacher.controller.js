@@ -161,7 +161,8 @@ export const teacherLogin = async (req, res) => {
       });
     }
 
-    const tokens = generateTokens(teacher.teacher_id, teacher.role);
+    const tokens = generateTokens(teacher.teacher_id, teacher.role, teacher.course_id);
+    console.log('Login response tokens:', tokens); // Debug log
 
     await teacher.update({ refresh_token: tokens.refreshToken });
 
@@ -175,7 +176,7 @@ export const teacherLogin = async (req, res) => {
           email: teacher.email,
           role: teacher.role,
         },
-        tokens,
+        tokens: tokens,
       },
     });
   } catch (error) {

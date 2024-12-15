@@ -2,6 +2,7 @@ import { Op } from "sequelize";
 import { Course } from "../model/course.model.js";
 import { Teacher } from "../model/teacher.model.js";
 import { Topic } from "../model/topic.model.js";
+import sequelize from "sequelize"
 
 export const createCourse = async (req, res) => {
   try {
