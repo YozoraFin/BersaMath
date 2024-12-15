@@ -14,7 +14,7 @@ export default function BerandaGuest({ onShowLoginPopup }) {
             </div>
             <Swiper />
             <div className="container my-5 d-flex flex-row align-items-center justify-content-evenly">
-                <img src="assets/img/asset-1.png" alt="" width={520} />
+                <img src="/assets/img/asset-1.png" alt="" width={520} />
                 <div>
                     <h1 className="mb-4 fw-bold header-title pt-5 pb-3">Selamat Datang di BersaMath!</h1>
                     <p className="mb-4 header-subtitle pb-3">Platform belajar online seputar Matematika gratis untuk seluruh pengguna di Indonesia.</p>

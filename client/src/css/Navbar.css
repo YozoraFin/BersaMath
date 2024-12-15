@@ -1,3 +1,7 @@
+.navbar-title {
+    cursor: pointer;
+}
+
 .nav-link {
     color: white !important;
     padding: 0.5rem;

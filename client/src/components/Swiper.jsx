@@ -8,11 +8,11 @@ export default function SwipperBanner() {
     const slides = [
         {
         id: 1,
-        image: 'assets/img/banner-1.png',
+        image: '/assets/img/banner-1.png',
         },
         {
         id: 2,
-        image: 'assets/img/banner-2.png',
+        image: '/assets/img/banner-2.png',
         }
     ];
 

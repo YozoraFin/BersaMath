@@ -4,34 +4,44 @@
         "description": "Mempelajari apa itu aljabar, apa dasarnya, dan lain-lain",
         "short_description": "Dasar-dasar aljabar",
         "video": "eW7LZDdXhLo",
-        "time" : "12:00 - 13:00"
+        "time" : "12:00 - 13:00",
+        "difficulty" : "Mudah"
+
     },
     {
         "title": "Penjumlahan dan pengurangan",
         "description": "Mempelajari operasi hitung sederhana pada aljabar",
         "short_description": "Operasi hitung sederhana",
         "video": "F3mW_ugYqFc",
-        "time" : "13:00 - 14:00"
+        "time" : "13:00 - 14:00",
+        "difficulty" : "Mudah"
+
     },
     {
         "title": "Tanda kurung",
         "description": "Mempelajari penggunaan tanda kurung pada aljabar",
         "short_description": "Penggunaan tanda kurung",
         "video": "jNihz6L5-Xs",
-        "time" : "14:00 - 15:00"
+        "time" : "14:00 - 15:00",
+        "difficulty" : "Mudah"
+
     },
     {
         "title": "Perkalian dan perpangkatan",
         "description": "Mempelajari operasi hitung perkalian dan perpangkatan pada aljabar",
         "short_description": "Operasi perkalian dan perpangkatan",
         "video": "WiAbdi_W7-4",
-        "time" : "16:00 - 17:00"
+        "time" : "16:00 - 17:00",
+        "difficulty" : "Mudah"
+
     },
     {
         "title": "Pembagian dan operasi campuran",
         "description": "Mempelajari operasi hitung pembagian dan operasi campuran pada aljabar",
         "short_description": "Operasi pembagian dan operasi campuran",
         "video": "o3wlTVOvM9E",
-        "time" : "17:00 - 18:00"
+        "time" : "17:00 - 18:00",
+        "difficulty" : "Mudah"
+
     }
 ]

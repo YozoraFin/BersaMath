@@ -1,0 +1,44 @@
+[
+    {
+        "title": "Aljabar",
+        "difficulty": "Mudah"
+    },
+    {
+        "title": "Aljabar",
+        "difficulty": "Sedang"
+
+    },
+    {
+        "title": "Aljabar",
+        "difficulty": "Susah"
+
+    },
+    {
+        "title": "Geometri",
+        "difficulty": "Mudah"
+    },
+    {
+        "title": "Geometri",
+        "difficulty": "Sedang"
+
+    },
+    {
+        "title": "Geometri",
+        "difficulty": "Susah"
+
+    },
+    {
+        "title": "Kalkulus",
+        "difficulty": "Mudah"
+    },
+    {
+        "title": "Kalkulus",
+        "difficulty": "Sedang"
+
+    },
+    {
+        "title": "Kalkulus",
+        "difficulty": "Susah"
+
+    }
+]

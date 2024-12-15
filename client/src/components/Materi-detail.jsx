@@ -1,38 +1,49 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import materi from '../assets/json/materi.json';
+import aljabar from '../assets/json/materi-aljabar.json';
+import geometri from '../assets/json/materi-geometri.json';
+import kalkulus from '../assets/json/materi-kalkulus.json';
 
 export default function Subjek() {
-    const { id } = useParams();
+    const { subject, difficulty, id } = useParams();
     const navigate = useNavigate();
-    const subject = materi.find((subject) => subject.title.toLowerCase() === id);
 
-    if (!subject) {
+    const subjectMap = {
+        aljabar: aljabar,
+        geometri: geometri,
+        kalkulus: kalkulus,
+    };
+
+    const selectedContent = subjectMap[subject] || [];
+    const filteredContent = selectedContent.filter(sub => sub.difficulty.toLowerCase() === difficulty);
+    const selectedSubject = filteredContent.find(sub => sub.title.toLowerCase() === id);
+
+    if (!selectedSubject) {
         return <div>Materi tidak ditemukan</div>;
     }
 
-    const nextSubjectIndex = materi.findIndex((subjek) => subjek.title.toLowerCase() === id) + 1;
-    const nextSubjectId = nextSubjectIndex < materi.length ? materi[nextSubjectIndex].title.toLowerCase() : null;
+    const nextSubjectIndex = filteredContent.findIndex(sub => sub.title.toLowerCase() === id) + 1;
+    const nextSubjectId = nextSubjectIndex < filteredContent.length ? filteredContent[nextSubjectIndex].title.toLowerCase() : null;
 
     return (
         <div className='d-flex flex-column min-height p-5'>
-            <h1 className='mb-4'>{subject.title}</h1>
+            <h1 className='mb-4'>{selectedSubject.title}</h1>
             <div className='d-flex justify-content-center gap-5'>
                 <iframe
-                    title={subject.title}
+                    title={selectedSubject.title}
                     width="1280"
                     height="720"
-                    src={`https://www.youtube.com/embed/${subject.video}?origin=${window.location.origin}`}
+                    src={`https://www.youtube.com/embed/${selectedSubject.video}?origin=${window.location.origin}`}
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
                     className='mr-4'
                 ></iframe>
                 <div className='card shadow-lg' style={{ width: '300px' }}>
                     <div className='card-body'>
-                        <p className='card-text'>{subject.description}</p>
+                        <p className='card-text'>{selectedSubject.description}</p>
                         {nextSubjectId && (
                             <button
                                 className='btn btn-primary rounded-pill position-absolute bottom-0 end-0 mb-3 me-3 px-3'
-                                onClick={() => navigate(`/materi/${nextSubjectId}`)}
+                                onClick={() => navigate(`/materi/${subject}/${difficulty}/${nextSubjectId}`)}
                             >
                                 Lanjut
                             </button>
