@@ -36,7 +36,7 @@ export default function Materi() {
                     {selectedContent.map((sub, index) => (
                         <div className="grid-item" key={index}>
                             <Link to={`/materi/${subject}/${sub.title.toLowerCase()}`} className="card-link">
-                                <div className="card d-flex flex-row">
+                                <div className="card card-animation d-flex flex-row">
                                     <img src={sub.img} alt="Image" className="card-img-left" />
                                     <div className="card-body flex-grow-1 d-flex flex-column">
                                         <h5 className="card-title">{sub.title}</h5>
