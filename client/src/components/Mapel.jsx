@@ -58,7 +58,7 @@ export default function SubjectSelection({ onSelectSubject }) {
                         <div className="row grid-container">
                             {difficulties[difficulty].map((subject, index) => (
                                 <div className="grid-item" key={index} onClick={() => checkConfirm(subject)}>
-                                    <div className="card d-flex flex-row">
+                                    <div className="card card-animation d-flex flex-row">
                                         <img src={subject.img} alt="Image" className="card-img-left" />
                                         <div className="card-body flex-grow-1 d-flex flex-column card-subject">
                                             <h5 className="card-title">{subject.title}</h5>

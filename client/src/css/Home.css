@@ -24,14 +24,21 @@ main {
 
 .wrapper-task {
     max-width : 1000px;
-    overflow-x : auto;
+    height : 190px;
+    overflow-x : hidden;
     overflow-y : hidden;
 }
 
 .wrapper-sbj {
     max-width : 1500px;
-    overflow-x : auto;
+    height : 190px;
+    overflow-x : hidden;
     overflow-y : hidden;
+}
+
+.wrapper-task:hover,
+.wrapper-sbj:hover {
+    overflow-x : auto;
 }
 
 .ongoing {
@@ -68,6 +75,10 @@ main {
     padding: 20px;
 }
 
+.card-subject {
+    cursor : pointer;
+}
+
 .grid-container {
     display: flex;
     flex-wrap: wrap;
@@ -95,7 +106,7 @@ main {
 }
 
 .container-header {
-    background: url('https://www.quipper.com/id/school/assets/images/background/student/student_header_pc.png');
+    background: url('/assets/img/asset-2.png');
     background-repeat: no-repeat;
     background-position: top right;
     background-size: contain;
@@ -137,4 +148,9 @@ main {
     border-radius: 50px;
     background-color: #4A628A;
     color: white;
+}
+
+.list-discussion {
+    overflow-y: auto;
+    max-height: 300px;
 }
