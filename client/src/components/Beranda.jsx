@@ -20,8 +20,8 @@ export default function Beranda({ user }) {
     return (
         <div className="min-height">
             <Swiper />
-            <div className="container border border-white shadow-lg rounded-3 my-5 justify-content-center align-items-center">
-                <div className="d-flex m-5">
+            <div className="container border border-white shadow-lg rounded-3 my-5">
+                <div className="d-flex m-5 justify-content-center align-items-center">
                     <div className="me-3">
                         <img src={user.profilePicture} className="rounded-3" alt="Profile" width="200" height="200" />     
                     </div>

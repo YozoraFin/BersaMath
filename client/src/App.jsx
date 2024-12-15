@@ -15,6 +15,8 @@ import LoginPopup from './components/LoginPopup.jsx';
 import PrivateRoute from './components/PrivateRoute.jsx';
 import SubjectSelection from './components/Mapel.jsx';
 import ProfilePage from './components/ProfilePage.jsx';
+import DiskusiDetail from './components/Diskusi-detail.jsx';
+import DiskusiAdd from './components/Diskusi-add.jsx';
 
 export default function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -64,6 +66,8 @@ export default function App() {
                     <Route path="/beranda/:subject" element={isLoggedIn ? <Beranda user={user} /> : <Navigate to="/" />} />
                     <Route path="/materi/:subject" element={isLoggedIn ? <Materi /> : <Navigate to="/" />} />
                     <Route path="/materi/:subject/:id" element={isLoggedIn ? <Subjek /> : <Navigate to="/" />} />
+                    <Route path="/materi/:subject/:id/discussion/:discussionId" element={isLoggedIn ? <DiskusiDetail /> : <Navigate to="/" />} />
+                    <Route path="/materi/:subject/:id/discussion-add" element={isLoggedIn ? <DiskusiAdd user={user} /> : <Navigate to="/" />} />
                     <Route path="/tugas" element={<PrivateRoute isLoggedIn={isLoggedIn && selectedSubject} element={<Tugas selectedSubject={selectedSubject ? selectedSubject.title : ''} />} />} />
                     <Route path="/tugas/:id" element={<PrivateRoute isLoggedIn={isLoggedIn && selectedSubject} element={<TugasDetail selectedSubject={selectedSubject ? selectedSubject.title : ''} />} />} />
                     <Route path="/profile" element={isLoggedIn ? <ProfilePage user={user} onUpdateProfile={handleUpdateProfile} /> : <Navigate to="/" />} />
