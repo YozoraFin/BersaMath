@@ -8,7 +8,6 @@ import { studentLogin, studentRegister, studentRequestResetPassword, studentRese
 const router = express.Router();
 
 router.post('/refresh-token', handleRefreshToken)
-
 // teacher routes
 router.post('/teacher/register', validateRegister, teacherRegister)
 router.post('/register-superteacher', validateRegister, registerSuperTeacher)
