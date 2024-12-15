@@ -51,7 +51,7 @@ export const generateTokens = async (userId, role) => {
       )
     };
 
-    console.log('Generated tokens:', tokens); // Debug log
+    // console.log('Generated tokens:', tokens); // Debug log
     return tokens;
   } catch (error) {
     console.error('Token generation error:', error);
