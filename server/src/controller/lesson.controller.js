@@ -7,6 +7,8 @@ export const createLesson = async (req, res) => {
     const { course_id } = req.params;
     const { title, description, lesson_type } = req.body;
 
+    const thumbnail = req.file ? req.file.path : null;
+
     const maxSequence = await Lesson.max("sequence", {
       where: { course_id },
     });
@@ -15,6 +17,7 @@ export const createLesson = async (req, res) => {
       title,
       description,
       lesson_type,
+      thumbnail,
       sequence: (maxSequence || 0) + 1,
     });
 
@@ -35,22 +38,47 @@ export const createLesson = async (req, res) => {
 export const getLessonsByCourse = async (req, res) => {
   try {
     const { course_id } = req.params;
+    const { 
+      page = 1,
+      limit = 10,
+      search = '',
+      lesson_type,
+      sort = 'sequence',
+      order = 'ASC'
+    } = req.query;
+
+    const whereClause = {
+      course_id,
+      [Op.and]: [
+        search ? {
+          title: {
+            [Op.like]: `%${search}%`
+          }
+        } : {},
+        lesson_type ? { lesson_type } : {}
+      ]
+    };
+
+    const offset = (page - 1) * limit;
+    const totalLessons = await Lesson.count({ where: whereClause });
 
     const lessons = await Lesson.findAll({
-      where: { course_id },
-      order: [["sequence", "ASC"]],
-      include: [
-        {
-          model: Course,
-          attributes: ["title"],
-        },
-      ],
+      where: whereClause,
+      order: [[sort, order]],
+      limit: parseInt(limit),
+      offset: parseInt(offset)
     });
 
     res.status(200).json({
       success: true,
       message: "Lessons fetched successfully",
       data: lessons,
+      metadata: {
+        total: totalLessons,
+        page: parseInt(page),
+        limit: parseInt(limit),
+        pages: Math.ceil(totalLessons / limit)
+      }
     });
   } catch (error) {
     res.status(500).json({
@@ -67,6 +95,7 @@ export const updateLesson = async (req, res) => {
     const { title, description, lesson_type, sequence } = req.body;
     const teacher_id = req.userId;
 
+    
     const lesson = await Lesson.findOne({
       where: { lesson_id },
       include: [
@@ -76,18 +105,20 @@ export const updateLesson = async (req, res) => {
         },
       ],
     });
-
+    
     if (!lesson) {
       return res.status(404).json({
         success: false,
         message: "Lesson not found",
       });
     }
+    const thumbnail = req.file ? req.file.path : lesson.thumbnail;
 
     await Lesson.update({
       title,
       description,
       lesson_type,
+      thumbnail,
       sequence,
     });
 

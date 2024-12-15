@@ -39,6 +39,10 @@ const Lesson = db.define(
         isIn: [["teori", "kuis"]],
       },
     },
+    thumbnail: {
+      type: DataTypes.JSON,
+      allowNull: true,
+    },
     sequence: {
       type: DataTypes.INTEGER,
       allowNull: false,

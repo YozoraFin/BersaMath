@@ -1,6 +1,6 @@
 import express from "express";
 import { verifyCourseAccess, verifyCourseOwner, verifyTeacher, verifyToken } from "../middleware/authenticate.js";
-import { createEnrollment, getEnrollmentById, getStudentEnrollments, updateEnrollmentStatus } from "../controller/enrollment.controller.js";
+import { createEnrollment, getAllEnrollments, getEnrollmentById, getStudentEnrollments, updateEnrollmentStatus } from "../controller/enrollment.controller.js";
 import { deleteCourse } from "../controller/course.controller.js";
 
 const router = express.Router();
@@ -13,5 +13,6 @@ router.delete('/:course_id/unenroll/:enrollment_id', verifyToken, verifyCourseAc
 
 // teacher routes
 router.put('/:course_id/enrollment/update/:enrollment_id', verifyToken, verifyCourseOwner, verifyTeacher, updateEnrollmentStatus)
+router.get('/:course_id/enrollment', verifyToken, verifyTeacher, getAllEnrollments)
 
 export default router;

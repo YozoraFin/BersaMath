@@ -1,5 +1,8 @@
+import { Op } from "sequelize";
 import { Lesson } from "../model/lesson.model.js";
 import { Practice } from "../model/practice.model.js";
+import { Submission } from "../model/submission.model.js";
+import sequelize from "sequelize";
 
 export const createPractice = async (req, res) => {
   try {
@@ -66,16 +69,65 @@ export const createPractice = async (req, res) => {
 export const getPracticesByLesson = async (req, res) => {
   try {
     const { lesson_id } = req.params;
+    const {
+      page = 1,
+      limit = 10,
+      search = '',
+      difficulty,
+      sort = 'due_date',
+      order = 'DESC'
+    } = req.query;
+
+    const whereClause = {
+      lesson_id,
+      [Op.and]: [
+        search ? {
+          [Op.or]: [
+            {
+              question: {
+                [Op.like]: `%${search}%`
+              }
+            },
+            {
+              description: {
+                [Op.like]: `%${search}%`
+              }
+            }
+          ]
+        } : {},
+        difficulty ? { difficulty } : {}
+      ]
+    };
+
+    const offset = (page - 1) * limit;
+    const totalPractices = await Practice.count({ where: whereClause });
 
     const practices = await Practice.findAll({
-      where: { lesson_id },
-      order: [["created_at", "DESC"]],
+      where: whereClause,
+      order: [[sort, order]],
+      limit: parseInt(limit),
+      offset: parseInt(offset),
+      include: [
+        {
+          model: Submission,
+          attributes: [
+            [sequelize.fn('COUNT', sequelize.col('submission_id')), 'submission_count']
+          ]
+        }
+      ],
+      group: ['practice_id']
     });
 
     res.status(200).json({
       success: true,
       message: "Practices fetched successfully",
       data: practices,
+      metadata: {
+        total: totalPractices,
+        page: parseInt(page),
+        limit: parseInt(limit),
+        pages: Math.ceil(totalPractices / limit)
+      }
     });
   } catch (error) {
     res.status(500).json({
