@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from '@fortawesome/fontawesome-free-solid'
 import { Link, useNavigate } from 'react-router-dom'
+import api from '../api/Api'
 
 export default function Login() {
   const [username, setUsername] = useState('')
@@ -11,8 +12,20 @@ export default function Login() {
 
   const login = (e) => {
     e.preventDefault()
-    
-    navigate('/bersamath')
+
+    const data = {
+      identifier: username,
+      password: password
+    }
+
+    api.post(process.env.REACT_APP_BASEURL + 'api/v1/auth/teacher/login', data).then((res) => {
+      if(res.status === 200) {
+        localStorage.setItem('Token', res.data?.data.tokens.accessToken)
+        localStorage.setItem('RefreshToken', res.data?.data.tokens.refreshToken)
+        localStorage.setItem('name', res.data?.data.teacher.name)
+        navigate('/bersamath')
+      }
+    })
   }
 
   return (
@@ -31,10 +44,6 @@ export default function Login() {
             <input value={password} onChange={e => setPassword(e.target.value)} name='password' type={hidePassword ? 'password' : 'text'} className="login-form" />
             <label className={password === '' ? '' : 'filled'} htmlFor="password">Password</label>
             <FontAwesomeIcon onClick={() => sethidePassword(!hidePassword)} type='button' color='#4A628A' className='password-toggle' icon={hidePassword ? faEye : faEyeSlash} />
-          </div>
-          <div className="checkbox mx-auto text-start mt-3">
-            <input className='form-check-input me-2' name='remember' type="checkbox" />
-            <label htmlFor="remember">Ingat Saya</label>
           </div>
         </div>
         <div className="border-bottom"></div>

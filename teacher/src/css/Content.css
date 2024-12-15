@@ -47,3 +47,7 @@
 .row-success td {
     color: #5cb85c !important;
 }
+
+.info h6, .info p {
+    font-size: 1.2rem;
+}
