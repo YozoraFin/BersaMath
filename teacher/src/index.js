@@ -4,8 +4,13 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom'
+import api from './api/Api';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+api.defaults.baseURL = process.env.REACT_APP_BASEURL
+api.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('Token')}`;
+
 root.render(
   <BrowserRouter>
     <App />

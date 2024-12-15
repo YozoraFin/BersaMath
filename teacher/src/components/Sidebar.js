@@ -41,10 +41,6 @@ export default function Sidebar({ sidebar }) {
       </div>
       <div className="border-top"></div>
       <div className="content row">
-      {
-        localStorage.getItem('role') !== 'superteacher'
-        ? ''
-        : 
         <Fragment>
           <Link className={location.pathname === '/bersamath' ? 'link active' : 'link'} to={'/bersamath'} >
             <FontAwesomeIcon size='sm' icon={faTachometerAlt} /> 
@@ -63,7 +59,6 @@ export default function Sidebar({ sidebar }) {
             <span className='ms-2'>Tugas</span>
           </Link>
         </Fragment>
-      }
       </div>
     </div>
   )

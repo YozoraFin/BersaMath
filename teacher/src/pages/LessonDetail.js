@@ -1,9 +1,10 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import ReactPlayer from 'react-player'
 import { Editor } from 'react-draft-wysiwyg'
 import { ContentState, EditorState, convertFromHTML } from 'draft-js';
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import api from '../api/Api';
 
 export default function LessonDetail() {
 	const [title, setTitle] = useState('')
@@ -18,6 +19,18 @@ export default function LessonDetail() {
 	const [preview, setPreview] = useState()
 	const [type, setType] = useState('video')
 	const navigate = useNavigate()
+	const param = useParams()
+
+	const getDetail = () => {
+		api.get('api/v1/course/'+localStorage.getItem('course')+'/lesson/'+param.id+'/content?content_id='+param.id).then((res) => {
+			const data = res.data?.data[0]
+			console.log(data)
+		})
+	}
+
+	useEffect(() => {
+		getDetail()
+	}, [])
 
 	useEffect(() => {	
 		if(!thumbnail) {

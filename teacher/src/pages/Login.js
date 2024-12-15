@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from '@fortawesome/fontawesome-free-solid'
 import { Link, useNavigate } from 'react-router-dom'
-import api from '../api/Api'
 import { authService } from '../api/auth'
 
 export default function Login() {
@@ -38,6 +37,7 @@ export default function Login() {
       localStorage.setItem('Token', tokens.accessToken);
       localStorage.setItem('RefreshToken', tokens.refreshToken);
       localStorage.setItem('name', teacher.name);
+      localStorage.setItem('course', teacher.course);
       localStorage.setItem('role', teacher.role);
 
       navigate('/bersamath');
