@@ -1,9 +1,20 @@
 import { faBook, faExclamation, faLocationArrow, faSearch, faTasks, faXRay } from '@fortawesome/fontawesome-free-solid'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import api from '../api/Api'
 
 export default function Dashboard() {
+  const [student, setStudent] = useState(0)
+  const [grade, setGrading] = useState(0)
+  const [lesson, setLesson] = useState(0)
+
+  const getData = () => {
+    api.get('api/v1/course/'+localStorage.getItem('course')+'/lesson/3/practice/1/submission').then((res) => {
+      
+    })
+  }
+
   return (
     <div className="p-3">
       <div className="header row">
@@ -24,7 +35,7 @@ export default function Dashboard() {
                 </div>
                 <div className="card-main text-second row">
                   <div className="col-6">
-                    300
+                    {student}
                   </div>
                   <div className="col-6 text-end">
                     <FontAwesomeIcon icon={faSearch} />
@@ -51,7 +62,7 @@ export default function Dashboard() {
                 </div>
                 <div className="card-main text-second row">
                   <div className="col-6">
-                    300
+                    {lesson}
                   </div>
                   <div className="col-6 text-end">
                     <FontAwesomeIcon icon={faBook} />
@@ -74,11 +85,11 @@ export default function Dashboard() {
             <Link to={'/bersamath/tugas'} className="card me-1">
               <div className="card-body">
                 <div className="card-title text-main">
-                  Tugas Belum Dinilai
+                  Tugas Dibuat
                 </div>
                 <div className="card-main text-second row">
-                  <div className="col-6 text-danger">
-                    300
+                  <div className="col-6">
+                    {grade}
                   </div>
                   <div className="col-6 text-end">
                     <FontAwesomeIcon icon={faExclamation} />

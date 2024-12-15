@@ -76,7 +76,8 @@ export const getLessonContents = async (req, res) => {
       where: whereClause,
       order: [[sort, order]],
       limit: parseInt(limit),
-      offset: parseInt(offset)
+      offset: parseInt(offset),
+      include: Lesson
     });
 
     res.status(200).json({
