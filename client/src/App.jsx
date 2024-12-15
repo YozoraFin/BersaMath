@@ -8,6 +8,7 @@ import Beranda from './components/Beranda.jsx';
 import BerandaGuest from './components/BerandaGuest.jsx';
 import Materi from './components/Materi.jsx';
 import Tugas from './components/Tugas.jsx';
+import TugasDetail from './components/Tugas-detail.jsx';
 import Footer from './components/Footer.jsx';
 import Subjek from './components/Materi-detail.jsx';
 import LoginPopup from './components/LoginPopup.jsx';
@@ -63,7 +64,8 @@ export default function App() {
                     <Route path="/beranda/:subject" element={isLoggedIn ? <Beranda user={user} /> : <Navigate to="/" />} />
                     <Route path="/materi/:subject" element={isLoggedIn ? <Materi /> : <Navigate to="/" />} />
                     <Route path="/materi/:subject/:id" element={isLoggedIn ? <Subjek /> : <Navigate to="/" />} />
-                    <Route path="/tugas" element={<PrivateRoute isLoggedIn={isLoggedIn && selectedSubject} element={<Tugas />} />} />
+                    <Route path="/tugas" element={<PrivateRoute isLoggedIn={isLoggedIn && selectedSubject} element={<Tugas selectedSubject={selectedSubject ? selectedSubject.title : ''} />} />} />
+                    <Route path="/tugas/:id" element={<PrivateRoute isLoggedIn={isLoggedIn && selectedSubject} element={<TugasDetail selectedSubject={selectedSubject ? selectedSubject.title : ''} />} />} />
                     <Route path="/profile" element={isLoggedIn ? <ProfilePage user={user} onUpdateProfile={handleUpdateProfile} /> : <Navigate to="/" />} />
                 </Routes>
             </main>

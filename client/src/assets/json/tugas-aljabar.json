@@ -1,0 +1,37 @@
+[
+    {
+        "subject": "Aljabar",
+        "title": "Tugas 1: Aljabar",
+        "description": "Kerjakan aljabar",
+        "file": "/assets/files/tugas-aljabar.pdf",
+        "deadline": "2024-12-15"
+    },
+    {
+        "subject": "Aljabar",
+        "title": "Tugas 2: Aljabar",
+        "description": "Kerjakan aljabar",
+        "file": "/assets/files/tugas-geometri.pdf",
+        "deadline": "2024-12-20"
+    },
+    {
+        "subject": "Aljabar",
+        "title": "Tugas 3: Aljabar",
+        "description": "Kerjakan aljabar",
+        "file": "/assets/files/tugas-kalkulus.pdf",
+        "deadline": "2024-12-25"
+    },
+    {
+        "subject": "Aljabar",
+        "title": "Tugas 4: Aljabar",
+        "description": "Kerjakan aljabar",
+        "file": "/assets/files/tugas-statistik.pdf",
+        "deadline": "2024-12-30"
+    },
+    {
+        "subject": "Aljabar",
+        "title": "Tugas 5: Aljabar",
+        "description": "Kerjakan aljabar",
+        "file": "/assets/files/tugas-trigonometri.pdf",
+        "deadline": "2025-01-05"
+    }
+]

@@ -1,24 +1,23 @@
-export default function Tugas() {
-    const tugas = [
-        { title: "Tugas 1: Aljabar", description: "Kerjakan aljabar", deadline: "2024-12-15" },
-        { title: "Tugas 2: Geometri", description: "Kerjakan geometri", deadline: "2024-12-20" },
-        { title: "Tugas 3: Kalkulus", description: "Kerjakan kalkulus", deadline: "2024-12-25" },
-        { title: "Tugas 4: Statistik", description: "Kerjakan statistik", deadline: "2024-12-30" },
-        { title: "Tugas 5: Trigonometri", description: "Kerjakan trigonometri", deadline: "2025-01-05" },
-    ];
+import { useParams, useNavigate } from 'react-router-dom';
+import tugas from '../assets/json/tugas-aljabar.json';
+
+export default function Tugas({ selectedSubject }) {
+    const navigate = useNavigate();
+    const filteredTugas = tugas.filter(task => task.subject.toLowerCase() === selectedSubject.toLowerCase());
 
     return (
         <div className="min-height p-5">
             <div className="container">
-                <h1 className="mb-4">Tugas Matematika</h1>
+                <h1 className="mb-4">Tugas {selectedSubject}</h1>
                 <div className="row">
-                    {tugas.map((task, index) => (
+                    {filteredTugas.map((task, index) => (
                         <div className="col-md-4 mb-4" key={index}>
-                            <div className="card">
+                            <div className="card card-animation">
                                 <div className="card-body">
                                     <h5 className="card-title">{task.title}</h5>
                                     <p className="card-text">{task.description}</p>
                                     <p className="card-text"><small className="text-muted">Deadline: {task.deadline}</small></p>
+                                    <button className="btn btn-primary" onClick={() => navigate(`/tugas/${task.title.toLowerCase().replace(/\s/g, '-')}`)}>Lihat</button>
                                 </div>
                             </div>
                         </div>

@@ -47,7 +47,7 @@ main {
     transition: transform 0.2s;
 }
 
-.card:hover {
+.card-animation:hover {
     transform: scale(1.05);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }

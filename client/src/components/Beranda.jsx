@@ -2,6 +2,7 @@ import { Link, useParams } from 'react-router-dom';
 import aljabar from '../assets/json/materi-aljabar.json';
 import geometri from '../assets/json/materi-geometri.json';
 import kalkulus from '../assets/json/materi-kalkulus.json';
+import tugas from '../assets/json/tugas-aljabar.json';
 import Swiper from './Swiper.jsx';
 
 export default function Beranda({ user }) {
@@ -14,14 +15,7 @@ export default function Beranda({ user }) {
     };
 
     const selectedSubject = subjectMap[subject] || [];
-
-    const tugas = [
-        { title: "Tugas 1: Aljabar", description: "Kerjakan aljabar", deadline: "2024-12-15" },
-        { title: "Tugas 2: Geometri", description: "Kerjakan geometri", deadline: "2024-12-20" },
-        { title: "Tugas 3: Kalkulus", description: "Kerjakan kalkulus", deadline: "2024-12-25" },
-        { title: "Tugas 4: Statistik", description: "Kerjakan statistik", deadline: "2024-12-30" },
-        { title: "Tugas 5: Trigonometri", description: "Kerjakan trigonometri", deadline: "2025-01-05" },
-    ];
+    const filteredTugas = tugas.filter(task => task.subject.toLowerCase() === subject.toLowerCase());
 
     return (
         <div className="min-height">
@@ -34,12 +28,15 @@ export default function Beranda({ user }) {
                     <div>
                         <h1 className="mb-5">Selamat datang, {user.username}!</h1>
                         <div className="d-flex wrapper-task">
-                            {tugas.map((task, index) => (
-                                <div className="card mx-2 ongoing border rounded-3" key={index}>
-                                    <div className="card-body">
-                                        <h5>{task.title}</h5>
-                                            <p>Deadline: {task.deadline}</p>
-                                    </div>    
+                            {filteredTugas.map((task, index) => (
+                                <div className="card card-animation mx-2 ongoing border rounded-3" key={index}>
+                                    <Link to={`/tugas/${task.title.toLowerCase().replace(/\s/g, '-')}`} className="card-link">
+                                        <div className="card-body">
+                                            <h5>{task.title}</h5>
+                                            <p className='text-truncate'>{task.description}</p>
+                                            <p><small className="text-muted">Deadline: {task.deadline}</small></p>
+                                        </div>
+                                    </Link>
                                 </div>
                             ))}
                         </div>
@@ -51,7 +48,7 @@ export default function Beranda({ user }) {
                     <h1 className="mb-4">Materi</h1>
                         <div className="d-flex wrapper-sbj">
                             {selectedSubject.map((subjek, index) => (
-                                <div className="card mx-2 ongoing border rounded-3" key={index}>
+                                <div className="card card-animation mx-2 ongoing border rounded-3" key={index}>
                                     <Link to={`/materi/${subject}/${subjek.title.toLowerCase()}`} className="card-link">
                                         <div className="card-body">
                                             <h5>{subjek.title}</h5>
