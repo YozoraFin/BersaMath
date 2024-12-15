@@ -148,14 +148,17 @@ export const verifyCourseAccess = async (req, res, next) => {
     if (userRole === "teacher") {
       const course = await Course.findOne({
         where: {
-          course_id,
-          teacher_id: userId,
+          course_id
         },
       });
-
-      if (course) {
-        return next();
+      if (!course) {
+        return res.status(404).json({
+          success: false,
+          message: "Course not found"
+        });
       }
+      
+      return next();
     }
 
     // Check student enrollment

@@ -1,6 +1,5 @@
 import db from "../config/db.js";
 import { DataTypes } from "sequelize";
-import { Teacher } from "./teacher.model.js";
 import { Topic } from "./topic.model.js";
 import { Lesson } from "./lesson.model.js";
 import { Enrollment } from "./enrollment.model.js";
@@ -13,14 +12,6 @@ export const Course = db.define(
       autoIncrement: true,
       type: DataTypes.INTEGER,
       primaryKey: true,
-    },
-    teacher_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: "teacher",
-        key: "teacher_id",
-      },
     },
     topic_id: {
       type: DataTypes.INTEGER,

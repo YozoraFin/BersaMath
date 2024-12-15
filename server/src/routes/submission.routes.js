@@ -10,7 +10,7 @@ router.get('/:course_id/lesson/:lesson_id/practice/:practice_id/my-submission', 
 router.post('/:course_id/lesson/:lesson_id/practice/:practice_id/submit', verifyToken, verifyCourseAccess, uploadSubmission, createSubmission)
 
 // teacher routes
-router.get('/:course_id/lesson/:lesson_id/practice/:practice_id/submission', verifyToken, verifyTeacher, verifyCourseOwner, getSubmissionsByPractice)
-router.put('/:course_id/lesson/:lesson_id/practice/:practice_id/submission/:submission_id/grade', verifyToken, verifyTeacher, verifyCourseOwner, gradeSubmission)
+router.get('/:course_id/lesson/:lesson_id/practice/:practice_id/submission', verifyToken, verifyTeacher, getSubmissionsByPractice)
+router.put('/:course_id/lesson/:lesson_id/practice/:practice_id/submission/:submission_id/grade', verifyToken, verifyTeacher, gradeSubmission)
 
 export default router
