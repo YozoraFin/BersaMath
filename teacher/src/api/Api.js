@@ -10,6 +10,7 @@ const api = axios.create({
   },
 });
 
+
 api.interceptors.response.use(
   (response) => {
     // Show success toast for successful operations
@@ -40,12 +41,6 @@ api.interceptors.response.use(
         icon: "fa fa-ban",
         iconColor: "black",
       });
-    }
-
-    // Handle unauthorized access
-    if (error.response?.status === 401) {
-      localStorage.clear();
-      window.location.href = "/login";
     }
 
     return Promise.reject(error);

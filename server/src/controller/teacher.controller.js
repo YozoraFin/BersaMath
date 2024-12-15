@@ -175,6 +175,7 @@ export const teacherLogin = async (req, res) => {
           name: teacher.name,
           email: teacher.email,
           role: teacher.role,
+          course: teacher.course_id
         },
         tokens: tokens,
       },

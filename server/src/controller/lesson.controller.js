@@ -1,6 +1,7 @@
-import { literal, Op } from "sequelize";
+import { literal, Op, where } from "sequelize";
 import { Lesson } from "../model/lesson.model.js";
 import { Course } from "../model/course.model.js";
+import { LessonContent } from "../model/lessonContent.model.js";
 
 export const createLesson = async (req, res) => {
   try {
@@ -44,10 +45,11 @@ export const getLessonsByCourse = async (req, res) => {
       search = '',
       lesson_type,
       sort = 'sequence',
-      order = 'ASC'
+      order = 'ASC',
+      lesson_id
     } = req.query;
 
-    const whereClause = {
+    let whereClause = {
       course_id,
       [Op.and]: [
         search ? {
@@ -59,6 +61,13 @@ export const getLessonsByCourse = async (req, res) => {
       ]
     };
 
+    if(lesson_id) {
+      whereClause = {
+        ...whereClause,
+        lesson_id
+      }
+    }
+
     const offset = (page - 1) * limit;
     const totalLessons = await Lesson.count({ where: whereClause });
 
@@ -66,7 +75,8 @@ export const getLessonsByCourse = async (req, res) => {
       where: whereClause,
       order: [[sort, order]],
       limit: parseInt(limit),
-      offset: parseInt(offset)
+      offset: parseInt(offset),
+      include: LessonContent
     });
 
     res.status(200).json({

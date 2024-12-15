@@ -45,11 +45,12 @@ export const getLessonContents = async (req, res) => {
       limit = 10,
       search = '',
       content_type,
+      content_id,
       sort = 'sequence',
       order = 'ASC'
     } = req.query;
 
-    const whereClause = {
+    let whereClause = {
       lesson_id,
       [Op.and]: [
         search ? {
@@ -60,6 +61,13 @@ export const getLessonContents = async (req, res) => {
         content_type ? { content_type } : {}
       ]
     };
+
+    if(content_id) {
+      whereClause = {
+        ...whereClause,
+        content_id
+      } 
+    }
 
     const offset = (page - 1) * limit;
     const totalContents = await LessonContent.count({ where: whereClause });

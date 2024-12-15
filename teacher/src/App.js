@@ -21,9 +21,6 @@ import { useEffect } from 'react';
 
 
 function App() {
-  useEffect(() => {
-    
-  }, [])
 
   return (
     <Routes>
@@ -33,7 +30,7 @@ function App() {
         <Route path='kelas' element={<Class/>} />
         <Route path='materi' element={<Lesson/>} />
         <Route path='materi/create' element={<LessonCreate/>} />
-        <Route path='materi/:id' element={<LessonDetail/>} />
+        <Route path='materi/:idles/:id' element={<LessonDetail/>} />
         <Route path='tugas' element={<Practice/>} />
         <Route path='tugas/create' element={<PracticeCreate/>} />
         <Route path='tugas/:id' element={<PracticeDetail/>} />

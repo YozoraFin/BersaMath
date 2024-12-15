@@ -1,12 +1,26 @@
 import { faPlus } from '@fortawesome/fontawesome-free-solid'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import api from '../api/Api'
 
 export default function Lesson() {
   const [loading, setLoading] = useState(true)
   const [lesson, setLesson] = useState([])
   const navigate = useNavigate()
+
+  const getCourse = () => {
+    api.get('api/v1/course/' + localStorage.getItem('course') + '/lesson?lesson_type=teori').then((res) => {
+      if(res.status === 200) {
+        setLesson(res.data?.data)
+        setLoading(false)
+      }
+    })
+  }
+
+  useEffect(() => {
+    getCourse()
+  }, [])
 
   return (
     <div className='p-3'>
@@ -32,55 +46,15 @@ export default function Lesson() {
                 <tr>
                     <th>#</th>
                     <th>Judul</th>
-                    <th>Materi</th>
                 </tr>
               </thead>
               <tbody>
-                <tr role='button' onClick={() => navigate('/bersamath/materi/1')}>
-                  <td>1</td>
-                  <td>Pengenalan Matriks</td>
-                  <td>Matriks</td>
-                </tr>
-                <tr role='button' onClick={() => navigate('/bersamath/materi/1')}>
-                  <td>2</td>
-                  <td>Jenis-Jenis Matriks</td>
-                  <td>Matriks</td>
-                </tr>
-                <tr role='button' onClick={() => navigate('/bersamath/materi/1')}>
-                  <td>3</td>
-                  <td>Filosofi Matriks</td>
-                  <td>Matriks</td>
-                </tr>
-                <tr role='button' onClick={() => navigate('/bersamath/materi/1')}>
-                  <td>4</td>
-                  <td>Matriks dan Dinamika Pancasila</td>
-                  <td>Matriks</td>
-                </tr>
-                <tr role='button' onClick={() => navigate('/bersamath/materi/1')}>
-                  <td>6</td>
-                  <td>Matriks sebagai Sistem Etika</td>
-                  <td>Matriks</td>
-                </tr>
-                <tr role='button' onClick={() => navigate('/bersamath/materi/1')}>
-                  <td>7</td>
-                  <td>Matriks sebagai Dasar Penelitian</td>
-                  <td>Matriks</td>
-                </tr>
-                <tr role='button' onClick={() => navigate('/bersamath/materi/1')}>
-                  <td>8</td>
-                  <td>Matriks dan Perkembangan Manusia</td>
-                  <td>Matriks</td>
-                </tr>
-                <tr role='button' onClick={() => navigate('/bersamath/materi/1')}>
-                  <td>9</td>
-                  <td>Matriks dan Pengaruhnya dalam Kehidupan Sosial</td>
-                  <td>Matriks</td>
-                </tr>
-                <tr role='button' onClick={() => navigate('/bersamath/materi/1')}>
-                  <td>100</td>
-                  <td>Matriks dan Ilmu Politik</td>
-                  <td>Matriks</td>
-                </tr>
+                {lesson.map((d, i) => {
+                  return <tr role='button' onClick={() => navigate('/bersamath/materi/' + d?.lesson_id + '/' + d?.lesson_content.content_id)}>
+                    <td>{i+1}</td>
+                    <td>{d?.title}</td>
+                  </tr>
+                })}
               </tbody>
             </table>
           </div>
