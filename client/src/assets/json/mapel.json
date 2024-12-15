@@ -1,44 +1,47 @@
 [
     {
         "title": "Aljabar",
-        "difficulty": "Mudah"
+        "difficulty": "Mudah",
+        "img": "/assets/img/aljabar.png"
     },
     {
-        "title": "Aljabar",
-        "difficulty": "Sedang"
-
+        "title": "Aritmetika",
+        "difficulty": "Mudah",
+        "img": "/assets/img/aljabar.png"
     },
     {
-        "title": "Aljabar",
-        "difficulty": "Susah"
-
-    },
-    {
-        "title": "Geometri",
-        "difficulty": "Mudah"
+        "title": "Peluang",
+        "difficulty": "Mudah",
+        "img": "/assets/img/aljabar.png"
     },
     {
         "title": "Geometri",
-        "difficulty": "Sedang"
-
+        "difficulty": "Sedang",
+        "img": "/assets/img/aljabar.png"
     },
     {
-        "title": "Geometri",
-        "difficulty": "Susah"
-
+        "title": "Statistika",
+        "difficulty": "Sedang",
+        "img": "/assets/img/aljabar.png"
     },
     {
-        "title": "Kalkulus",
-        "difficulty": "Mudah"
-    },
-    {
-        "title": "Kalkulus",
-        "difficulty": "Sedang"
-
+        "title": "Vektor",
+        "difficulty": "Sedang",
+        "img": "/assets/img/aljabar.png"
     },
     {
         "title": "Kalkulus",
-        "difficulty": "Susah"
-
+        "difficulty": "Susah",
+        "img": "/assets/img/aljabar.png"
+    },
+    {
+        "title": "Trigonometri",
+        "difficulty": "Susah",
+        "img": "/assets/img/aljabar.png"
+    },
+    {
+        "title": "Bilangan Kompleks",
+        "difficulty": "Susah",
+        "img": "/assets/img/aljabar.png"
     }
 ]
