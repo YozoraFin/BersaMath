@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Login from './LoginPopup.jsx';
 
-export default function Navbar({ onLogin, isLoggedIn, selectedSubject }) {
+export default function Navbar({ onLogin, isLoggedIn, selectedSubject, user }) {
     const [showLogin, setShowLogin] = useState(false);
     const [activeMenu, setActiveMenu] = useState('/');
     const navigate = useNavigate();
@@ -18,7 +18,7 @@ export default function Navbar({ onLogin, isLoggedIn, selectedSubject }) {
     const handleMenuClick = (menu) => {
         setActiveMenu(menu);
         if (isLoggedIn && selectedSubject) {
-            const subjectPath = `${selectedSubject.title.toLowerCase()}/${selectedSubject.difficulty.toLowerCase()}`;
+            const subjectPath = `${selectedSubject.title.toLowerCase()}`;
             console.log(`Navigating to ${menu}`);
             if (menu === '/beranda') {
                 navigate(`/beranda/${subjectPath}`);
@@ -31,6 +31,21 @@ export default function Navbar({ onLogin, isLoggedIn, selectedSubject }) {
             console.log("Redirecting to select subject");
             navigate("/select-subject");
         }
+    };
+
+    const handleProfileClick = () => {
+        navigate('/profile');
+    };
+
+    const handleLogout = () => {
+        setIsLoggedIn(false);
+        setSelectedSubject(null);
+        setUser({
+            username: '',
+            bio: '',
+            profilePicture: ''
+        });
+        console.log("Logged out");
     };
 
     return (
@@ -52,7 +67,7 @@ export default function Navbar({ onLogin, isLoggedIn, selectedSubject }) {
                             <ul className="navbar-nav align-items-center flex-grow-1 pe-3 justify-content-center gap-3">
                                 <li className="nav-item">
                                     <div
-                                        className={`nav-link ${activeMenu === '/beranda' ? 'active' : ''} px-3`}
+                                        className={`nav-link ${activeMenu === '/beranda' ? 'active-menu' : ''} px-3`}
                                         aria-current="page"
                                         onClick={() => handleMenuClick('/beranda')}
                                     >
@@ -61,7 +76,7 @@ export default function Navbar({ onLogin, isLoggedIn, selectedSubject }) {
                                 </li>
                                 <li className="nav-item">
                                     <div
-                                        className={`nav-link ${(!isLoggedIn || !selectedSubject) ? 'disabled' : ''} ${activeMenu === '/materi' ? 'active' : ''} px-3`}
+                                        className={`nav-link ${activeMenu === '/materi' ? 'active-menu' : ''} ${(!isLoggedIn || !selectedSubject) ? 'disabled' : ''} px-3`}
                                         onClick={() => handleMenuClick('/materi')}
                                     >
                                         Materi
@@ -69,7 +84,7 @@ export default function Navbar({ onLogin, isLoggedIn, selectedSubject }) {
                                 </li>
                                 <li className="nav-item">
                                     <div
-                                        className={`nav-link ${(!isLoggedIn || !selectedSubject) ? 'disabled' : ''} ${activeMenu === '/tugas' ? 'active' : ''} px-3`}
+                                        className={`nav-link ${activeMenu === '/tugas' ? 'active-menu' : ''} ${(!isLoggedIn || !selectedSubject) ? 'disabled' : ''} px-3`}
                                         onClick={() => handleMenuClick('/tugas')}
                                     >
                                         Tugas
@@ -77,7 +92,17 @@ export default function Navbar({ onLogin, isLoggedIn, selectedSubject }) {
                                 </li>
                             </ul>
                             <div className="justify-content-center d-flex pe-3">
-                                <button className="btn btn-nav" onClick={handleLoginClick}>Login</button>
+                                {isLoggedIn ? (
+                                    <div className="dropdown">
+                                        <img src={user.profilePicture} alt="Profile" className="rounded-circle dropdown-toggle" width="40" height="40" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false" />
+                                        <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                                            <li><a className="dropdown-item" onClick={handleProfileClick}>Profile</a></li>
+                                            <li><a className="dropdown-item text-danger" onClick={handleLogout}>Log Out</a></li>
+                                        </ul>
+                                    </div>
+                                ) : (
+                                    <button className="btn btn-nav" onClick={handleLoginClick}>Login</button>
+                                )}
                             </div>
                         </div>
                     </div>
