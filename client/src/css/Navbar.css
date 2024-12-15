@@ -1,8 +1,13 @@
+.navbar-title {
+    cursor: pointer;
+}
+
 .nav-link {
     color: white !important;
     padding: 0.5rem;
     border-radius: 5rem;
     transition: background-color 0.3s;
+    cursor: pointer;
 }
 
 .nav-link.active, .nav-link:focus, .nav-link:active {
