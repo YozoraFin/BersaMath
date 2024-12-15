@@ -10,7 +10,7 @@ export default function Student() {
   const navigate = useNavigate()
 
   return (
-    <div className='student p-3 overflow-hidden'>
+    <div className='p-3'>
       <div className="header row">
         <h1 className="title col-12 col-lg-6">Agensg</h1>
         <nav aria-label='breadcrumb' className='col-12 col-lg-6 d-block d-lg-flex justify-content-end align-items-center'>
@@ -81,7 +81,7 @@ export default function Student() {
             <select name="filter" id="filter" onChange={(e) => setFilter(e.target.value)} className="form-select">
               <option value="all" selected={filter === "all"}>Semua</option>
               <option value="grade" selected={filter === "grade"}>Sudah dinilai</option>
-              <option value="not" selected={filter === "not"}>Belum dinilai</option>
+              <option value="none" selected={filter === "none"}>Belum dinilai</option>
             </select>
           </div>
         </div>

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 export default function Dashboard() {
   return (
-    <div className="dashboard p-3">
+    <div className="p-3">
       <div className="header row">
         <h1 className='title col-12 col-lg-6'>Dasbor</h1>
         <nav aria-label='breadcrumb' className='col-12 col-lg-6 d-block d-lg-flex justify-content-end align-items-center'>
@@ -16,7 +16,7 @@ export default function Dashboard() {
       </div>
       <div className="body mt-3">
         <div className="card-list row justify-content-center">
-          <div className="col-12 col-lg-3 mb-3 mb-lg-0 pe-0">
+          <div className="col-12 col-lg-4 mb-3 mb-lg-0 pe-0">
             <Link to={'/bersamath/kelas'} className="card me-1">
               <div className="card-body">
                 <div className="card-title text-main">
@@ -43,7 +43,7 @@ export default function Dashboard() {
               </div>
             </Link>
           </div>
-          <div className="col-12 col-lg-3 mb-3 mb-lg-0 pe-0">
+          <div className="col-12 col-lg-4 mb-3 mb-lg-0 pe-0">
             <Link to={'/bersamath/materi'} className="card me-1">
               <div className="card-body">
                 <div className="card-title text-main">
@@ -70,7 +70,7 @@ export default function Dashboard() {
               </div>
             </Link>
           </div>
-          <div className="col-12 col-lg-3 mb-3 mb-lg-0 pe-0">
+          <div className="col-12 col-lg-4 mb-3 mb-lg-0 pe-0">
             <Link to={'/bersamath/tugas'} className="card me-1">
               <div className="card-body">
                 <div className="card-title text-main">
@@ -89,33 +89,6 @@ export default function Dashboard() {
                 <div className="row">
                   <div className="col-10">
                     Lihat daftar tugas
-                  </div>
-                  <div className="col-2 text-end">
-                    <FontAwesomeIcon className='card-nav' icon={faLocationArrow} />
-                  </div>
-                </div>
-              </div>
-            </Link>
-          </div>
-          <div className="col-12 col-lg-3 mb-3 mb-lg-0 pe-0">
-            <Link to={'/'} className="card me-1">
-              <div className="card-body">
-                <div className="card-title text-main">
-                  Gatau mau diisi apa njir sapatau ntar kepikiran (iya tau njir textnya over tapi biarin ae ntar kalo uda keisi ga lebih dari sebaris kok janji)
-                </div>
-                <div className="card-main text-second row">
-                  <div className="col-6">
-                    300
-                  </div>
-                  <div className="col-6 text-end">
-                    <FontAwesomeIcon icon={faXRay} />
-                  </div>
-                </div>
-              </div>
-              <div className="card-footer text-second">
-                <div className="row">
-                  <div className="col-10">
-                    Lihat daftar gatau mau diisi apa njir makanya itu daritadi bingung pek aseli, ujung-ujunge cuma buat pajangan bagian sini ckckck
                   </div>
                   <div className="col-2 text-end">
                     <FontAwesomeIcon className='card-nav' icon={faLocationArrow} />

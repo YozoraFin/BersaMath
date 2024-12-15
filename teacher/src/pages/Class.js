@@ -5,7 +5,7 @@ export default function Class() {
   const navigate = useNavigate()
 
   return (
-    <div className="class p-3">
+    <div className="p-3">
       <div className="header row">
         <h1 className='title col-12 col-lg-6'>Kelas</h1>
         <nav aria-label='breadcrumb' className='col-12 col-lg-6 d-block d-lg-flex justify-content-end align-items-center'>

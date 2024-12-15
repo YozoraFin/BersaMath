@@ -1,12 +1,12 @@
 import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
-export default function Answer() {
+export default function Submission() {
   const param = useParams()
   const navigate = useNavigate()
 
   return (
-    <div className="answer p-3">
+    <div className="p-3">
       <div className="header row">
         <h1 className="col-12 col-lg-6 title">Dasar-Dasar Matriks</h1>
         <nav aria-label='breadcrumb' className="col-12 col-lg-6 d-block d-lg-flex justify-content-end align-items-center">
