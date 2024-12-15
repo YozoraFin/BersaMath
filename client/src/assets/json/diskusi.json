@@ -1,0 +1,128 @@
+[
+    {
+        "title": "Introduction to Algebra",
+        "discussion": "I think we should start with the basics of algebra before moving to more complex topics. What do you think?",
+        "sender": "Alice",
+        "date": "2023-12-01",
+        "replies": [
+            {
+                "discussion": "I agree with starting with the basics to build a strong foundation.",
+                "sender": "Bob",
+                "date": "2023-12-02"
+            },
+            {
+                "discussion": "Basics are crucial. Let’s draft a plan.",
+                "sender": "Charlie",
+                "date": "2023-12-03"
+            }
+        ]
+    },
+    {
+        "title": "Foundation is Key",
+        "discussion": "I agree with Alice. It's important to have a strong foundation in the basics before tackling more difficult concepts.",
+        "sender": "Bob",
+        "date": "2023-12-02",
+        "replies": [
+            {
+                "discussion": "Absolutely, a strong foundation makes advanced topics easier.",
+                "sender": "Alice",
+                "date": "2023-12-03"
+            },
+            {
+                "discussion": "Yes, let’s outline key foundational topics.",
+                "sender": "Eve",
+                "date": "2023-12-04"
+            }
+        ]
+    },
+    {
+        "title": "Creating a Timeline",
+        "discussion": "We can create a timeline that includes sessions for basic concepts and gradually move to advanced topics. This way, everyone stays on the same page.",
+        "sender": "Charlie",
+        "date": "2023-12-03",
+        "replies": [
+            {
+                "discussion": "A timeline sounds great. It will help us stay organized.",
+                "sender": "Alice",
+                "date": "2023-12-04"
+            },
+            {
+                "discussion": "I can draft a rough timeline by tomorrow.",
+                "sender": "David",
+                "date": "2023-12-05"
+            }
+        ]
+    },
+    {
+        "title": "Practical Exercises",
+        "discussion": "Can we include some practical exercises as well? I find that hands-on practice helps in understanding complex ideas better.",
+        "sender": "David",
+        "date": "2023-12-04",
+        "replies": [
+            {
+                "discussion": "Hands-on practice is essential. Let’s integrate exercises in every session.",
+                "sender": "Alice",
+                "date": "2023-12-05"
+            },
+            {
+                "discussion": "I can create some exercises for the initial sessions.",
+                "sender": "Eve",
+                "date": "2023-12-06"
+            }
+        ]
+    },
+    {
+        "title": "Incorporating Exercises",
+        "discussion": "Absolutely! Practical exercises are a great idea. We can incorporate them into each session to reinforce the concepts learned.",
+        "sender": "Eve",
+        "date": "2023-12-05",
+        "replies": [
+            {
+                "discussion": "Great idea, Eve. I’ll help in creating some exercises.",
+                "sender": "Bob",
+                "date": "2023-12-06"
+            },
+            {
+                "discussion": "I can take care of creating quizzes as well.",
+                "sender": "David",
+                "date": "2023-12-07"
+            }
+        ]
+    },
+    {
+        "title": "Weekly Meetings",
+        "discussion": "Should we set up a weekly meeting to discuss our progress and any challenges we're facing? This way, we can support each other effectively.",
+        "sender": "Alice",
+        "date": "2023-12-06",
+        "replies": [
+            {
+                "discussion": "A weekly meeting is a great idea to stay aligned.",
+                "sender": "Charlie",
+                "date": "2023-12-07"
+            },
+            {
+                "discussion": "I’m in for weekly meetings. Let’s set a time.",
+                "sender": "Eve",
+                "date": "2023-12-08"
+            }
+        ]
+    },
+    {
+        "title": "Staying on Track",
+        "discussion": "I like the idea of a weekly meeting. It will help us stay on track and address any issues promptly.",
+        "sender": "Bob",
+        "date": "2023-12-07",
+        "replies": [
+            {
+                "discussion": "Exactly, Bob. We can discuss our goals and any roadblocks.",
+                "sender": "David",
+                "date": "2023-12-08"
+            },
+            {
+                "discussion": "Let’s finalize a meeting time that works for everyone.",
+                "sender": "Alice",
+                "date": "2023-12-09"
+            }
+        ]
+    }
+]

@@ -24,14 +24,21 @@ main {
 
 .wrapper-task {
     max-width : 1000px;
-    overflow-x : auto;
+    height : 190px;
+    overflow-x : hidden;
     overflow-y : hidden;
 }
 
 .wrapper-sbj {
     max-width : 1500px;
-    overflow-x : auto;
+    height : 190px;
+    overflow-x : hidden;
     overflow-y : hidden;
+}
+
+.wrapper-task:hover,
+.wrapper-sbj:hover {
+    overflow-x : auto;
 }
 
 .ongoing {
@@ -141,4 +148,9 @@ main {
     border-radius: 50px;
     background-color: #4A628A;
     color: white;
+}
+
+.list-discussion {
+    overflow-y: auto;
+    max-height: 300px;
 }
