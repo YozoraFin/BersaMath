@@ -2,6 +2,7 @@ import db from "../config/db.js";
 import { DataTypes } from "sequelize";
 import { Practice } from "./practice.model.js";
 import { LessonContent } from "./lessonContent.model.js";
+import { Progress } from "./progress.model.js";
 
 const Lesson = db.define(
   "lesson",
@@ -76,6 +77,9 @@ Lesson.hasOne(LessonContent, {
 })
 LessonContent.belongsTo(Lesson, {
   foreignKey: 'lesson_id'
+})
+Progress.belongsTo(Lesson, {
+  foreignKey: "lesson_id",
 })
 
 export { Lesson };

@@ -159,7 +159,7 @@ export const studentLogin = async (req, res) => {
       });
     }
 
-    const tokens = generateTokens(student.student_id, "student");
+    const tokens = await generateTokens(student.student_id, 'student');
 
     await student.update({ refresh_token: tokens.refreshToken });
 
@@ -172,7 +172,7 @@ export const studentLogin = async (req, res) => {
           name: student.name,
           email: student.email,
         },
-        tokens,
+        tokens: tokens,
       },
     });
   } catch (error) {

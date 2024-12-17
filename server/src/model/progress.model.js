@@ -1,4 +1,4 @@
-import db from "../config/db";
+import db from "../config/db.js";
 import { DataTypes } from "sequelize";
 
 const Progress = db.define(
@@ -57,14 +57,5 @@ const Progress = db.define(
     updatedAt: "updated_at",
   }
 );
-
-Progress.associate = (models) => {
-  Progress.belongsTo(models.Enrollment, {
-    foreignKey: "enrollment_id",
-  });
-  Progress.belongsTo(models.Lesson, {
-    foreignKey: "lesson_id",
-  });
-};
 
 export { Progress };
