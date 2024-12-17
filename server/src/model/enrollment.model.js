@@ -1,6 +1,7 @@
 import db from "../config/db.js";
 import { DataTypes } from "sequelize";
 import { Course } from "./course.model.js";
+import { Progress } from "./progress.model.js";
 
 const Enrollment = db.define(
   "enrollment",
@@ -48,5 +49,9 @@ const Enrollment = db.define(
     updatedAt: "updated_at",
   }
 );
+
+Progress.belongsTo(Enrollment, {
+  foreignKey: "enrollment_id",
+})
 
 export { Enrollment };

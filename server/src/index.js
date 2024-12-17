@@ -19,6 +19,7 @@ import authRoutes from "./routes/auth.routes.js"
 import path from 'path';
 import { fileURLToPath } from 'url';
 import discussionRoutes from "./routes/discussion.routes.js";
+import progressRoutes from "./routes/progress.routes.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -72,7 +73,7 @@ app.use('/api/v1/auth', authRoutes)
 app.use('/api/v1/teacher', teacherRoutes)
 app.use('/api/v1/student', studentRoutes)
 app.use('/api/v1/topic', topicRoutes)
-app.use('/api/v1/course', courseRoutes, enrollmentRoutes, lessonRoutes, practiceRoutes, submissionRoutes, discussionRoutes)
+app.use('/api/v1/course', courseRoutes, enrollmentRoutes, lessonRoutes, practiceRoutes, submissionRoutes, discussionRoutes, progressRoutes)
 
 app.listen(port, async () => {
   try {

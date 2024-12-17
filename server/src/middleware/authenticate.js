@@ -40,12 +40,12 @@ export const generateTokens = async (userId, role) => {
 
     const tokens = {
       accessToken: jwt.sign(
-        { id: userId, role, courseId },
+        { id: userId, role, ...(role === 'teacher' ? { courseId } : {}) },
         process.env.JWT_SECRET_KEY,
         { expiresIn: "15m" }
       ),
       refreshToken: jwt.sign(
-        { id: userId, role, courseId },
+        { id: userId, role, ...(role === 'teacher' ? { courseId } : {}) },
         process.env.JWT_REFRESH_SECRET_KEY,
         { expiresIn: "7d" }
       )
