@@ -1,29 +1,27 @@
 ## API Reference
 
 ### Authentication
-#### Teacher Registration
-
+#### Super Teacher Registration
 ```http
 POST /api/v1/auth/register-superteacher
 Content-Type: application/json
 ```
-
-| Variabel | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `name` | `string` | **Required**. Your name value |
-| `email` | `string` | **Required**. Your email value |
-| `password` | `string` | **Required**. Your password value |
-| `phone` | `string` | **Required**. Your phone value |
-| `bio` | `string` | **Required**. Your bio value |
-| `gender` | `string` | **Required**. Your gender value |
-| `registrationCode` | `string` | **Required**. Your registrationCode value |
-
-```headers
-Response (201):
-```
+#### Request Body:
 ```json
 {
-  "success": true,  
+    "name": "John Doe",
+    "email": "superteacher.bersamath@mail.com",
+    "password": "admin12345",
+    "phone": "085512345678",
+    "bio": "ini bio super teacher",
+    "gender": "Pria",
+    "registrationCode": "140234cfc5b44971af0e63d1e1e1d9329de8b45a25ae72f0aeea6554cbde3097"
+}
+```
+#### Response (201):
+```json
+{
+  "success": true,
   "message": "Super teacher registration successful",
   "data": {
     "teacher": {
@@ -40,22 +38,24 @@ Response (201):
 }
 ```
 
+#### Teacher Registration
 ```http
 POST /api/v1/auth/teacher/register
 Content-Type: application/json
 ```
-
-| Variabel | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `name` | `string` | **Required**. Your name value |
-| `email` | `string` | **Required**. Your email value |
-| `password` | `string` | **Required**. Your password value |
-| `phone` | `string` | **Required**. Your phone value |
-| `bio` | `string` | **Required**. Your bio value |
-| `gender` | `string` | **Required**. Your gender value |
-
+#### Request Body:
 ```json
-Response (201):
+{
+    "name": "John Doe",
+    "email": "superteacher.bersamath@mail.com",
+    "password": "admin12345",
+    "phone": "085512345678",
+    "bio": "ini bio super teacher",
+    "gender": "Pria"
+}
+```
+#### Response (201):
+```json
 {
   "success": true,
   "message": "Registration successful. Please verify your email",
@@ -73,25 +73,71 @@ Response (201):
 }
 ```
 
+#### Teacher Login
+```http
+POST /api/v1/auth/teacher/register
+Content-Type: application/json
+```
+#### Request Body
+```json
+{
+    "identifier": "jane@example.com",
+    "password": "Secret123!"
+}
+```
+
+#### Response (200):
+```json
+{
+  "success": true,
+  "message": "Registration successful. Please verify your email",
+  "data": {
+    "teacher": {
+      "id": 1,
+      "name": "John Doe",
+      "email": "john@example.com"
+    },
+    "tokens": {
+      "accessToken": "eyJhbG...",
+      "refreshToken": "eyJhbG..."
+    }
+  }
+}
+```
+
+#### Teacher Logout
+```http
+POST /api/v1/teachers/logout
+Authorization: Bearer {token}
+```
+#### Response 200:
+```json
+{
+    "success": true,
+    "message": "Logged out successfully"
+}
+```
+
 #### Student Registration
 
 ```http
 POST /api/v1/auth/student/register
 Content-Type: application/json
 ```
-
-| Variabel | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `name` | `string` | **Required**. Your name value |
-| `email` | `string` | **Required**. Your email value |
-| `password` | `string` | **Required**. Your password value |
-| `phone` | `string` | **Required**. Your phone value |
-| `bio` | `string` | **Required**. Your bio value |
-| `gender` | `string` | **Required**. Your gender value |
-| `grade_level` | `string` | **Required**. Your grade_level value |
-
+#### Request Body:
 ```json
-Response (201):
+{
+    "name": "John Doe",
+    "email": "john@example.com",
+    "password": "admin12345",
+    "phone": "085512345678",
+    "bio": "ini bio super teacher",
+    "gender": "Pria",
+    "grade_level": 11
+}
+```
+#### Response (201):
+```json
 {
   "success": true,
   "message": "Registration successful. Please verify your email",
@@ -109,164 +155,492 @@ Response (201):
 }
 ```
 
+#### Student Login
+```http
+POST /api/v1/auth/student/register
+Content-Type: application/json
+```
+#### Request Body
+```json
+{
+    "identifier": "jane@example.com",
+    "password": "Secret123!"
+}
+```
+
+#### Response (200):
+```json
+{
+  "success": true,
+  "message": "Registration successful. Please verify your email",
+  "data": {
+    "student": {
+      "id": 1,
+      "name": "John Doe",
+      "email": "john@example.com",
+    },
+    "tokens": {
+      "accessToken": "eyJhbG...",
+      "refreshToken": "eyJhbG..."
+    }
+  }
+}
+```
+
+#### Student Logout
+```http
+POST /api/v1/student/logout
+Authorization: Bearer {token}
+```
+#### Response 200:
+```json
+{
+    "success": true,
+    "message": "Logged out successfully"
+}
+```
+
+### Teacher Management
+#### Get All Teachers
+```http
+GET /api/v1/teachers?page=1&limit=10&search=john&role=teacher&sort=created_at&order=DESC
+```
+#### Response (200):
+```json
+{
+    "success": true,
+    "message": "Teachers fetched successfully",
+    "data": [
+        {
+            "teacher_id": 1,
+            "name": "John Smith",
+            "email": "john@example.com",
+            "gender": "male",
+            "profile_pict": "uploads/profile/teacher-123.jpg"
+        }
+    ],
+    "metadata": {
+        "total": 50,
+        "page": 1,
+        "limit": 10,
+        "pages": 5
+    }
+}
+```
+
+#### Get Teacher By Id
+```http
+GET /api/v1/teachers/{id}
+```
+#### Response (200):
+```json
+{
+    "success": true,
+    "message": "Teacher fetched successfully",
+    "data": {
+        "teacher_id": 1,
+        "name": "John Smith",
+        "email": "john@example.com",
+        "gender": "male",
+        "profile_pict": "uploads/profile/teacher-123.jpg",
+        "bio": "Math teacher with 5 years experience"
+    }
+}
+```
+
+#### Update Teacher Profile
+```http
+PUT /api/v1/teachers/update-profile
+Authorization: Bearer {token}
+Content-Type: multipart/form-data
+```
+#### Request Body:
+```json
+{
+    "name": "John Smith",
+    "phone": "081234567890",
+    "bio": "Math teacher with 5 years experience",
+    "gender": "male",
+    "profile_pict": [File]
+}
+```
+#### Response (200):
+```json
+{
+    "success": true,
+    "message": "Profile updated successfully",
+    "data": {
+        "teacher_id": 1,
+        "name": "John Smith",
+        "phone": "081234567890",
+        "bio": "Math teacher with 5 years experience",
+        "gender": "male",
+        "profile_pict": "uploads/profile/teacher-123.jpg"
+    }
+}
+```
+
+### Student Management
+#### Get All Students
+```http
+GET /api/v1/students?page=1&limit=10&search=john&grade_level=10&sort=created_at&order=DESC
+```
+#### Response (200):
+```json
+{
+    "success": true,
+    "message": "Students fetched successfully",
+    "data": [
+        {
+            "student_id": 1,
+            "name": "John Doe",
+            "email": "john@example.com",
+            "grade_level": "10",
+            "profile_pict": "uploads/profile/student-123.jpg"
+        }
+    ],
+    "metadata": {
+        "total": 100,
+        "page": 1,
+        "limit": 10,
+        "pages": 10
+    }
+}
+```
+
+#### Get Student By Id
+```http
+GET /api/v1/student/{id}
+```
+#### Response (200):
+```json
+{
+    "success": true,
+    "message": "Student fetched successfully",
+    "data": {
+        "student_id": 1,
+        "name": "John Doe",
+        "email": "john@example.com",
+        "phone": "081234567890",
+        "grade_level": "10",
+        "gender": "male",
+        "bio": "High school student",
+        "profile_pict": "uploads/profile/student-123.jpg"
+    }
+}
+```
+
+#### Update Student Profile
+```http
+PUT /api/v1/student/update-profile
+Authorization: Bearer {token}
+Content-Type: multipart/form-data
+```
+#### Request Body:
+```json
+{
+    "name": "John Doe",
+    "phone": "081234567890",
+    "grade_level": "10",
+    "gender": "male",
+    "bio": "High school student",
+    "profile_pict": [File]
+}
+```
+#### Response (200):
+```json
+{
+    "success": true,
+    "message": "Profile updated successfully",
+    "data": {
+        "student_id": 1,
+        "name": "John Doe",
+        "phone": "081234567890",
+        "grade_level": "10",
+        "gender": "male",
+        "bio": "High school student",
+        "profile_pict": "uploads/profile/student-123.jpg"
+    }
+}
+```
+
 ### Course Management
-#### Create Course
-
+#### Create Topic (super teacher only)
 ```http
-POST /api/v1/auth/course/create
-Authorization: Bearer {accessToken}
+POST /api/v1/topic/create
+Authorization: Bearer {token}
+Content-Type: application/json
+```
+#### Request Body:
+```json
+{
+    "title": "Mathematics",
+    "description": "Basic mathematical concepts"
+}
+```
+#### Response (201)
+```json
+{
+    "success": true,
+    "message": "Topic created successfully",
+    "data": {
+        "topic_id": 1,
+        "title": "Mathematics",
+        "description": "Basic mathematical concepts"
+    }
+}
+```
+
+#### Get All Topics
+```http
+GET /api/v1/topic?page=1&limit=10&search=math
+Authorization: Bearer {token}
+```
+#### Response (200)
+```json
+{
+    "success": true,
+    "message": "Topics fetched successfully",
+    "data": [
+        {
+            "topic_id": 1,
+            "title": "Mathematics",
+            "description": "Basic mathematical concepts",
+            "created_at": "2024-03-20T10:00:00Z"
+        }
+    ],
+    "metadata": {
+        "total": 10,
+        "page": 1,
+        "limit": 10,
+        "pages": 1
+    }
+}
+```
+
+#### Get Topic By Id
+```http
+GET /api/v1/topic/{id}
+Authorization: Bearer {token}
+```
+#### Response (200)
+```json
+{
+    "success": true,
+    "message": "Topic fetched successfully",
+    "data": {
+        "topic_id": 1,
+        "title": "Mathematics",
+        "description": "Basic mathematical concepts",
+        "created_at": "2024-03-20T10:00:00Z",
+        "updated_at": "2024-03-20T10:00:00Z"
+    }
+}
+```
+
+#### Update Topic (super teacher only)
+```http
+PUT /api/v1/topic/update/{id}
+Authorization: Bearer {token}
+Content-Type: application/json
+```
+#### Request Body:
+```json
+{
+    "title": "Advanced Mathematics",
+    "description": "Advanced mathematical concepts"
+}
+```
+#### Response (200):
+```json
+{
+    "success": true,
+    "message": "Topic updated successfully",
+    "data": {
+        "topic_id": 1,
+        "title": "Advanced Mathematics",
+        "description": "Advanced mathematical concepts"
+    }
+}
+```
+
+#### Delete Topic (super teacher only)
+```http
+DELETE /api/v1/topic/delete/{id}
+Authorization: Bearer {token}
+```
+#### Response (200):
+```json
+{
+    "success": true,
+    "message": "Topic deleted successfully"
+}
+```
+
+#### Create Course (super teacher only)
+```http
+POST /api/v1/course/create
+Authorization: Bearer {token}
 Content-Type: multipart/form-data
 ```
-
-| Variabel | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `title` | `string` | **Required**. Your title value |
-| `description` | `string` | **Required**. Your description value |
-| `difficulty` | `string` | **Required**. Your difficulty value |
-| `topic_id` | `int` | **Required**. Your topic_id value |
-| `thumbnail` | `json` | **Required**. Your thumbnail value |
-
+#### Request Body:
 ```json
-Response (201):
 {
-  "success": true,
-  "message": "Course created successfully",
-  "data": {
-    "course_id": 1,
-    "title": "Aljabar Dasar",
-    "description": "Pembelajaran dasar aljabar",
-    "difficulty": "basic",
-    "thumbnail": "path/to/thumbnail.jpg"
-  }
+  "title": "Course percobaan ke berapa gak tau",
+  "description": "percobaan course jehehe",
+  "difficulty": "basic",
+  "topic_id": 1,
+  "thumbnail": [file]
+}
+```
+#### Response (201)
+```json
+{
+    "success": true,
+    "message": "Course created successfully",
+    "data": {
+        "course_id": 1,
+        "title": "Basic Algebra",
+        "description": "Introduction to algebraic concepts",
+        "difficulty": "basic",
+        "thumbnail": "uploads/course/thumbnail-123.jpg",
+        "topic_id": 1
+    }
 }
 ```
 
-#### Create Lesson
-
+#### Get All Courses
 ```http
-POST /api/v1/course/{course_id}/lesson/create
-Authorization: Bearer {accessToken}
+GET /api/v1/course?page=1&limit=10&search=algebra&topic_id=1&difficulty=basic&sort=created_at&order=DESC
 ```
-| Params | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `course_id` | `int` | **Required**. Your course_id value |
-
-| Variabel | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `title` | `string` | **Required**. Your title value |
-| `description` | `string` | **Required**. Your description value |
-| `lesson_type` | `string` | **Required**. Your lesson_type value |
-
+#### Response (200):
 ```json
-Response (201):
 {
-  "success": true,
-  "message": "Lesson created successfully",
-  "data": {
-    "lesson_id": 1,
-    "title": "Pengenalan Variabel",
-    "description": "Memahami konsep variabel dalam aljabar",
-    "lesson_type": "teori",
-    "sequence": 1
-  }
+    "success": true,
+    "message": "Courses fetched successfully",
+    "data": [
+        {
+            "course_id": 1,
+            "title": "Basic Algebra",
+            "description": "Introduction to algebraic concepts",
+            "difficulty": "basic",
+            "thumbnail": "uploads/course/thumbnail-123.jpg",
+            "topic": {
+                "topic_id": 1,
+                "title": "Algebra"
+            }
+        }
+    ],
+    "metadata": {
+        "total": 50,
+        "page": 1,
+        "limit": 10,
+        "pages": 5
+    }
 }
 ```
 
-#### Create Practice
-
+#### Get Course By Id
 ```http
-POST /api/v1/course/{course_id}/lesson/{lesson_id}/practice/create
-Authorization: Bearer {accessToken}
+GET /api/v1/course/{id}
+Authorization: Bearer {token}
 ```
-| Params | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `course_id` | `int` | **Required**. Your course_id value |
-| `lesson_id` | `int` | **Required**. Your lesson_id value |
-
-| Variabel | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `question` | `string` | **Required**. Your question value |
-| `description` | `string` | **Required**. Your description value |
-| `difficulty` | `string` | **Required**. Your difficulty value |
-| `max_score` | `int` | **Required**. Your max_score value |
-| `due_date` | `date` | **Required**. Your due_date value |
-
+#### Response (200):
 ```json
-Response (201):
 {
-  "success": true,
-  "message": "Practice created successfully",
-  "data": {
-    "practice_id": 1,
-    "question": "Selesaikan persamaan: 2x + 5 = 15",
-    "difficulty": "basic",
-    "max_score": 100,
-    "due_date": "2024-04-01T23:59:59.999Z"
-  }
+    "success": true,
+    "message": "Course fetched successfully",
+    "data": {
+        "course_id": 1,
+        "title": "Basic Algebra",
+        "description": "Introduction to algebraic concepts",
+        "difficulty": "basic",
+        "thumbnail": "uploads/course/thumbnail-123.jpg",
+        "topic": {
+            "topic_id": 1,
+            "title": "Algebra"
+        },
+        "teachers": [
+            {
+                "teacher_id": 1,
+                "name": "John Smith"
+            }
+        ]
+    }
 }
 ```
 
-#### Submit Practice
-
+#### Update Course (super teacher only)
 ```http
-POST /api/v1/course/{course_id}/lesson/{lesson_id}/practice/{practice_id}/submit
-Authorization: Bearer {accessToken}
+POST /api/v1/course/create
+Authorization: Bearer {token}
 Content-Type: multipart/form-data
 ```
-| Params | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `course_id` | `int` | **Required**. Your course_id value |
-| `lesson_id` | `int` | **Required**. Your lesson_id value |
-| `practice_id` | `int` | **Required**. Your practice_id value |
-
-| Variabel | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `answer` | `string` | **Required**. Your answer value |
-| `files` | `json` | **Required**. Your submission files value |
-
+#### Request Body
 ```json
-Response (201):
 {
-  "success": true,
-  "message": "Submission created successfully",
-  "data": {
-    "submission_id": 1,
-    "answer": "Langkah penyelesaian: ...",
-    "files": ["path/to/file1.pdf", "path/to/file2.jpg"],
-    "status": "submitted"
-  }
+    "title": "Basic Algebra",
+    "description": "Introduction to algebraic concepts",
+    "difficulty": "basic",
+    "topic_id": 1,
+    "thumbnail": [File]
+}
+```
+#### Response (200):
+```json
+{
+    "success": true,
+    "message": "Course created successfully",
+    "data": {
+        "course_id": 1,
+        "title": "Basic Algebra",
+        "description": "Introduction to algebraic concepts",
+        "difficulty": "basic",
+        "thumbnail": "uploads/course/thumbnail-123.jpg",
+        "topic_id": 1
+    }
 }
 ```
 
-#### Grade Submission
-
+#### Delete Course (super teacher only)
 ```http
-PUT /api/v1/course/{course_id}/lesson/{lesson_id}/practice/{practice_id}/submission/{submission_id}/grade
-Authorization: Bearer {accessToken}
+DELETE /api/v1/course/delete/{id}
+Authorization: Bearer {token}
 ```
-| Params | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `course_id` | `int` | **Required**. Your course_id value |
-| `lesson_id` | `int` | **Required**. Your lesson_id value |
-| `practice_id` | `int` | **Required**. Your practice_id value |
-| `submission_id` | `int` | **Required**. Your submission_id value |
-
-| Variabel | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `score` | `int` | **Required**. Your score value |
-| `feedback` | `string` | **Required**. Your feedback value |
-
+#### Response (200):
 ```json
-Response (200):
 {
-  "success": true,
-  "message": "Submission graded successfully",
-  "data": {
-    "submission_id": 1,
-    "score": 85,
-    "feedback": "Jawaban sudah baik dan lengkap...",
-    "status": "graded"
-  }
+    "success": true,
+    "message": "Course deleted successfully"
+}
+```
+
+#### Add Teacher To Course (super teacher only)
+```http
+PUT /api/v1/course/{id}/add-teacher
+Authorization: Bearer {token}
+Content-Type: application/json
+```
+#### Request Body:
+```json
+{
+    "teacher_id": [1, 2, 3]
+}
+```
+#### Response (200):
+```json
+{
+    "success": true,
+    "message": "Teachers added to course successfully",
+    "data": {
+        "course_id": 1,
+        "teachers": [
+            {
+                "teacher_id": 1,
+                "name": "John Smith"
+            }
+        ]
+    }
 }
 ```
 
